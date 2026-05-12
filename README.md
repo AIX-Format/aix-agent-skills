@@ -209,7 +209,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-12 23:37 UTC_
+_Last updated: 2026-05-12 23:50 UTC_
 
 ---
 
@@ -241,11 +241,11 @@ _Last updated: 2026-05-12 23:37 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`e419201`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/e419201) | Merge pull request #12 from Moeabdelaziz007/feat/rhythm-bridge | Mohamed Abdelaziz ‬‏ |
+| [`05452e1`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/05452e1) | 📝 Add docstrings to `feat/rhythm-bridge` | coderabbitai[bot] |
+| [`bd048e0`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/bd048e0) | feat: add Rhythm Bridge — automated iqra ↔ marketplace tide sync | Moeabdelaziz007 |
+| [`55154df`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/55154df) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`9c894b8`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/9c894b8) | Merge pull request #11 from Moeabdelaziz007/chore/sentinel-and-cleanup | Mohamed Abdelaziz ‬‏ |
-| [`d2c456b`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/d2c456b) | fix: address review comments on sentinel, compress.go, workflow | Moeabdelaziz007 |
-| [`e721bc2`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/e721bc2) | Merge remote-tracking branch 'origin/main' into chore/sentinel-and-cleanup Co-authored-by: Codesmith <codesmith-bot@users.noreply.github.com> | Moeabdelaziz007 |
-| [`a26352e`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/a26352e) | Merge branch 'chore/sentinel-and-cleanup' of https://github.com/Moeabdelaziz007/aix-agent-skills into chore/sentinel-and-cleanup | Moeabdelaziz007 |
-| [`5af1e24`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/5af1e24) | Merge remote-tracking branch 'origin/main' into chore/sentinel-and-cleanup | Moeabdelaziz007 |
 
 ---
 
