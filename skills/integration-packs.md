@@ -31,3 +31,16 @@
 ## تكامل مع المهارات الأخرى
 - `circuit-breaker`: يراقب عمليات العالم الحقيقي (مثل المدفوعات) ويعزل التكامل فوراً في حال اكتشاف خطأ تجنباً للخسائر.
 - `shura-council`: الأفعال ذات الأثر الكبير (إرسال 50 بريداً للعملاء) تمر تلقائياً عبر الشورى لضمان الموافقة قبل التنفيذ الفعلي.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

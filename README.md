@@ -155,3 +155,27 @@ This sovereign ecosystem was conceived and engineered by:
     </tr>
   </table>
 </div>
+
+---
+
+## 📈 Performance Tracking
+
+The Skill Forge includes a lightweight system to track the health and success rates of skills in the marketplace. Data is stored locally in `performance_ledger.json`.
+
+### How to use:
+
+To record a successful or failed execution of a skill, run the following command:
+
+```bash
+node scripts/record_performance.js --skill <skill_name> --success <true|false>
+```
+
+**Example (Success):**
+```bash
+node scripts/record_performance.js --skill data-alchemist --success true
+```
+
+**Example (Failure):**
+```bash
+node scripts/record_performance.js --skill data-alchemist --success false
+```

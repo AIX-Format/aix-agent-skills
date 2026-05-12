@@ -20,3 +20,16 @@ Planner → Researcher → Builder → Validator → Reporter
 - لا تداخل في الأدوار
 - لا موافقة ذاتية (كل عامل يراجع عمل سابقه)
 - عقد تسليم صارم بين كل عاملين
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

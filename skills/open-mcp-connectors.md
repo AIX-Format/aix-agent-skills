@@ -25,3 +25,16 @@
 ## تكامل مع المهارات الأخرى
 - `edge-whisperer`: الرفيق المثالي لهذه المهارة؛ نموذج يعمل في المتصفح + أدوات مجانية = ذكاء لا نهائي مجاني.
 - `skill-sandbox`: تضمن عدم إساءة استخدام `File System MCP` أو `Fetch MCP` للوصول إلى بيانات حساسة.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

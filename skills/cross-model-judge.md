@@ -14,3 +14,16 @@
 - في الأسئلة الأخلاقية: النموذج المحلي له وزن أكبر (خصوصية).
 - في الأسئلة الإبداعية: النموذج السحابي له وزن أكبر.
 - في الأسئلة التقنية: يُعادل بين الثلاثة.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

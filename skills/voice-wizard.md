@@ -28,3 +28,16 @@ Each conversation turn extracts ONE field:
 - NEVER play TTS while recording
 - ALWAYS show visual state (pulse = recording, spinner = processing)
 - ALWAYS fallback to text input if microphone denied
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

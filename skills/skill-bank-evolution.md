@@ -29,3 +29,16 @@ graph LR
 - **تحليل الفجوات**: رصد أنماط الأسئلة التي لا تملك المهارات الحالية إجابة عنها.
 - **تقطير النجاح**: استخلاص أنماط قابلة لإعادة الاستخدام من المسارات الناجحة.
 - **النسخ المعدَّل**: أخذ مهارة ناجحة وتعديلها لمجال مختلف.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

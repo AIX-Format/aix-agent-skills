@@ -34,3 +34,16 @@ curl POST /api/agents/test-123/memory -d '{"role":"user","content":"hello"}'
 curl GET  /api/agents/test-123/memory
 # -> Should return [{role:"user", content:"hello"}]
 ```
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

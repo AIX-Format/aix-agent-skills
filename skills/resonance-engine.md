@@ -28,3 +28,16 @@ resonance = (novelty + topology + depth - penalty) × pathMultiplier
 - اكتشاف "مهارات مخفية" لم تُسجَّل رسميًا بعد
 - رصد "أنماط الفشل" قبل حدوثها
 - اقتراح "سلاسل مهارات" غير متوقعة لكنها متناغمة
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

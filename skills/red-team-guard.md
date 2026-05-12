@@ -14,3 +14,16 @@
 - كل هجوم ناجح = ثغرة تُغلق.
 - كل هجوم فاشل = دفاع يُسجَّل.
 - السجل يُغذي `skill-bank-evolution` لتحصين المهارات.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

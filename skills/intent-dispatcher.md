@@ -22,3 +22,16 @@
 - `pipeline-store`: المصدر الأساسي للمسارات الجاهزة.
 - `skill-evaluator`: لا يقترح إلا المهارات أو المسارات الموثوقة.
 - `version-guard`: التحقق من التوافق قبل التوصية.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

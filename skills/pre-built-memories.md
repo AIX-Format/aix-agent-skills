@@ -24,3 +24,16 @@
 ## تكامل مع المهارات الأخرى
 - `memory-bridge`: تُركّب هذه الحزم في طبقة الـ Vector Archive لتعمل كذاكرة عصبية عميقة للوكيل.
 - `fine-tuned-vault`: تعمل جنباً إلى جنب مع النماذج المدربة لضمان توافق المعرفة (الذاكرة) مع الاستدلال (الوزن).
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

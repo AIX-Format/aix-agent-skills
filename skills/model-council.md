@@ -34,3 +34,16 @@ local (ollama) → edge (webgpu) → cloud (gemini)
 - `prompt-weaver`: يعد المطالبة قبل إرسالها لأي نموذج
 - `edge-whisperer`: يتولى النماذج الطرفية
 - `trust-chain`: يسجل أي نموذج استُخدم ومتى
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

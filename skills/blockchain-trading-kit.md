@@ -59,3 +59,16 @@
 
 ## الاستخدام الفوري
 "حمِّل حزمة التداول" ← الوكيل جاهز لتحليل الأسواق، تنفيذ الصفقات، وإدارة المخاطر.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

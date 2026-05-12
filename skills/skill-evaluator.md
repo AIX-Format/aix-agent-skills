@@ -60,3 +60,16 @@ description: "Run automated evaluations against any skill and produce verifiable
 - `version-guard`: يضمن تشغيل المقيّم قبل أي تحديث في الإصدار.
 - `skill-sandbox`: بيئة العزل التي يُشغل فيها التقييم.
 - `pipeline-store`: يتطلب أن تكون جميع المهارات المكونة للمسار حاصلة على شارة اجتياز.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

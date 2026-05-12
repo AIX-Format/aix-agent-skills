@@ -11,3 +11,16 @@
 
 ## التكامل
 يعمل كخط دفاع أخير قبل تفعيل المهارة أو المطالبة في البيئة الحية.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

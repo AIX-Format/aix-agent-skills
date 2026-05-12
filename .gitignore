@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+__pycache__/
+*.log
+aix-constitutional-runtime/
+go-engine/
+tests/test_*.py
+test_write.ts

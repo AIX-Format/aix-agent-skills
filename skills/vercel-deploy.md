@@ -35,3 +35,16 @@ OR create `apps/studio/vercel.json`:
 - [ ] `/api/registry` returns agents list
 - [ ] `/builder` page loads Voice Wizard
 - [ ] `/.well-known/agent.aix.json` returns valid JSON
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

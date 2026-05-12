@@ -17,3 +17,16 @@
 ## تكامل مع المهارات الأخرى
 - `model-council`: المجلس هو من يتخذ قرار توجيه الطلب إلى أحد هذه النماذج الدقيقة بدلاً من النماذج السحابية العامة.
 - `trust-chain`: تسجيل هوية وإصدار النموذج الدقيق المستخدم في أي استنتاج حرج.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

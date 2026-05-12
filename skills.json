@@ -256,6 +256,91 @@
       "name": "antigravity-jules",
       "description": "Shared task board and resonance synchronization between Antigravity and Jules",
       "file": "skills/antigravity-jules.md"
+    },
+    {
+      "name": "DATA_GUARDIAN",
+      "description": "Auto-generated stub for DATA_GUARDIAN",
+      "file": "skills/data-guardian.md"
+    },
+    {
+      "name": "TOPOLOGICAL_CURIOSITY",
+      "description": "Auto-generated stub for TOPOLOGICAL_CURIOSITY",
+      "file": "skills/topological-curiosity.md"
+    },
+    {
+      "name": "compute_router",
+      "description": "Auto-generated stub for compute_router",
+      "file": "skills/compute-router.md"
+    },
+    {
+      "name": "damir_check",
+      "description": "Auto-generated stub for damir_check",
+      "file": "skills/damir-check.md"
+    },
+    {
+      "name": "memory_management",
+      "description": "Auto-generated stub for memory_management",
+      "file": "skills/memory-management.md"
+    },
+    {
+      "name": "opportunity_hunter",
+      "description": "Auto-generated stub for opportunity_hunter",
+      "file": "skills/opportunity-hunter.md"
+    },
+    {
+      "name": "pattern_validate",
+      "description": "Auto-generated stub for pattern_validate",
+      "file": "skills/pattern-validate.md"
+    },
+    {
+      "name": "quran_deep_analysis",
+      "description": "Auto-generated stub for quran_deep_analysis",
+      "file": "skills/quran-deep-analysis.md"
+    },
+    {
+      "name": "quran_search",
+      "description": "Auto-generated stub for quran_search",
+      "file": "skills/quran-search.md"
+    },
+    {
+      "name": "sovereign_identity",
+      "description": "Auto-generated stub for sovereign_identity",
+      "file": "skills/sovereign-identity.md"
+    },
+    {
+      "name": "sovereign_reasoning",
+      "description": "Auto-generated stub for sovereign_reasoning",
+      "file": "skills/sovereign-reasoning.md"
+    },
+    {
+      "name": "trading_skill",
+      "description": "Auto-generated stub for trading_skill",
+      "file": "skills/trading-skill.md"
+    },
+    {
+      "name": "SKILLS",
+      "description": "Auto-generated stub for SKILLS",
+      "file": "skills/skills.md"
+    },
+    {
+      "name": "TrustChain",
+      "description": "Immutable SHA-256 ledger for agent accountability",
+      "file": "skills/trustchain.md"
+    },
+    {
+      "name": "CavemanSkill",
+      "description": "Basic foundational problem-solving skill, highly resilient",
+      "file": "skills/caveman-skill.md"
+    },
+    {
+      "name": "FatihaTopology",
+      "description": "Mathematical and topological routing based on Quranic patterns",
+      "file": "skills/fatiha-topology.md"
+    },
+    {
+      "name": "Go_Engine",
+      "description": "Independent HTTP server and optimized execution engine",
+      "file": "skills/go-engine.md"
     }
   ]
 }

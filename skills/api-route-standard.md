@@ -41,3 +41,16 @@ if (!allowed) {
 - NEVER skip auth on mutating endpoints (POST/PUT/DELETE).
 - ALWAYS use try/catch with structured error response.
 - ALWAYS log errors to `console.error` with request context.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

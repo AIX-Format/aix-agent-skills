@@ -29,3 +29,16 @@
 - المستخدم الجديد لا يعرف أسماء المهارات. يرى "رف المبيعات" ويحصل على مجموعة مهارات موثوقة.
 - المجتمع يبني السمعة ليس فقط للمهارات، بل **للقوائم نفسها** (قائمة فلان أفضل من قائمة علان).
 - يتيح **التخصص العميق**: قائمة "أدوات تحليل البيانات بالعربية" أو "وكلاء تدقيق العقود".
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

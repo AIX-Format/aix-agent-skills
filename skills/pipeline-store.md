@@ -38,3 +38,16 @@ nodes:
 - `version-guard`: يقفل (Locks) الإصدارات المتوافقة لتجنب الكسر.
 - `intent-dispatcher`: يقترح المسارات الجاهزة بناءً على نية المستخدم.
 - `chain-tracer`: يراقب تنفيذ المسار للتصحيح.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

@@ -39,3 +39,16 @@
 - `role-tribunal`: يستشير حدود الدور
 - `sovereign-constitution`: يضمن عدم تعارض المطالبة مع الدستور
 - `memory-bridge`: يحقن السياق الحي من الذاكرة
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

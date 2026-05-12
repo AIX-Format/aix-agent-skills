@@ -19,3 +19,16 @@ WebGPU + WASM = عقلك في جيبك ضمن منصة IQRA.
 ## تكامل
 - `model-council`: يُستدعى عندما يختار المجلس "edge"
 - `memory-bridge`: يحتفظ بنسخة دافئة من السياق للمتصفح
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

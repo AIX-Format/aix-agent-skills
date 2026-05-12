@@ -34,3 +34,16 @@ interface CovenantSignature {
 ## الجوهرة المخفية: قاعدة الـ 9
 بعد 9 محاولات فاشلة في حل معضلة أخلاقية، يجب التوقف وطلب التدخل البشري.
 هذا يمنع الحلقات اللانهائية من "التبرير الذاتي".
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

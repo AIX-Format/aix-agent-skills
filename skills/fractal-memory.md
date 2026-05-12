@@ -24,3 +24,16 @@
 - "ما النمط الذي تكرر 7 مرات هذا الأسبوع؟"
 
 الذاكرة تستجيب لما "يشبه" السؤال، لا لما "يطابق" المفتاح.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

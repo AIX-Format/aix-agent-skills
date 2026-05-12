@@ -48,3 +48,16 @@
 - `prompt-weaver`: يستشير الدستور قبل صياغة أي مطالبة
 - `topology-orchestrator`: لا ينفذ أي مهمة قبل اجتياز الفلتر الأخلاقي
 - `trust-chain`: يُسجّل كل قرار دستوري في سلسلة الثقة
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.
