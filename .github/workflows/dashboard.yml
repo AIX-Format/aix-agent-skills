@@ -1,0 +1,68 @@
+name: 📊 Live Dashboard
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-dashboard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 10
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup Go 1.25
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+
+      - name: Install Python test deps
+        run: pip install pytest
+
+      - name: Install TS runtime deps
+        working-directory: aix-constitutional-runtime
+        run: npm ci
+
+      - name: Generate dashboard
+        working-directory: .
+        run: |
+          python .github/scripts/generate_dashboard.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet README.md; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit & push updated dashboard
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "iqra-dashboard-bot"
+          git config user.email "bot@iqra.sovereign"
+          git add README.md
+          git commit -m "📊 auto-update live ecosystem dashboard [skip ci]"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin HEAD:${{ github.ref_name }}
