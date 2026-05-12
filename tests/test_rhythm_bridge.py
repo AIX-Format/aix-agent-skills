@@ -21,6 +21,14 @@ SCRIPT_PATH = REPO_ROOT / "scripts" / "rhythm_bridge.py"
 
 
 def _import_rhythm_bridge():
+    """
+    Dynamically load the rhythm_bridge module from SCRIPT_PATH and return it.
+    
+    The loaded module is registered in sys.modules under the name "rhythm_bridge".
+    
+    Returns:
+        module: The imported rhythm_bridge module object.
+    """
     spec = importlib.util.spec_from_file_location("rhythm_bridge", SCRIPT_PATH)
     module = importlib.util.module_from_spec(spec)
     sys.modules["rhythm_bridge"] = module
@@ -98,6 +106,11 @@ class TestExtractSuccessPatterns:
     def _reset_registry_cache(self, monkeypatch):
         # Each test starts with a fresh registry view so monkeypatched
         # registry files take effect.
+        """
+        Reset the Rhythm Bridge success-patterns registry cache so tests observe fresh registry state.
+        
+        This fixture clears rb._PATTERNS_REGISTRY (sets it to None) before a test runs, ensuring that subsequent monkeypatches of the registry file or its contents take effect.
+        """
         monkeypatch.setattr(rb, "_PATTERNS_REGISTRY", None)
 
     def test_unknown_skill_returns_empty(self, monkeypatch, tmp_path):
@@ -200,6 +213,18 @@ class TestTickIO:
 
 class TestComputePairs:
     def _build_signals(self, donor_score=0.9, recipient_score=0.9):
+        """
+        Create sample donor and recipient signal objects for tests.
+        
+        Parameters:
+            donor_score (float): Ignored; present for API compatibility.
+            recipient_score (float): Ignored; present for API compatibility.
+        
+        Returns:
+            tuple: Two dictionaries:
+                - First maps "donor" to an `rb.IqraSignal` configured to exceed `rb.HIGH_THRESHOLD`.
+                - Second maps "recipient" to an `rb.MarketplaceSignal` with positive activity.
+        """
         donor = rb.IqraSignal(name="donor", weighted_score=10.0, mention_count=5)
         recipient = rb.MarketplaceSignal(name="recipient", lines_changed=50, commits=3)
         # Sanity: our hand-picked weights should clear the thresholds.

@@ -82,7 +82,12 @@ class IqraSignal:
 
     @property
     def tide_score(self) -> float:
-        """Normalize to [0, 1]. mentions×decay → squashed by tanh."""
+        """
+        Normalize the signal's weighted score into the range 0 to 1.
+        
+        Returns:
+            float: Tide score between 0 and 1 where larger values indicate stronger recent activity.
+        """
         # tanh keeps the curve well-behaved as mentions grow.
         return math.tanh(self.weighted_score / 5.0)
 
@@ -99,6 +104,12 @@ class MarketplaceSignal:
     @property
     def activity_score(self) -> float:
         # tanh squash so very-large diffs don't dominate.
+        """
+        Compute a normalized activity score for this marketplace signal.
+        
+        Returns:
+            activity_score (float): A value between 0 (no activity) and 1 (very high activity), where larger values indicate more lines changed and/or commits.
+        """
         return math.tanh((self.lines_changed + self.commits * 10) / 50.0)
 
 
@@ -115,11 +126,29 @@ class CrossPollination:
 
 
 def log(msg: str) -> None:
+    """
+    Log a message to standard output prefixed with "[rhythm]".
+    
+    Parameters:
+        msg (str): Message text to emit.
+    """
     print(f"[rhythm] {msg}", flush=True)
 
 
 def run(cmd: list[str], cwd: Optional[Path] = None) -> str:
-    """Run a subprocess, return stdout. Raise on failure with full context."""
+    """
+    Execute a command and return its captured standard output as text.
+    
+    Parameters:
+        cmd (list[str]): Command and arguments to run (as a list, e.g. ["git", "status"]).
+        cwd (Optional[Path]): Working directory for the command; if omitted, uses the current working directory.
+    
+    Returns:
+        stdout (str): The process's standard output decoded as text.
+    
+    Raises:
+        RuntimeError: If the process exits with a non-zero return code; message includes the return code and captured stderr.
+    """
     proc = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
     if proc.returncode != 0:
         raise RuntimeError(
@@ -130,6 +159,14 @@ def run(cmd: list[str], cwd: Optional[Path] = None) -> str:
 
 
 def read_tick() -> int:
+    """
+    Read the current tick counter from the persistent tick file.
+    
+    Reads an integer from TICK_FILE and returns it. If the file does not exist or contains non-integer content, returns 0 (invalid content also triggers a logged warning).
+    
+    Returns:
+        tick (int): the tick counter value read from TICK_FILE, or 0 when the file is missing or invalid.
+    """
     if not TICK_FILE.exists():
         return 0
     raw = TICK_FILE.read_text(encoding="utf-8").strip() or "0"
@@ -141,11 +178,24 @@ def read_tick() -> int:
 
 
 def write_tick(value: int) -> None:
+    """
+    Write the provided tick counter value to the persistent tick file, overwriting any existing content.
+    
+    Parameters:
+        value (int): The tick value to store.
+    """
     TICK_FILE.write_text(f"{value}\n", encoding="utf-8")
 
 
 def load_skill_names() -> list[str]:
-    """Authoritative list of skills, taken from the manifest."""
+    """
+    Get the authoritative list of skill names from the skills manifest.
+    
+    Reads SKILLS_JSON and extracts the `"name"` field from each object in the top-level `"skills"` array. Only entries where `"name"` is a string are included; ordering matches the manifest.
+    
+    Returns:
+        list[str]: Skill names from the manifest in the order they appear.
+    """
     data = json.loads(SKILLS_JSON.read_text(encoding="utf-8"))
     return [
         s["name"]
@@ -155,6 +205,16 @@ def load_skill_names() -> list[str]:
 
 
 def determine_action(tick: int, override: Optional[str] = None) -> str:
+    """
+    Selects the cadence action for a given tick, optionally forcing a specific action.
+    
+    Parameters:
+    	tick (int): Current tick count used to choose scheduled actions.
+    	override (Optional[str]): If provided, this action is returned verbatim.
+    
+    Returns:
+    	action (str): One of "TELEMETRY_MIRROR", "CROSS_POLLINATE", "TIER_REBALANCE", or "DEEP_REFORM" indicating the cycle action for the tick.
+    """
     if override:
         return override
     if tick == 0:
@@ -173,13 +233,22 @@ def determine_action(tick: int, override: Optional[str] = None) -> str:
 
 
 def sample_iqra_signals(iqra_repo: Path, skill_names: list[str]) -> dict[str, IqraSignal]:
-    """Build a tide signal for each skill by mining iqra's recent git history.
-
-    We look at the last IQRA_LOOKBACK_DAYS of commits and count:
-      1. References to the skill name in commit messages (weight 2.0)
-      2. References to the skill name in changed file paths (weight 3.0)
-      3. References to the skill name in diff content (weight 1.0)
-    Each reference is decayed by age: weight × exp(-age_days / lookback).
+    """
+    Construct per-skill "tide" signals by scanning recent commits in a local iqra git repository.
+    
+    For each provided skill name this function:
+    - adds 2.0 (decayed by age) for matches in the commit subject,
+    - adds 3.0 (decayed by age) for matches in changed file paths.
+    Matches use token-boundary-safe regexes to avoid substring collisions. Scores are decayed by age using exp(-age_days / IQRA_LOOKBACK_DAYS).
+    
+    Parameters:
+        iqra_repo (Path): Path to the local iqra git repository to inspect.
+        skill_names (list[str]): Skill names to detect in commit subjects and changed paths.
+    
+    Returns:
+        dict[str, IqraSignal]: Mapping from skill name to an IqraSignal with populated
+        `weighted_score`, `mention_count`, `last_seen_iso` (most recent matched commit ISO),
+        and `touched_files` (list of matched file paths).
     """
     signals: dict[str, IqraSignal] = {n: IqraSignal(name=n) for n in skill_names}
 
@@ -243,7 +312,17 @@ def sample_iqra_signals(iqra_repo: Path, skill_names: list[str]) -> dict[str, Iq
 
 
 def sample_marketplace_signals(skill_names: list[str]) -> dict[str, MarketplaceSignal]:
-    """Active marketplace skills = MDs touched within ACTIVE_WINDOW_HOURS."""
+    """
+    Compute recent marketplace activity for each skill by scanning git history under skills/.
+    
+    Parses the repository git log since ACTIVE_WINDOW_HOURS ago (using --numstat) and for each recognized
+    skills/{name}.md file accumulates total lines changed, number of commits touching that file, and the
+    most recent commit ISO timestamp seen for that skill.
+    
+    Returns:
+        dict[str, MarketplaceSignal]: Mapping from skill name to a MarketplaceSignal containing
+            lines_changed, commits, and last_touched_iso.
+    """
     signals: dict[str, MarketplaceSignal] = {
         n: MarketplaceSignal(name=n) for n in skill_names
     }
@@ -308,6 +387,17 @@ def sample_marketplace_signals(skill_names: list[str]) -> dict[str, MarketplaceS
 
 
 def load_cooldowns() -> dict[str, int]:
+    """
+    Load the donor→recipient cooldown map from disk.
+    
+    Reads JSON from the configured cooldown file and returns a mapping where keys are
+    `"donor->recipient"` strings and values are the tick at which the pair becomes
+    eligible again. If the cooldown file is missing or contains invalid JSON, an
+    empty dict is returned.
+    
+    Returns:
+        cooldowns (dict[str, int]): Mapping of pair keys to unlock tick integers.
+    """
     if not COOLDOWN_FILE.exists():
         return {}
     try:
@@ -317,12 +407,26 @@ def load_cooldowns() -> dict[str, int]:
 
 
 def save_cooldowns(cooldowns: dict[str, int]) -> None:
+    """
+    Write the cooldowns mapping to the persistent cooldown JSON file.
+    
+    Parameters:
+        cooldowns (dict[str, int]): Mapping from pair keys (e.g. "donor->recipient") to the tick
+            at which the pair becomes available again. The mapping is written as pretty-printed
+            JSON with keys sorted and a trailing newline.
+    """
     COOLDOWN_FILE.write_text(
         json.dumps(cooldowns, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
 
 
 def pair_key(donor: str, recipient: str) -> str:
+    """
+    Produce a stable key string identifying a donor→recipient pair.
+    
+    Returns:
+        key (str): A string in the form "donor->recipient" suitable for indexing cooldowns and patch records.
+    """
     return f"{donor}->{recipient}"
 
 
@@ -330,11 +434,11 @@ def pair_key(donor: str, recipient: str) -> str:
 
 
 def _load_patterns_registry() -> dict[str, list[str]]:
-    """Read the donor patterns registry. Returns an empty mapping if missing.
-
-    Keeping patterns in a separate JSON file (instead of MD frontmatter)
-    means the existing structural tests on skills/*.md stay green. The
-    registry is the source of truth for the Rhythm Bridge.
+    """
+    Load the donor patterns registry from the patterns_registry.json file.
+    
+    Returns:
+        dict[str, list[str]]: Mapping from skill name to its list of success patterns. Returns an empty dict if the registry file is missing or contains invalid JSON.
     """
     if not PATTERNS_REGISTRY_FILE.is_file():
         return {}
@@ -353,11 +457,18 @@ _PATTERNS_REGISTRY: Optional[dict[str, list[str]]] = None
 
 
 def extract_success_patterns(skill_or_path) -> list[str]:
-    """Return the success_patterns for a skill.
-
-    Accepts either a skill name (string) or a Path to a skill MD file —
-    the Path form is convenient when callers already hold the MD path
-    elsewhere in the pipeline.
+    """
+    Retrieve the registered success patterns for a skill.
+    
+    Accepts either a Path pointing to a skill Markdown file (the skill name is derived from the file stem)
+    or a skill name string. Returns the list of patterns registered for that skill; returns an empty
+    list if the registry has no entry for the skill.
+    
+    Parameters:
+    	skill_or_path (str | Path): Skill name or Path to the skill's Markdown file.
+    
+    Returns:
+    	list[str]: Registered success patterns for the given skill, or an empty list if none exist.
     """
     global _PATTERNS_REGISTRY
     if _PATTERNS_REGISTRY is None:
@@ -373,7 +484,20 @@ def extract_success_patterns(skill_or_path) -> list[str]:
 def pollination_section(
     donor: str, patterns: list[str], confidence: float, tick: int
 ) -> str:
-    """Render the markdown section to append to the recipient MD."""
+    """
+    Create a markdown "Inherited Patterns" section attributing patterns from a donor skill.
+    
+    Parameters:
+        donor (str): Name of the donor skill.
+        patterns (list[str]): List of pattern strings to include as bullets.
+        confidence (float): Confidence score to include in the attribution sentence.
+        tick (int): Cycle/tick number to include in the attribution sentence.
+    
+    Returns:
+        str: A markdown fragment beginning with a blank line and the section header,
+        containing an attribution sentence with donor, tick, and confidence, followed by
+        a bullet list of the provided patterns and a trailing blank line.
+    """
     lines = [
         "",
         SECTION_HEADER,
@@ -389,7 +513,16 @@ def pollination_section(
 
 
 def has_been_pollinated_from(md_path: Path, donor: str) -> bool:
-    """Idempotency check: skip if this donor already pollinated this recipient."""
+    """
+    Check whether the recipient markdown file already contains a pollination entry from the given donor.
+    
+    Parameters:
+        md_path (Path): Path to the recipient skill markdown file to inspect.
+        donor (str): Donor skill name to look for (matched as a literal backticked token).
+    
+    Returns:
+        true if the file exists and contains the pollination section header and the literal `` `{donor}` ``, false otherwise.
+    """
     if not md_path.is_file():
         return False
     text = md_path.read_text(encoding="utf-8")
@@ -402,7 +535,14 @@ def compute_pairs(
     cooldowns: dict[str, int],
     tick: int,
 ) -> list[CrossPollination]:
-    """Match HIGH iqra × ACTIVE marketplace, ranked by combined score."""
+    """
+    Select donor→recipient cross-pollination candidates from iqra and marketplace signals.
+    
+    Filters donors to those with tide_score >= HIGH_THRESHOLD and recipients to those with activity_score > 0. Excludes self-pairs, enforces per-pair cooldowns (using keys in `cooldowns`), skips recipients that already contain a pollination from the donor, and requires the donor to have exportable patterns and a combined confidence >= 0.10. Candidates are sorted by descending confidence and the top MAX_PAIRS_PER_CYCLE entries are returned.
+    
+    Returns:
+        list[CrossPollination]: Ranked cross-pollination candidates; each entry contains donor, recipient, confidence (rounded to three decimals), patterns, and a short reason.
+    """
     candidates: list[CrossPollination] = []
     high_donors = [s for s in iqra.values() if s.tide_score >= HIGH_THRESHOLD]
     active_recipients = [s for s in market.values() if s.activity_score > 0]
@@ -448,7 +588,16 @@ def compute_pairs(
 
 
 def apply_patches(pairs: list[CrossPollination], tick: int) -> int:
-    """Append pollination sections to recipient MDs. Returns number applied."""
+    """
+    Append a pollination section for each pair to the corresponding recipient skill markdown file.
+    
+    Parameters:
+        pairs (list[CrossPollination]): List of donor→recipient pairs whose pollination sections will be appended.
+        tick (int): Current cycle tick included in the rendered pollination section.
+    
+    Returns:
+        int: Number of recipient files that were modified.
+    """
     applied = 0
     for pair in pairs:
         recipient_md = SKILLS_DIR / f"{pair.recipient}.md"
@@ -468,6 +617,17 @@ def apply_patches(pairs: list[CrossPollination], tick: int) -> int:
 
 
 def render_pr_body(tick: int, action: str, pairs: list[CrossPollination]) -> str:
+    """
+    Render the markdown body for a Tide-Sync CI cycle, including action metadata, proposed cross-pollination pairs, per-pair reasoning, and safety notes.
+    
+    Parameters:
+    	tick (int): Current tick counter for this cycle.
+    	action (str): Selected cycle action (e.g., "CROSS_POLLINATE", "TIER_REBALANCE").
+    	pairs (list[CrossPollination]): Ordered list of proposed donor→recipient cross-pollination records.
+    
+    Returns:
+    	pr_body (str): Complete Markdown document describing the cycle, ready to write to `.rhythm/pr_body.md`.
+    """
     next_rebalance = TIER_REBALANCE_EVERY - (tick % TIER_REBALANCE_EVERY)
     next_reform = DEEP_REFORM_EVERY - (tick % DEEP_REFORM_EVERY)
     lines = [
@@ -532,6 +692,25 @@ def append_history(
     iqra_high: int,
     market_active: int,
 ) -> None:
+    """
+    Append a single JSON-lines history entry describing the current cycle.
+    
+    Writes one newline-terminated JSON object to HISTORY_FILE with these fields:
+    - `tick`: current tick number
+    - `ts`: ISO 8601 UTC timestamp when the entry was recorded
+    - `action`: the selected cadence action for this tick
+    - `iqra_high_count`: number of high-tide skills from iqra
+    - `market_active_count`: number of active marketplace skills
+    - `pairs_proposed`: number of proposed cross-pollination pairs
+    - `pairs`: list of proposed pairs, each with `donor`, `recipient`, and `confidence`
+    
+    Parameters:
+        tick (int): current tick counter value.
+        action (str): cadence action taken for this tick.
+        pairs (list[CrossPollination]): proposed cross-pollination pairs for this cycle.
+        iqra_high (int): count of skills classified as high tide.
+        market_active (int): count of skills classified as active in the marketplace.
+    """
     entry = {
         "tick": tick,
         "ts": datetime.now(timezone.utc).isoformat(),
@@ -549,6 +728,15 @@ def append_history(
 
 
 def emit_github_output(key: str, value: str) -> None:
+    """
+    Write a GitHub Actions output variable to the runner's designated file and echo it to stdout.
+    
+    If the environment variable `GITHUB_OUTPUT` is set, appends a line of the form `key=value` to that file. Always prints the same `"[output] key=value"` line to standard output.
+    
+    Parameters:
+        key (str): The output name.
+        value (str): The output value.
+    """
     out_file = os.environ.get("GITHUB_OUTPUT")
     if out_file:
         with open(out_file, "a", encoding="utf-8") as f:
@@ -560,6 +748,20 @@ def emit_github_output(key: str, value: str) -> None:
 
 
 def main() -> int:
+    """
+    Execute a single Rhythm Bridge CI tick: sample signals, compute cross-pollination pairs, optionally apply patches, and render cycle artifacts.
+    
+    When run, the function:
+    - Resolves the iqra repository path and ensures the .rhythm directory exists.
+    - Reads the current tick and (unless running with --dry-run) increments it.
+    - Determines the cycle action and samples iqra and marketplace signals for known skills.
+    - If the action produces cross-pollination, computes candidate donor→recipient pairs, enforces cooldowns and idempotency, and (unless --dry-run) appends pollination sections to recipient skill files and updates cooldowns.
+    - Renders the PR body and, when not a dry run, writes .rhythm/pr_body.md, .rhythm/patches.json, updates the tick counter, and appends an entry to .rhythm/history.jsonl.
+    - Emits GitHub Actions outputs for `action`, `tick`, and `pairs_count`, and logs summary information.
+    
+    Returns:
+        int: `0` on successful completion.
+    """
     parser = argparse.ArgumentParser(description="Rhythm Bridge tick runner")
     parser.add_argument(
         "--iqra-repo",
