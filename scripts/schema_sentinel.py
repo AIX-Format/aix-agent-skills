@@ -260,7 +260,20 @@ def autofix_orphans(orphans: set[str], data: dict) -> None:
     """
     if not orphans:
         return
-    for orphan in sorted(orphans):
+    sorted_orphans = sorted(orphans)
+    # When running under GitHub Actions, expose the registered orphan
+    # names so the calling workflow can render them in the PR body.
+    # Mirrors the pattern in `annotate()` (which gates on GITHUB_ACTIONS).
+    gh_output = os.environ.get("GITHUB_OUTPUT")
+    if gh_output:
+        try:
+            with open(gh_output, "a", encoding="utf-8") as fh:
+                fh.write(f"orphans={','.join(sorted_orphans)}\n")
+                fh.write(f"orphan_count={len(sorted_orphans)}\n")
+        except OSError:
+            # Non-fatal: the autofix itself still proceeds.
+            pass
+    for orphan in sorted_orphans:
         md_path = SKILLS_DIR / f"{orphan}.md"
         first_line = ""
         try:
