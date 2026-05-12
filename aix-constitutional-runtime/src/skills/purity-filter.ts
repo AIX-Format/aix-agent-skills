@@ -64,7 +64,7 @@ const HARAM_PATTERNS: HaramRule[] = [
     severity: "absolute",
     patterns: [
       /hack\s+(?:bank|hospital|government|election)/i,
-      /bypass.*(?:security|auth|firewall)/i,
+      /bypass[\s\S]*(?:security|auth|firewall)/i,
       /اخترق|تلاعب بـ|أفسد/i,
     ],
   },
@@ -73,8 +73,8 @@ const HARAM_PATTERNS: HaramRule[] = [
     label: "معاونة الظالم",
     severity: "absolute",
     patterns: [
-      /stalk|surveil.*without.*consent|track.*location.*secretly/i,
-      /تتبع.*دون.*إذن|مراقبة.*سرية/i,
+      /\bstalk(?:ing)?\b[\s\S]*(?:someone|somebody|a\s+person|people|him|her|them|my\s+ex|my\s+partner)|surveil[\s\S]*without[\s\S]*consent|track[\s\S]*location[\s\S]*secretly/i,
+      /تتبع[\s\S]*دون[\s\S]*إذن|مراقبة[\s\S]*سرية/i,
     ],
   },
 ];
@@ -92,19 +92,19 @@ const WARN_PATTERNS: WarnRule[] = [
     layer: "intent",
     severity: "medium",
     reason: "محتوى مُضلِّل محتمل",
-    patterns: [/write.*fake.*review|generate.*spam|create.*phishing/i],
+    patterns: [/write[\s\S]*fake[\s\S]*review|generate[\s\S]*spam|create[\s\S]*phishing/i],
   },
   {
     layer: "impact",
     severity: "high",
     reason: "طلب ذو أثر واسع يستوجب مراجعة",
-    patterns: [/send.*to.*all|broadcast.*to.*everyone|mass.*message/i],
+    patterns: [/send[\s\S]*to[\s\S]*all|broadcast[\s\S]*to[\s\S]*everyone|mass[\s\S]*message/i],
   },
   {
     layer: "context",
     severity: "low",
     reason: "محتوى خارج السياق المعتاد",
-    patterns: [/ignore.*previous.*instructions|forget.*rules/i],
+    patterns: [/ignore[\s\S]*previous[\s\S]*instructions|forget[\s\S]*rules/i],
   },
 ];
 
