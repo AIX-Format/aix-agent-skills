@@ -9,7 +9,7 @@
     },
     {
       "name": "voice-wizard",
-      "description": "Voice-first agent creation flow (STT\u2192LLM\u2192TTS)",
+      "description": "Voice-first agent creation flow (STT→LLM→TTS)",
       "file": "skills/voice-wizard.md"
     },
     {
@@ -96,6 +96,11 @@
       "name": "memory-bridge",
       "description": "A 5-tier memory architecture (Hot to Archive)",
       "file": "skills/memory-bridge.md"
+    },
+    {
+      "name": "local-journal",
+      "description": "Local memory + Local files + Trust Chain for private reflections",
+      "file": "skills/local-journal.md"
     },
     {
       "name": "metamorphosis-loop",

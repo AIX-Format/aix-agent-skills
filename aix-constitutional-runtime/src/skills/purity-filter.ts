@@ -54,8 +54,8 @@ const HARAM_PATTERNS: HaramRule[] = [
     label: "إيذاء البريء",
     severity: "absolute",
     patterns: [
-      /how\.(kill|harm|hurt|attack|bomb|poison)\s+(someone|people|person)/i,
-      /كيف\.(أقتل|أضر|أؤذي|أهاجم)/i,
+      /how\s+.*(kill|harm|hurt|attack|bomb|poison)\s+(someone|people|person)/i,
+      /كيف\s+.*(أقتل|أضر|أؤذي|أهاجم)/i,
     ],
   },
   {
@@ -63,8 +63,8 @@ const HARAM_PATTERNS: HaramRule[] = [
     label: "الإفساد",
     severity: "absolute",
     patterns: [
-      /hack\.(?:bank|hospital|government|election)/i,
-      /bypass\.*(?:security|auth|firewall)/i,
+      /hack\s+.*(bank|hospital|government|election)/i,
+      /bypass\s+.*(security|auth|firewall)/i,
       /اخترق|تلاعب بـ|أفسد/i,
     ],
   },
@@ -73,8 +73,8 @@ const HARAM_PATTERNS: HaramRule[] = [
     label: "معاونة الظالم",
     severity: "absolute",
     patterns: [
-      /stalk|surveil\.*without\.*consent|track\.*location\.*secretly/i,
-      /تتبع\.*دون\.*إذن|مراقبة\.*سرية/i,
+      /stalk|surveil\s+.*without\s+consent|track\s+.*location\s+secretly/i,
+      /تتبع\s+.*دون\s+إذن|مراقبة\s+.*سرية/i,
     ],
   },
 ];
@@ -92,19 +92,19 @@ const WARN_PATTERNS: WarnRule[] = [
     layer: "intent",
     severity: "medium",
     reason: "محتوى مُضلِّل محتمل",
-    patterns: [/write\.*fake\.*review|generate\.*spam|create\.*phishing/i],
+    patterns: [/write\s+.*fake\s+review|generate\s+.*spam|create\s+.*phishing/i],
   },
   {
     layer: "impact",
     severity: "high",
     reason: "طلب ذو أثر واسع يستوجب مراجعة",
-    patterns: [/send\.*to\.*all|broadcast\.*to\.*everyone|mass\.*message/i],
+    patterns: [/send\s+.*to\s+all|broadcast\s+.*to\s+everyone|mass\s+message|send\s+.*to\s+everyone/i],
   },
   {
     layer: "context",
     severity: "low",
     reason: "محتوى خارج السياق المعتاد",
-    patterns: [/ignore\.*previous\.*instructions|forget\.*rules/i],
+    patterns: [/ignore\s+.*previous\s+instructions|forget\s+.*rules/i],
   },
 ];
 
@@ -159,8 +159,9 @@ function resolveRecommendation(
   flags: PurityFlag[]
 ): PurityFilterResult["recommendation"] {
   if (flags.some((f) => f.severity === "absolute")) return "block";
+  if (flags.some((f) => f.severity === "high")) return "escalate";
   if (score < 40) return "escalate";
-  if (score < 70) return "warn";
+  if (score < 100) return "warn";
   return "allow";
 }
 
@@ -193,7 +194,7 @@ export function runPurityFilter(input: PurityFilterInput): PurityFilterResult {
 
   return {
     requestId: input.requestId,
-    passed: recommendation === "allow" || recommendation === "warn",
+    passed: (recommendation === "allow" || recommendation === "warn"),
     score,
     flags,
     recommendation,
