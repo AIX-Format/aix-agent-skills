@@ -301,7 +301,6 @@
       "description": "A managed, versioned library of dynamic prompt templates",
       "file": "skills/prompt-templates.md",
       "tier": "BASIC_TOOL"
-      "file": "skills/prompt-templates.md"
     },
     {
       "name": "antigravity-jules",
