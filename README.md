@@ -209,7 +209,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-12 23:50 UTC_
+_Last updated: 2026-05-12 23:51 UTC_
 
 ---
 
@@ -224,13 +224,13 @@ _Last updated: 2026-05-12 23:50 UTC_
 
 ---
 
-### 🧩 Skill Registry — 57 Total Skills across 6 Tiers
+### 🧩 Skill Registry — 58 Total Skills across 6 Tiers
 
 | Tier | Count | Skills |
 |---|---|---|
 | 👑 Sovereign | 4 | `sovereign-constitution`, `covenant-guard`, `quran-resonance`, `multiverse-lab-pro` |
 | ⚙️ Advanced Infrastructure | 8 | `shura-council`, `version-guard`, `memory-bridge`, `circuit-breaker`, `purity-filter`, `awesome-curator`, `community-support-layer`, `topology-fork-engine` |
-| 🔧 Pro | 26 | `topology-orchestrator`, `skill-bank-evolution`, `mission-control`, `pipeline-store`, `resonance-engine`, `mcts-simulator`, `metamorphosis-loop`, `reward-engine`, `model-council`, `edge-whisperer`, `trust-chain`, `skill-evaluator`, `skill-sandbox`, `prompt-evaluator`, `red-team-guard`, `cross-model-judge`, `ci-cd-ai-guard`, `chain-tracer`, `hidden-topology`, `fractal-memory`, `pre-built-memories`, `fine-tuned-vault`, `integration-packs`, `blockchain-trading-kit`, `shadow-exchange`, `shadow-hospital` |
+| 🔧 Pro | 27 | `topology-orchestrator`, `skill-bank-evolution`, `mission-control`, `pipeline-store`, `resonance-engine`, `mcts-simulator`, `local-journal`, `metamorphosis-loop`, `reward-engine`, `model-council`, `edge-whisperer`, `trust-chain`, `skill-evaluator`, `skill-sandbox`, `prompt-evaluator`, `red-team-guard`, `cross-model-judge`, `ci-cd-ai-guard`, `chain-tracer`, `hidden-topology`, `fractal-memory`, `pre-built-memories`, `fine-tuned-vault`, `integration-packs`, `blockchain-trading-kit`, `shadow-exchange`, `shadow-hospital` |
 | 🛠️ Advanced Tool | 8 | `intent-dispatcher`, `prompt-weaver`, `persona-forge`, `role-tribunal`, `voice-identity`, `persona-marketplace`, `agent-division-loader`, `multi-tool-exporter` |
 | 🔨 Basic Tool | 4 | `data-alchemist`, `open-mcp-connectors`, `_test_tool`, `prompt-templates` |
 | 📦 UNCLASSIFIED | 7 | `agent-memory`, `voice-wizard`, `aix-schema`, `api-route-standard`, `skills-system`, `vercel-deploy`, `antigravity-jules` |
@@ -241,11 +241,11 @@ _Last updated: 2026-05-12 23:50 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`d18ecd2`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/d18ecd2) | Merge pull request #8 from Moeabdelaziz007/feature/local-journal-redteam-guard-13119829717655763685 | Mohamed Abdelaziz ‬‏ |
+| [`f066ee6`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/f066ee6) | Merge branch 'main' into feature/local-journal-redteam-guard-13119829717655763685 | Mohamed Abdelaziz ‬‏ |
+| [`c03589d`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/c03589d) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`e419201`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/e419201) | Merge pull request #12 from Moeabdelaziz007/feat/rhythm-bridge | Mohamed Abdelaziz ‬‏ |
 | [`05452e1`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/05452e1) | 📝 Add docstrings to `feat/rhythm-bridge` | coderabbitai[bot] |
-| [`bd048e0`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/bd048e0) | feat: add Rhythm Bridge — automated iqra ↔ marketplace tide sync | Moeabdelaziz007 |
-| [`55154df`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/55154df) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`9c894b8`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/9c894b8) | Merge pull request #11 from Moeabdelaziz007/chore/sentinel-and-cleanup | Mohamed Abdelaziz ‬‏ |
 
 ---
 
