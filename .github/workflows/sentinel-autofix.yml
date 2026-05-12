@@ -3,9 +3,9 @@ name: Schema Sentinel Autofix
 # Sibling workflow to `schema-sentinel.yml`. The strict sentinel keeps PRs
 # honest by failing on any orphan MD; this workflow runs on a schedule (and
 # on pushes to main) to auto-register any orphan that lands on the default
-# branch and open a follow-up PR with the registration. This closes the
-# loop on the "Schema Sentinel" idea: not only does it detect drift, it
-# proposes the fix as a reviewable PR instead of stalling the build.
+# branch and commit the registration directly back to main under the
+# github-actions[bot] identity. The commit carries `[skip ci]` so the
+# autofix cannot recursively re-trigger itself.
 on:
   push:
     branches: [main]
@@ -21,7 +21,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: sentinel-autofix
@@ -36,11 +35,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-          # Use a PAT when available so the resulting PR can trigger
-          # downstream workflows (e.g., schema-sentinel.yml). Falls back
-          # to GITHUB_TOKEN, which still works but won't re-trigger CI
-          # on the autofix branch by design.
-          token: ${{ secrets.SENTINEL_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -67,35 +62,18 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Create pull request
+      - name: Commit & push autofix to main
         if: steps.diff.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.SENTINEL_PR_TOKEN || secrets.GITHUB_TOKEN }}
-          branch: sentinel/auto-register-orphans-${{ github.run_number }}
-          delete-branch: true
-          commit-message: |
-            sentinel: auto-register ${{ steps.sentinel.outputs.orphan_count || 'orphan' }} skill(s)
-
-            Detected by Schema Sentinel autofix run #${{ github.run_number }}.
-            Orphans: ${{ steps.sentinel.outputs.orphans }}
-          author: "Iqra Marketplace Bot <bot@iqra.sovereign>"
-          committer: "Iqra Marketplace Bot <bot@iqra.sovereign>"
-          title: "🛡️ Sentinel: auto-register orphan skill(s)"
-          body: |
-            The Schema Sentinel detected one or more Markdown files under
-            `skills/` that were not registered in `skills.json`. This PR
-            adds stub entries so the marketplace manifest matches the
-            files on disk and `schema-sentinel.yml` stays green.
-
-            **Orphans registered:** `${{ steps.sentinel.outputs.orphans || '(see diff)' }}`
-            **Count:** ${{ steps.sentinel.outputs.orphan_count || 'see diff' }}
-            **Triggered by:** `${{ github.event_name }}` (run #${{ github.run_number }})
-
-            Review the `description` field for each new entry, tweak it
-            if the auto-extracted heading isn't right, and merge. If an
-            orphan was added by mistake, close this PR and delete the MD
-            instead.
-          labels: |
-            auto-fix
-            schema-sentinel
+        # Direct commit to main under the github-actions[bot] identity,
+        # matching the existing pattern in `dashboard.yml`. The trailing
+        # `[skip ci]` prevents this workflow (and others gated on push to
+        # main) from re-triggering on the autofix commit itself.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add skills.json
+          git commit -m "🛡️ sentinel: auto-register ${{ steps.sentinel.outputs.orphan_count || 'orphan' }} skill(s) [skip ci]" \
+                     -m "Orphans: ${{ steps.sentinel.outputs.orphans }}" \
+                     -m "Detected by Schema Sentinel autofix run #${{ github.run_number }} (${{ github.event_name }})."
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin HEAD:main
