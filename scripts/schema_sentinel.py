@@ -268,7 +268,9 @@ def autofix_orphans(orphans: set[str], data: dict) -> None:
                 if ln.strip():
                     first_line = ln.lstrip("# ").strip()
                     break
-        except Exception:
+        except (OSError, UnicodeDecodeError):
+            # The MD file is either unreadable or not valid UTF-8. Fall back
+            # to the skill name itself; the orphan still gets registered.
             first_line = orphan
         data.setdefault("skills", []).append({
             "name": orphan,
