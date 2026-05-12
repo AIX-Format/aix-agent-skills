@@ -1,8 +1,8 @@
 /**
  * IQRA Filter — المصفاة (Legacy)
- *
+ * 
  * "فَأَمَّا الزَّبَدُ فَيَذْهَبُ جُفَاءً ۖ وَأَمَّا مَا يَنفَعُ النَّاسَ فَيَمْكُثُ فِي الْأَرْضِ" — الرعد: 17
- *
+ * 
  * Filters memory and input according to Fitrah and Dastūr.
  */
 

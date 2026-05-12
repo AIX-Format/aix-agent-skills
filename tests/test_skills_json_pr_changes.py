@@ -81,7 +81,7 @@ class TestVoiceWizardDescriptionUpdated:
         """The old description used the HTML entity &rarr; or encoded sequence → — verify it's gone."""
         description = skill_by_name["voice-wizard"]["description"]
         assert "&rarr;" not in description
-        # assert "→" not in description  # HTML entity form
+        assert "→" not in description  # HTML entity form
 
     def test_voice_wizard_description_content(self, skill_by_name):
         description = skill_by_name["voice-wizard"]["description"]

@@ -1,9 +1,9 @@
 /**
  * 🦴 IQRA Caveman Protocol — "الضغط اللغوي السيادي"
- *
+ * 
  * Linguistic Compression Skill for IQRA.
  * Reduces token usage by ~60% using terse, high-density patterns.
- *
+ * 
  * "why use many token when few token do trick"
  */
 

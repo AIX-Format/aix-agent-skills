@@ -301,6 +301,12 @@
       "description": "A managed, versioned library of dynamic prompt templates",
       "file": "skills/prompt-templates.md",
       "tier": "BASIC_TOOL"
+      "file": "skills/prompt-templates.md"
+    },
+    {
+      "name": "antigravity-jules",
+      "description": "Shared task board and resonance synchronization between Antigravity and Jules",
+      "file": "skills/antigravity-jules.md"
     }
   ]
 }

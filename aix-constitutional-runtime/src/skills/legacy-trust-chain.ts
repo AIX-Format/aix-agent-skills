@@ -18,7 +18,7 @@ let trustChain: TrustChainEntry[] = [];
 
 /**
  * Append to TrustChain with audit hash verification
- *
+ * 
  * ḤISĀB.md: "النية مهمة أيضاً" — النية تُسجَّل لتحليل المساءلة
  */
 export function appendToTrustChain(
