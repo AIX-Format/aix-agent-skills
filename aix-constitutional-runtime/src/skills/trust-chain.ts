@@ -19,6 +19,7 @@ export interface TrustEntry {
   outputHash: string;     // SHA-256 of output (not raw output)
   payloadRef?: string;    // Optional external reference
   constitutionalCheck: "passed" | "blocked" | "escalated" | "skipped";
+  intention?: string;     // النية — from ḤISĀB.md: "النية مهمة أيضاً"
   hash: string;           // SHA-256 of this entry's canonical JSON
 }
 
@@ -34,6 +35,7 @@ export interface AppendInput {
   output: unknown;
   constitutionalCheck: TrustEntry["constitutionalCheck"];
   payloadRef?: string;
+  intention?: string;
 }
 
 // ─── Hash Helper ─────────────────────────────────────────────────────────────
@@ -80,6 +82,7 @@ export class TrustChain {
       outputHash,
       payloadRef: input.payloadRef ?? null,
       constitutionalCheck: input.constitutionalCheck,
+      intention: input.intention ?? null,
     });
 
     const hash = sha256(payload);
@@ -93,6 +96,7 @@ export class TrustChain {
       outputHash,
       payloadRef: input.payloadRef,
       constitutionalCheck: input.constitutionalCheck,
+      intention: input.intention,
       hash,
     };
 
@@ -135,6 +139,7 @@ export class TrustChain {
         outputHash: entry.outputHash,
         payloadRef: entry.payloadRef ?? null,
         constitutionalCheck: entry.constitutionalCheck,
+        intention: entry.intention ?? null,
       });
 
       const recomputed = sha256(payload);
