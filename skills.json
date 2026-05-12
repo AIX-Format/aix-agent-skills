@@ -5,252 +5,302 @@
     {
       "name": "agent-memory",
       "description": "Redis-backed agent memory and context persistence",
-      "file": "skills/agent-memory.md"
+      "file": "skills/agent-memory.md",
+      "tier": "BASIC_TOOL"
     },
     {
       "name": "voice-wizard",
       "description": "Voice-first agent creation flow (STT\u2192LLM\u2192TTS)",
-      "file": "skills/voice-wizard.md"
+      "file": "skills/voice-wizard.md",
+      "tier": "BASIC_TOOL"
     },
     {
       "name": "aix-schema",
       "description": "AIX v1.3.0 manifest schema rules and validation",
-      "file": "skills/aix-schema.md"
+      "file": "skills/aix-schema.md",
+      "tier": "BASIC_TOOL"
     },
     {
       "name": "api-route-standard",
       "description": "Standard API route patterns for AIX Studio",
-      "file": "skills/api-route-standard.md"
+      "file": "skills/api-route-standard.md",
+      "tier": "BASIC_TOOL"
     },
     {
       "name": "skills-system",
       "description": "Agent skills attach/detach and tier enforcement",
-      "file": "skills/skills-system.md"
+      "file": "skills/skills-system.md",
+      "tier": "BASIC_TOOL"
     },
     {
       "name": "vercel-deploy",
       "description": "Vercel monorepo deploy fix and ENV checklist",
-      "file": "skills/vercel-deploy.md"
+      "file": "skills/vercel-deploy.md",
+      "tier": "BASIC_TOOL"
     },
     {
       "name": "sovereign-constitution",
       "description": "The ethical filter and ultimate reference",
-      "file": "skills/sovereign-constitution.md"
+      "file": "skills/sovereign-constitution.md",
+      "tier": "SOVEREIGN"
     },
     {
       "name": "covenant-guard",
       "description": "The digital oath binding the agent to truth",
-      "file": "skills/covenant-guard.md"
+      "file": "skills/covenant-guard.md",
+      "tier": "SOVEREIGN"
     },
     {
       "name": "shura-council",
       "description": "The consensus mechanism preventing algorithmic dictatorship",
-      "file": "skills/shura-council.md"
+      "file": "skills/shura-council.md",
+      "tier": "ADVANCED_INFRASTRUCTURE"
     },
     {
       "name": "topology-orchestrator",
       "description": "Maps and routes execution paths",
-      "file": "skills/topology-orchestrator.md"
+      "file": "skills/topology-orchestrator.md",
+      "tier": "PRO"
     },
     {
       "name": "skill-bank-evolution",
       "description": "Autonomous discovery and self-healing of skills",
-      "file": "skills/skill-bank-evolution.md"
+      "file": "skills/skill-bank-evolution.md",
+      "tier": "PRO"
     },
     {
       "name": "mission-control",
       "description": "The strategic planner for every task",
-      "file": "skills/mission-control.md"
+      "file": "skills/mission-control.md",
+      "tier": "PRO"
     },
     {
       "name": "pipeline-store",
       "description": "Installable pre-composed skill chains",
-      "file": "skills/pipeline-store.md"
+      "file": "skills/pipeline-store.md",
+      "tier": "PRO"
     },
     {
       "name": "version-guard",
       "description": "Prevents downstream breakages when skills evolve",
-      "file": "skills/version-guard.md"
+      "file": "skills/version-guard.md",
+      "tier": "ADVANCED_INFRASTRUCTURE"
     },
     {
       "name": "intent-dispatcher",
       "description": "Translates natural language directly into execution topologies",
-      "file": "skills/intent-dispatcher.md"
+      "file": "skills/intent-dispatcher.md",
+      "tier": "ADVANCED_TOOL"
     },
     {
       "name": "prompt-weaver",
       "description": "Crafts perfect prompts using the 7-thread philosophy",
-      "file": "skills/prompt-weaver.md"
+      "file": "skills/prompt-weaver.md",
+      "tier": "ADVANCED_TOOL"
     },
     {
       "name": "resonance-engine",
       "description": "Detects hidden patterns and harmonic frequencies",
-      "file": "skills/resonance-engine.md"
+      "file": "skills/resonance-engine.md",
+      "tier": "PRO"
     },
     {
       "name": "mcts-simulator",
       "description": "Monte Carlo Tree Search for strategic forecasting",
-      "file": "skills/mcts-simulator.md"
+      "file": "skills/mcts-simulator.md",
+      "tier": "PRO"
     },
     {
       "name": "memory-bridge",
       "description": "A 5-tier memory architecture (Hot to Archive)",
-      "file": "skills/memory-bridge.md"
+      "file": "skills/memory-bridge.md",
+      "tier": "ADVANCED_INFRASTRUCTURE"
     },
     {
       "name": "metamorphosis-loop",
       "description": "Cognitive shedding every 49 tasks",
-      "file": "skills/metamorphosis-loop.md"
+      "file": "skills/metamorphosis-loop.md",
+      "tier": "PRO"
     },
     {
       "name": "reward-engine",
       "description": "Evaluates the purity of the execution path",
-      "file": "skills/reward-engine.md"
+      "file": "skills/reward-engine.md",
+      "tier": "PRO"
     },
     {
       "name": "persona-forge",
       "description": "Forges distinct digital personalities",
-      "file": "skills/persona-forge.md"
+      "file": "skills/persona-forge.md",
+      "tier": "ADVANCED_TOOL"
     },
     {
       "name": "role-tribunal",
       "description": "Enforces permission boundaries",
-      "file": "skills/role-tribunal.md"
+      "file": "skills/role-tribunal.md",
+      "tier": "ADVANCED_TOOL"
     },
     {
       "name": "voice-identity",
       "description": "A unique vocal signature reflecting the persona",
-      "file": "skills/voice-identity.md"
+      "file": "skills/voice-identity.md",
+      "tier": "ADVANCED_TOOL"
     },
     {
       "name": "persona-marketplace",
       "description": "A vast library of ready-to-use specialized agents",
-      "file": "skills/persona-marketplace.md"
+      "file": "skills/persona-marketplace.md",
+      "tier": "ADVANCED_TOOL"
     },
     {
       "name": "agent-division-loader",
       "description": "Loads entire functional teams for complex missions",
-      "file": "skills/agent-division-loader.md"
+      "file": "skills/agent-division-loader.md",
+      "tier": "ADVANCED_TOOL"
     },
     {
       "name": "multi-tool-exporter",
       "description": "Exports IQRA personas to external platforms",
-      "file": "skills/multi-tool-exporter.md"
+      "file": "skills/multi-tool-exporter.md",
+      "tier": "ADVANCED_TOOL"
     },
     {
       "name": "data-alchemist",
       "description": "Transforms raw data into visual gold",
-      "file": "skills/data-alchemist.md"
+      "file": "skills/data-alchemist.md",
+      "tier": "BASIC_TOOL"
     },
     {
       "name": "model-council",
       "description": "Routes tasks optimally between Local, Edge, and Cloud models",
-      "file": "skills/model-council.md"
+      "file": "skills/model-council.md",
+      "tier": "PRO"
     },
     {
       "name": "edge-whisperer",
       "description": "Empowers offline WebGPU/WASM intelligence",
-      "file": "skills/edge-whisperer.md"
+      "file": "skills/edge-whisperer.md",
+      "tier": "PRO"
     },
     {
       "name": "trust-chain",
       "description": "Immutable append-only ledger for absolute accountability",
-      "file": "skills/trust-chain.md"
+      "file": "skills/trust-chain.md",
+      "tier": "PRO"
     },
     {
       "name": "circuit-breaker",
       "description": "Isolates repeated failures before they spread",
-      "file": "skills/circuit-breaker.md"
+      "file": "skills/circuit-breaker.md",
+      "tier": "ADVANCED_INFRASTRUCTURE"
     },
     {
       "name": "purity-filter",
       "description": "Evaluates the intent behind every request",
-      "file": "skills/purity-filter.md"
+      "file": "skills/purity-filter.md",
+      "tier": "ADVANCED_INFRASTRUCTURE"
     },
     {
       "name": "skill-evaluator",
       "description": "Embeds rigorous evaluation metrics into the marketplace",
-      "file": "skills/skill-evaluator.md"
+      "file": "skills/skill-evaluator.md",
+      "tier": "PRO"
     },
     {
       "name": "skill-sandbox",
       "description": "Isolates unverified skills for deep safety testing",
-      "file": "skills/skill-sandbox.md"
+      "file": "skills/skill-sandbox.md",
+      "tier": "PRO"
     },
     {
       "name": "prompt-evaluator",
       "description": "Judges every prompt for clarity, accuracy, and security",
-      "file": "skills/prompt-evaluator.md"
+      "file": "skills/prompt-evaluator.md",
+      "tier": "PRO"
     },
     {
       "name": "red-team-guard",
       "description": "Ethical hacker that autonomously attacks the system",
-      "file": "skills/red-team-guard.md"
+      "file": "skills/red-team-guard.md",
+      "tier": "PRO"
     },
     {
       "name": "cross-model-judge",
       "description": "Evaluates responses by consulting multiple independent LLMs",
-      "file": "skills/cross-model-judge.md"
+      "file": "skills/cross-model-judge.md",
+      "tier": "PRO"
     },
     {
       "name": "ci-cd-ai-guard",
       "description": "Prevents untested prompts or skills from ever reaching production",
-      "file": "skills/ci-cd-ai-guard.md"
+      "file": "skills/ci-cd-ai-guard.md",
+      "tier": "PRO"
     },
     {
       "name": "chain-tracer",
       "description": "Provides full execution traces and observability",
-      "file": "skills/chain-tracer.md"
+      "file": "skills/chain-tracer.md",
+      "tier": "PRO"
     },
     {
       "name": "quran-resonance",
       "description": "Explores mathematical and semantic patterns in sacred texts",
-      "file": "skills/quran-resonance.md"
+      "file": "skills/quran-resonance.md",
+      "tier": "SOVEREIGN"
     },
     {
       "name": "hidden-topology",
       "description": "Discovers undocumented emergent connections between skills",
-      "file": "skills/hidden-topology.md"
+      "file": "skills/hidden-topology.md",
+      "tier": "PRO"
     },
     {
       "name": "fractal-memory",
       "description": "Compresses memories into infinite self-reflecting layers",
-      "file": "skills/fractal-memory.md"
+      "file": "skills/fractal-memory.md",
+      "tier": "PRO"
     },
     {
       "name": "awesome-curator",
       "description": "Community-curated verified lists of marketplace skills",
-      "file": "skills/awesome-curator.md"
+      "file": "skills/awesome-curator.md",
+      "tier": "ADVANCED_INFRASTRUCTURE"
     },
     {
       "name": "pre-built-memories",
       "description": "Plug-and-play cognitive identities connecting directly to memory",
-      "file": "skills/pre-built-memories.md"
+      "file": "skills/pre-built-memories.md",
+      "tier": "PRO"
     },
     {
       "name": "fine-tuned-vault",
       "description": "Registry for domain-specific fine-tuned models",
-      "file": "skills/fine-tuned-vault.md"
+      "file": "skills/fine-tuned-vault.md",
+      "tier": "PRO"
     },
     {
       "name": "integration-packs",
       "description": "Smart prosthetics that grant real-world manipulation powers",
-      "file": "skills/integration-packs.md"
+      "file": "skills/integration-packs.md",
+      "tier": "PRO"
     },
     {
       "name": "open-mcp-connectors",
       "description": "Free, open-source MCPs for zero-cost autonomy",
-      "file": "skills/open-mcp-connectors.md"
+      "file": "skills/open-mcp-connectors.md",
+      "tier": "BASIC_TOOL"
     },
     {
       "name": "blockchain-trading-kit",
       "description": "Autonomous investment bank spanning Web3 data and DeFi execution",
-      "file": "skills/blockchain-trading-kit.md"
+      "file": "skills/blockchain-trading-kit.md",
+      "tier": "PRO"
     },
     {
       "name": "prompt-templates",
       "description": "A managed, versioned library of dynamic prompt templates",
-      "file": "skills/prompt-templates.md"
+      "file": "skills/prompt-templates.md",
+      "tier": "BASIC_TOOL"
     }
   ]
 }

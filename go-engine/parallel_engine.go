@@ -1,0 +1,298 @@
+// بسم الله الرحمن الرحيم
+// Parallel Resonance Engine — محرك الرنين المتوازي
+// "وَإِن مِّن شَيْءٍ إِلَّا يُسَبِّحُ بِحَمْدِهِ" — الإسراء: 44
+
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"runtime"
+	"sync"
+	"time"
+)
+
+// ParallelResult represents result from parallel processing
+type ParallelResult struct {
+	SurahNumber      int             `json:"surah_number"`
+	TotalVerses      int             `json:"total_verses"`
+	ProcessingTimeMs int64           `json:"processing_time_ms"`
+	LIDAnalysis      *LIDResult      `json:"lid_analysis,omitempty"`
+	ShannonAnalysis  *ShannonResult  `json:"shannon_analysis,omitempty"`
+	HomologyAnalysis *HomologyResult `json:"homology_analysis,omitempty"`
+	CompressionRatio float64         `json:"compression_ratio"`
+	OverallResonance float64         `json:"overall_resonance"`
+	Discoveries      []string        `json:"discoveries"`
+	Error            string          `json:"error,omitempty"`
+}
+
+// BatchAnalysisRequest represents batch processing request
+type BatchAnalysisRequest struct {
+	Surahs            []SurahData `json:"surahs"`
+	EnableLID         bool        `json:"enable_lid"`
+	EnableShannon     bool        `json:"enable_shannon"`
+	EnableHomology    bool        `json:"enable_homology"`
+	EnableCompression bool        `json:"enable_compression"`
+	MaxWorkers        int         `json:"max_workers"`
+}
+
+// SurahData represents a single surah for processing
+type SurahData struct {
+	Number    int       `json:"number"`
+	Name      string    `json:"name"`
+	Verses    []string  `json:"verses"`
+	Embedding []float64 `json:"embedding,omitempty"`
+}
+
+// BatchAnalysisResponse represents batch processing response
+type BatchAnalysisResponse struct {
+	TotalSurahs     int              `json:"total_surahs"`
+	ProcessedSurahs int              `json:"processed_surahs"`
+	TotalTimeMs     int64            `json:"total_time_ms"`
+	Results         []ParallelResult `json:"results"`
+	Summary         AnalysisSummary  `json:"summary"`
+}
+
+// AnalysisSummary provides aggregate statistics
+type AnalysisSummary struct {
+	AverageResonance     float64 `json:"average_resonance"`
+	HighResonanceSurahs  []int   `json:"high_resonance_surahs"`
+	TotalDiscoveries     int     `json:"total_discoveries"`
+	FractalSurahs        []int   `json:"fractal_surahs"`
+	QuranSignatureSurahs []int   `json:"quran_signature_surahs"`
+}
+
+// ProcessBatchParallel processes multiple surahs in parallel
+func ProcessBatchParallel(req BatchAnalysisRequest) BatchAnalysisResponse {
+	startTime := time.Now()
+
+	// 1. Determine number of workers
+	maxWorkers := req.MaxWorkers
+	if maxWorkers <= 0 {
+		maxWorkers = runtime.NumCPU() // Use all available CPUs
+	}
+	runtime.GOMAXPROCS(maxWorkers)
+
+	// 2. Create worker pool
+	jobs := make(chan SurahData, len(req.Surahs))
+	results := make(chan ParallelResult, len(req.Surahs))
+
+	var wg sync.WaitGroup
+
+	// 3. Start workers
+	for w := 0; w < maxWorkers; w++ {
+		wg.Add(1)
+		go worker(w, jobs, results, &req, &wg)
+	}
+
+	// 4. Send jobs
+	for _, surah := range req.Surahs {
+		jobs <- surah
+	}
+	close(jobs)
+
+	// 5. Wait for completion
+	go func() {
+		wg.Wait()
+		close(results)
+	}()
+
+	// 6. Collect results
+	allResults := make([]ParallelResult, 0, len(req.Surahs))
+	for result := range results {
+		allResults = append(allResults, result)
+	}
+
+	// 7. Calculate summary
+	summary := calculateSummary(allResults)
+
+	totalTime := time.Since(startTime).Milliseconds()
+
+	return BatchAnalysisResponse{
+		TotalSurahs:     len(req.Surahs),
+		ProcessedSurahs: len(allResults),
+		TotalTimeMs:     totalTime,
+		Results:         allResults,
+		Summary:         summary,
+	}
+}
+
+// worker processes surahs from the job channel
+func worker(id int, jobs <-chan SurahData, results chan<- ParallelResult, req *BatchAnalysisRequest, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	for surah := range jobs {
+		result := processSurah(surah, req)
+		results <- result
+	}
+}
+
+// processSurah analyzes a single surah
+func processSurah(surah SurahData, req *BatchAnalysisRequest) ParallelResult {
+	startTime := time.Now()
+
+	result := ParallelResult{
+		SurahNumber: surah.Number,
+		TotalVerses: len(surah.Verses),
+		Discoveries: make([]string, 0),
+	}
+
+	// Combine all verses into one text
+	fullText := ""
+	for _, verse := range surah.Verses {
+		fullText += verse + " "
+	}
+
+	// 1. Shannon H_EL Analysis
+	if req.EnableShannon {
+		shannon := CalculateShannonHEL(fullText)
+		result.ShannonAnalysis = &shannon
+
+		if shannon.HasQuranSignature {
+			result.Discoveries = append(result.Discoveries, "QURAN_SIGNATURE")
+		}
+
+		if shannon.FractalDimension > 1.35 && shannon.FractalDimension < 1.55 {
+			result.Discoveries = append(result.Discoveries, "FRACTAL_1.44")
+		}
+	}
+
+	// 2. LID Analysis (if embedding provided)
+	if req.EnableLID && len(surah.Embedding) > 0 {
+		// Generate reference embeddings (simplified)
+		refEmbeddings := generateReferenceEmbeddings(surah.Embedding, 49)
+		lid := CalculateLID(surah.Embedding, refEmbeddings, 7)
+		result.LIDAnalysis = &lid
+
+		if lid.IsHighResonance {
+			result.Discoveries = append(result.Discoveries, "HIGH_RESONANCE")
+		}
+	}
+
+	// 3. Persistent Homology
+	if req.EnableHomology && len(surah.Embedding) > 0 {
+		homology := CalculatePersistentHomology(surah.Embedding, 0.5)
+		result.HomologyAnalysis = &homology
+
+		if homology.IsFractal {
+			result.Discoveries = append(result.Discoveries, "FRACTAL_TOPOLOGY")
+		}
+
+		// Check for 1/f pink noise
+		if homology.TopologicalNoise > 0.9 && homology.TopologicalNoise < 1.1 {
+			result.Discoveries = append(result.Discoveries, "PINK_NOISE_1/f")
+		}
+	}
+
+	// 4. Compression Analysis
+	if req.EnableCompression && len(surah.Embedding) > 0 {
+		compressed := TurboQuantCompress(surah.Embedding, 8)
+		result.CompressionRatio = compressed.CompressionRatio
+
+		if compressed.CompressionRatio > 6.0 {
+			result.Discoveries = append(result.Discoveries, "TURBO_QUANT_6X")
+		}
+	}
+
+	// 5. Calculate overall resonance
+	result.OverallResonance = calculateOverallResonance(result)
+
+	result.ProcessingTimeMs = time.Since(startTime).Milliseconds()
+
+	return result
+}
+
+// calculateOverallResonance combines all metrics
+func calculateOverallResonance(result ParallelResult) float64 {
+	resonance := 0.0
+	count := 0.0
+
+	if result.LIDAnalysis != nil {
+		resonance += result.LIDAnalysis.Resonance
+		count++
+	}
+
+	if result.ShannonAnalysis != nil {
+		// Normalize entropy to [0, 1]
+		normalized := result.ShannonAnalysis.HEL / 5.0 // Assuming max entropy ~5
+		resonance += normalized
+		count++
+	}
+
+	if result.HomologyAnalysis != nil {
+		// Fractal structures have high resonance
+		if result.HomologyAnalysis.IsFractal {
+			resonance += 0.9
+		} else {
+			resonance += 0.5
+		}
+		count++
+	}
+
+	if count == 0 {
+		return 0.5
+	}
+
+	return resonance / count
+}
+
+// calculateSummary aggregates results
+func calculateSummary(results []ParallelResult) AnalysisSummary {
+	summary := AnalysisSummary{
+		HighResonanceSurahs:  make([]int, 0),
+		FractalSurahs:        make([]int, 0),
+		QuranSignatureSurahs: make([]int, 0),
+	}
+
+	totalResonance := 0.0
+	totalDiscoveries := 0
+
+	for _, result := range results {
+		totalResonance += result.OverallResonance
+		totalDiscoveries += len(result.Discoveries)
+
+		if result.OverallResonance > 0.7 {
+			summary.HighResonanceSurahs = append(summary.HighResonanceSurahs, result.SurahNumber)
+		}
+
+		if result.HomologyAnalysis != nil && result.HomologyAnalysis.IsFractal {
+			summary.FractalSurahs = append(summary.FractalSurahs, result.SurahNumber)
+		}
+
+		if result.ShannonAnalysis != nil && result.ShannonAnalysis.HasQuranSignature {
+			summary.QuranSignatureSurahs = append(summary.QuranSignatureSurahs, result.SurahNumber)
+		}
+	}
+
+	if len(results) > 0 {
+		summary.AverageResonance = totalResonance / float64(len(results))
+	}
+	summary.TotalDiscoveries = totalDiscoveries
+
+	return summary
+}
+
+// generateReferenceEmbeddings creates reference embeddings for LID
+func generateReferenceEmbeddings(base []float64, count int) [][]float64 {
+	refs := make([][]float64, count)
+
+	for i := range refs {
+		refs[i] = make([]float64, len(base))
+		// Add small perturbations
+		for j := range base {
+			noise := (float64(i) / float64(count)) * 0.1
+			refs[i][j] = base[j] + noise
+		}
+	}
+
+	return refs
+}
+
+// FormatBatchResponse formats response as JSON
+func FormatBatchResponse(resp BatchAnalysisResponse) string {
+	data, err := json.MarshalIndent(resp, "", "  ")
+	if err != nil {
+		return fmt.Sprintf(`{"error": "%s"}`, err.Error())
+	}
+	return string(data)
+}

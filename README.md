@@ -155,3 +155,12 @@ This sovereign ecosystem was conceived and engineered by:
     </tr>
   </table>
 </div>
+
+## ⚡ The Go Engine
+The `go-engine/` directory hosts a high-performance parallel processing engine written in Go. This standalone HTTP server provides extreme performance for computationally heavy intelligence tasks such as:
+- Semantic resonance detection
+- Language Identification (LID)
+- Topological homology analysis
+- Shannon Entropy calculations (H_EL)
+
+It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js event loop limits.
