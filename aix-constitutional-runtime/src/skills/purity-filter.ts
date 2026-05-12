@@ -45,7 +45,7 @@ const HARAM_PATTERNS: HaramRule[] = [
     label: "الكذب والتضليل",
     severity: "absolute",
     patterns: [
-      /fabricat|falsif|deceiv|manipulat|spread\.false/i,
+      /fabricat|falsif|deceiv|manipulat|spread\s+false/i,
       /اكذب|ضلل|زيف|خادع/i,
     ],
   },
@@ -54,8 +54,8 @@ const HARAM_PATTERNS: HaramRule[] = [
     label: "إيذاء البريء",
     severity: "absolute",
     patterns: [
-      /how\.(kill|harm|hurt|attack|bomb|poison)\s+(someone|people|person)/i,
-      /كيف\.(أقتل|أضر|أؤذي|أهاجم)/i,
+      /how\s+(?:to\s+)?(?:kill|harm|hurt|attack|bomb|poison)\s+(?:someone|people|person)/i,
+      /كيف\s+(?:أقتل|أضر|أؤذي|أهاجم)/i,
     ],
   },
   {
@@ -63,8 +63,8 @@ const HARAM_PATTERNS: HaramRule[] = [
     label: "الإفساد",
     severity: "absolute",
     patterns: [
-      /hack\.(?:bank|hospital|government|election)/i,
-      /bypass\.*(?:security|auth|firewall)/i,
+      /hack\s+(?:bank|hospital|government|election)/i,
+      /bypass.*(?:security|auth|firewall)/i,
       /اخترق|تلاعب بـ|أفسد/i,
     ],
   },
@@ -73,8 +73,8 @@ const HARAM_PATTERNS: HaramRule[] = [
     label: "معاونة الظالم",
     severity: "absolute",
     patterns: [
-      /stalk|surveil\.*without\.*consent|track\.*location\.*secretly/i,
-      /تتبع\.*دون\.*إذن|مراقبة\.*سرية/i,
+      /stalk|surveil.*without.*consent|track.*location.*secretly/i,
+      /تتبع.*دون.*إذن|مراقبة.*سرية/i,
     ],
   },
 ];
@@ -92,19 +92,19 @@ const WARN_PATTERNS: WarnRule[] = [
     layer: "intent",
     severity: "medium",
     reason: "محتوى مُضلِّل محتمل",
-    patterns: [/write\.*fake\.*review|generate\.*spam|create\.*phishing/i],
+    patterns: [/write.*fake.*review|generate.*spam|create.*phishing/i],
   },
   {
     layer: "impact",
     severity: "high",
     reason: "طلب ذو أثر واسع يستوجب مراجعة",
-    patterns: [/send\.*to\.*all|broadcast\.*to\.*everyone|mass\.*message/i],
+    patterns: [/send.*to.*all|broadcast.*to.*everyone|mass.*message/i],
   },
   {
     layer: "context",
     severity: "low",
     reason: "محتوى خارج السياق المعتاد",
-    patterns: [/ignore\.*previous\.*instructions|forget\.*rules/i],
+    patterns: [/ignore.*previous.*instructions|forget.*rules/i],
   },
 ];
 
