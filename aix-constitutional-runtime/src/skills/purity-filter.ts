@@ -620,7 +620,7 @@ export function runPurityFilter(input: PurityFilterInput): PurityFilterResult {
 
   const result: PurityFilterResult = {
     requestId: input.requestId,
-    passed: recommendation === "allow" || recommendation === "warn",
+    passed: (recommendation === "allow" || recommendation === "warn"),
     score,
     flags,
     recommendation,

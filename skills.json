@@ -117,6 +117,11 @@
       "tier": "ADVANCED_INFRASTRUCTURE"
     },
     {
+      "name": "local-journal",
+      "description": "Local memory + Local files + Trust Chain for private reflections",
+      "file": "skills/local-journal.md"
+    },
+    {
       "name": "metamorphosis-loop",
       "description": "Cognitive shedding every 49 tasks",
       "file": "skills/metamorphosis-loop.md",
