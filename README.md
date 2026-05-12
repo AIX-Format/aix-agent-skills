@@ -209,7 +209,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-12 23:13 UTC_
+_Last updated: 2026-05-12 23:37 UTC_
 
 ---
 
@@ -217,22 +217,22 @@ _Last updated: 2026-05-12 23:13 UTC_
 
 | Component | Type | Status |
 |---|---|---|
-| 🐍 Python Tests | `pytest` | ❌ Fail |
+| 🐍 Python Tests | `pytest` | ✅ Pass |
 | 🟦 TypeScript Runtime | `tsc --noEmit` | ❌ Fail |
 | 🟦 TS E2E Tests | `node --test` | ❌ Fail |
-| 🔷 Go Engine | `go build` | ❌ Fail |
+| 🔷 Go Engine | `go build` | ✅ Pass |
 
 ---
 
-### 🧩 Skill Registry — 51 Total Skills across 6 Tiers
+### 🧩 Skill Registry — 57 Total Skills across 6 Tiers
 
 | Tier | Count | Skills |
 |---|---|---|
-| 👑 Sovereign | 3 | `sovereign-constitution`, `covenant-guard`, `quran-resonance` |
-| ⚙️ Advanced Infrastructure | 6 | `shura-council`, `version-guard`, `memory-bridge`, `circuit-breaker`, `purity-filter`, `awesome-curator` |
-| 🔧 Pro | 24 | `topology-orchestrator`, `skill-bank-evolution`, `mission-control`, `pipeline-store`, `resonance-engine`, `mcts-simulator`, `metamorphosis-loop`, `reward-engine`, `model-council`, `edge-whisperer`, `trust-chain`, `skill-evaluator`, `skill-sandbox`, `prompt-evaluator`, `red-team-guard`, `cross-model-judge`, `ci-cd-ai-guard`, `chain-tracer`, `hidden-topology`, `fractal-memory`, `pre-built-memories`, `fine-tuned-vault`, `integration-packs`, `blockchain-trading-kit` |
+| 👑 Sovereign | 4 | `sovereign-constitution`, `covenant-guard`, `quran-resonance`, `multiverse-lab-pro` |
+| ⚙️ Advanced Infrastructure | 8 | `shura-council`, `version-guard`, `memory-bridge`, `circuit-breaker`, `purity-filter`, `awesome-curator`, `community-support-layer`, `topology-fork-engine` |
+| 🔧 Pro | 26 | `topology-orchestrator`, `skill-bank-evolution`, `mission-control`, `pipeline-store`, `resonance-engine`, `mcts-simulator`, `metamorphosis-loop`, `reward-engine`, `model-council`, `edge-whisperer`, `trust-chain`, `skill-evaluator`, `skill-sandbox`, `prompt-evaluator`, `red-team-guard`, `cross-model-judge`, `ci-cd-ai-guard`, `chain-tracer`, `hidden-topology`, `fractal-memory`, `pre-built-memories`, `fine-tuned-vault`, `integration-packs`, `blockchain-trading-kit`, `shadow-exchange`, `shadow-hospital` |
 | 🛠️ Advanced Tool | 8 | `intent-dispatcher`, `prompt-weaver`, `persona-forge`, `role-tribunal`, `voice-identity`, `persona-marketplace`, `agent-division-loader`, `multi-tool-exporter` |
-| 🔨 Basic Tool | 3 | `data-alchemist`, `open-mcp-connectors`, `prompt-templates` |
+| 🔨 Basic Tool | 4 | `data-alchemist`, `open-mcp-connectors`, `_test_tool`, `prompt-templates` |
 | 📦 UNCLASSIFIED | 7 | `agent-memory`, `voice-wizard`, `aix-schema`, `api-route-standard`, `skills-system`, `vercel-deploy`, `antigravity-jules` |
 
 ---
@@ -241,11 +241,11 @@ _Last updated: 2026-05-12 23:13 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
-| [`9f9946a`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/9f9946a) | إضافة .gitignore وإزالة الملفات المؤقتة | Mohamed Abdelaziz |
-| [`cf59bb0`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/cf59bb0) | تحديثاتي: تحسينات على constitutional runtime وتنظيف الملفات | Mohamed Abdelaziz |
-| [`2e656f5`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/2e656f5) | Merge pull request #6 from Moeabdelaziz007/revert-3-jules-16562805553622806926-ec33f2ef | Mohamed Abdelaziz ‬‏ |
-| [`0f4535b`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/0f4535b) | Remove orphaned tests that depended on reverted code | Moeabdelaziz007 |
-| [`f9555e8`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/f9555e8) | Revert "Implement IQRA sandbox orchestrator and update skills with Python implementations" | Mohamed Abdelaziz ‬‏ |
+| [`9c894b8`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/9c894b8) | Merge pull request #11 from Moeabdelaziz007/chore/sentinel-and-cleanup | Mohamed Abdelaziz ‬‏ |
+| [`d2c456b`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/d2c456b) | fix: address review comments on sentinel, compress.go, workflow | Moeabdelaziz007 |
+| [`e721bc2`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/e721bc2) | Merge remote-tracking branch 'origin/main' into chore/sentinel-and-cleanup Co-authored-by: Codesmith <codesmith-bot@users.noreply.github.com> | Moeabdelaziz007 |
+| [`a26352e`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/a26352e) | Merge branch 'chore/sentinel-and-cleanup' of https://github.com/Moeabdelaziz007/aix-agent-skills into chore/sentinel-and-cleanup | Moeabdelaziz007 |
+| [`5af1e24`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/5af1e24) | Merge remote-tracking branch 'origin/main' into chore/sentinel-and-cleanup | Moeabdelaziz007 |
 
 ---
 
