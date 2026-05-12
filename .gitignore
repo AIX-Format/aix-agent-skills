@@ -6,13 +6,36 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+*.swo
 *~
 
 # Dependencies
 node_modules/
 __pycache__/
 *.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
 .pytest_cache/
+
+# Python virtualenvs
+env/
+venv/
+ENV/
+
+# Python build artifacts
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # Build artifacts
 dist/
@@ -25,15 +48,22 @@ go-engine/iqra-engine
 aix-constitutional-runtime/src/**/*.js
 aix-constitutional-runtime/tests/**/*.js
 
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 # Local runtime state
 .iqra/
-*.log
 
-# Backups
+# Backups & scratch
 *.bak
 *.backup
 *.orig
-*~
+*.tmp
+scratch/
+scratch_test.ts
 
 # Env
 .env

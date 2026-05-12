@@ -34,25 +34,3 @@
 ## الجوهرة المخفية: الرنين الطوبولوجي (Topological Resonance)
 عندما تنجح سلسلة مهارات، تُسجَّل "بصمة رنين" — تردد النجاح بين المهارات.
 البصمات المتشابهة تُستخدم لاقتراح سلاسل جديدة لم تُجرَّب بعد.
-
-```python
-import json
-
-def main(inputs):
-    chain = inputs.get("chain", [])
-
-    # Simple cycle detection for a linear chain representation
-    visited = set()
-    has_cycle = False
-
-    for node in chain:
-        if node in visited:
-            has_cycle = True
-            break
-        visited.add(node)
-
-    print(json.dumps({
-        "dag_valid": not has_cycle,
-        "stages": len(chain) if not has_cycle else 0
-    }))
-```

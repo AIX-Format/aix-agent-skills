@@ -92,6 +92,12 @@ VALID_TIERS = {
 
 # Regex for valid kebab-case skill names (lowercase letters, digits, hyphens).
 KEBAB_CASE_RE = re.compile(r"^[a-z][a-z0-9-]+[a-z0-9]$")
+# Internal/test-only skills opt out of kebab-case via a leading underscore;
+# the rest of the name uses snake_case (mirrors the Schema Sentinel rule).
+INTERNAL_NAME_RE = re.compile(r"^_[a-z0-9]+(?:_[a-z0-9]+)*$")
+SKILL_NAME_RE = re.compile(
+    rf"({KEBAB_CASE_RE.pattern})|({INTERNAL_NAME_RE.pattern})"
+)
 
 
 def _load_skills_json():
@@ -239,13 +245,14 @@ class TestSkillsJsonEntries(unittest.TestCase):
             with self.subTest(name=skill["name"]):
                 self.assertRegex(
                     skill["name"],
-                    KEBAB_CASE_RE,
-                    f"Skill name '{skill['name']}' is not kebab-case",
+                    SKILL_NAME_RE,
+                    f"Skill name '{skill['name']}' is not kebab-case "
+                    f"(or `_` + snake_case for internal skills)",
                 )
 
     def test_no_extra_fields_per_entry(self):
         """Each entry must only contain the known keys."""
-        allowed = {"name", "description", "file"}
+        allowed = {"name", "description", "file", "tier"}
         for skill in self.skills:
             with self.subTest(name=skill["name"]):
                 extra = set(skill.keys()) - allowed

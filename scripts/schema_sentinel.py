@@ -34,7 +34,15 @@ ROOT = Path(__file__).resolve().parent.parent
 SKILLS_JSON = ROOT / "skills.json"
 SKILLS_DIR = ROOT / "skills"
 
+# Public skill names are strict kebab-case (a-z0-9 with dash separators).
+# Names that start with a leading underscore are treated as internal/test-only
+# and may use snake_case (e.g. `_test_tool`); the prefix is the opt-out marker.
 KEBAB_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+INTERNAL_RE = re.compile(r"^_[a-z0-9]+(?:_[a-z0-9]+)*$")
+
+
+def is_valid_skill_name(name: str) -> bool:
+    return bool(KEBAB_RE.match(name) or INTERNAL_RE.match(name))
 
 
 def annotate(level: str, msg: str, file: Path | None = None) -> None:
@@ -93,8 +101,11 @@ def check_entries(data: dict, errors: list[str]) -> None:
         file_path = entry.get("file", "")
         if not isinstance(name, str) or not name.strip():
             errors.append(f"{ctx}: 'name' must be a non-empty string")
-        elif not KEBAB_RE.match(name):
-            errors.append(f"{ctx} ({name}): name must be kebab-case (a-z0-9, dash-separated)")
+        elif not is_valid_skill_name(name):
+            errors.append(
+                f"{ctx} ({name}): name must be kebab-case "
+                f"(a-z0-9, dash-separated) or `_` + snake_case for internal skills"
+            )
         if name in seen_names:
             errors.append(f"{ctx} ({name}): duplicate skill name")
         seen_names.add(name)
