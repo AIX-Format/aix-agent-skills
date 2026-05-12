@@ -26,7 +26,9 @@ type CompressionResult struct {
 // is 8 bytes/element (float64) and compressed is `bits / 8` bytes/element.
 //
 // NOTE: This is the reference implementation. Performance-tuned variants
-// (SIMD, AVX-512) can replace this without changing the function signature.
+// TurboQuantCompress quantizes an embedding into signed 8-bit integers using symmetric per-vector scaling.
+// 
+// TurboQuantCompress clamps the requested `bits` to the valid range (values <= 0 or > 8 are set to 8), computes a scale from the maximum absolute component, and maps each element to the integer range [-2^(bits-1), 2^(bits-1)-1] with rounding and clamping. For an empty input it returns an empty `[]int8` payload; for an all-zero input it returns a zeroed `[]int8` of the same length with `Scale = 0`. The returned CompressionResult uses `Method = "turbo_quant"`, sets `OriginalDim` and `CompressedDim` to the input length, includes the (possibly adjusted) `Bits` and computed `Scale` when applicable, and records `CompressionRatio = 64.0 / float64(bits)`.
 func TurboQuantCompress(embedding []float64, bits int) CompressionResult {
 	if bits <= 0 || bits > 8 {
 		bits = 8
@@ -92,7 +94,7 @@ func TurboQuantCompress(embedding []float64, bits int) CompressionResult {
 //
 // Preserves approximate pairwise distances and is sufficient for resonance
 // comparisons. Production implementation should use a true Gaussian random
-// matrix; this version uses a deterministic sign-flip mix for reproducibility.
+// input length, CompressedDim set to the output length, and CompressionRatio equal to float64(original)/float64(compressed).
 func QJLCompress(embedding []float64) CompressionResult {
 	srcDim := len(embedding)
 	if srcDim == 0 {
@@ -135,7 +137,14 @@ func QJLCompress(embedding []float64) CompressionResult {
 // matters more than per-axis magnitude. Output is flat
 // [r0, theta0, r1, theta1, ...]; dimensionality is preserved
 // (same count of floats out as in), so compression ratio is 1.0 in size
-// terms but the representation is more interpretable.
+// PolarQuantCompress converts an embedding into flat polar-coordinate pairs (r, theta)
+// computed from consecutive component pairs of the input.
+//
+// For an empty input it returns an empty Data payload and zero dimensions.
+// If the input has a single element it returns Data = {abs(x), 0.0}, CompressedDim = 2
+// and CompressionRatio = 0.5. For inputs with length >= 2 it converts each pair (x,y)
+// into r = sqrt(x*x + y*y) and theta = atan2(y, x), sets Method = "polar",
+// CompressedDim = 2*(len(embedding)/2) and CompressionRatio = 1.0.
 func PolarQuantCompress(embedding []float64) CompressionResult {
 	srcDim := len(embedding)
 	if srcDim == 0 {

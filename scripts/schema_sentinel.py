@@ -46,7 +46,14 @@ def is_valid_skill_name(name: str) -> bool:
 
 
 def annotate(level: str, msg: str, file: Path | None = None) -> None:
-    """Emit a GitHub Actions annotation if running under Actions, otherwise plain log."""
+    """
+    Emit a GitHub Actions annotation when running inside Actions; otherwise print a human-readable log marker.
+    
+    Parameters:
+        level (str): Annotation level such as "error", "warning", or "notice". Unknown levels are allowed and will use a generic marker.
+        msg (str): The message text to include in the annotation or log.
+        file (Path | None): Optional path related to the message. When running under GitHub Actions, the path will be converted to a repository-relative path when possible and included in the annotation; otherwise it is appended to the human-readable log output.
+    """
     if os.environ.get("GITHUB_ACTIONS") == "true":
         prefix = f"::{level} "
         if file is not None:
@@ -65,6 +72,14 @@ def annotate(level: str, msg: str, file: Path | None = None) -> None:
 
 
 def load_manifest() -> dict:
+    """
+    Load and parse the repository's skills.json manifest.
+    
+    Reads SKILLS_JSON as UTF-8 and returns the decoded JSON object. If the file is missing or contains invalid JSON, emits an error annotation and terminates the process with exit code 1.
+    
+    Returns:
+        dict: The parsed JSON object from skills.json.
+    """
     if not SKILLS_JSON.exists():
         annotate("error", f"skills.json not found at {SKILLS_JSON}")
         sys.exit(1)
@@ -76,6 +91,15 @@ def load_manifest() -> dict:
 
 
 def check_top_level(data: dict, errors: list[str]) -> None:
+    """
+    Validate the top-level structure of a parsed skills.json manifest and record any schema violations.
+    
+    Checks that the manifest is a JSON object, that it contains a top-level "skills" key, and that "skills" is a list when present. Appends human-readable error messages to `errors` for each detected violation.
+    
+    Parameters:
+        data (dict): Parsed JSON value from skills.json.
+        errors (list[str]): Mutable list to which validation error messages will be appended.
+    """
     if not isinstance(data, dict):
         errors.append("skills.json top-level must be a JSON object")
         return
@@ -86,6 +110,15 @@ def check_top_level(data: dict, errors: list[str]) -> None:
 
 
 def check_entries(data: dict, errors: list[str]) -> None:
+    """
+    Validate each entry in the manifest's "skills" list and append human-readable error messages to `errors`.
+    
+    Per-entry validations include presence of required fields ("name", "description", "file"), that "name" and "description" are non-empty strings, that "name" matches the kebab-case pattern, that skill names and referenced file paths are unique across the manifest, that "file" is under `skills/` and ends with `.md`, and that the referenced file exists on disk. Each detected problem is added to `errors` with an index-aware context (e.g., `skills[0]`).
+    
+    Parameters:
+        data (dict): Parsed manifest object; expected to contain a "skills" list of entries.
+        errors (list[str]): Mutable list that will be appended with descriptive error strings for any violations.
+    """
     seen_names: set[str] = set()
     seen_files: set[str] = set()
     for i, entry in enumerate(data.get("skills", [])):
@@ -125,7 +158,16 @@ def check_entries(data: dict, errors: list[str]) -> None:
 
 
 def check_orphans(data: dict, errors: list[str]) -> set[str]:
-    """Return the set of orphan stems so callers (e.g. --fix) can act on them."""
+    """
+    Identify Markdown files in the skills directory that are not registered in the manifest.
+    
+    Parameters:
+        data (dict): Parsed manifest (expected to contain a "skills" list of entry objects).
+        errors (list[str]): Mutable list to which an error message is appended for each orphan file found.
+    
+    Returns:
+        orphans (set[str]): Set of filename stems (without extension) for markdown files present under `skills/` but not listed in `data["skills"]`.
+    """
     if not SKILLS_DIR.exists():
         return set()
     on_disk = {p.stem for p in SKILLS_DIR.glob("*.md")}
@@ -139,6 +181,14 @@ def check_orphans(data: dict, errors: list[str]) -> set[str]:
 
 
 def check_md_headings(errors: list[str]) -> None:
+    """
+    Validate that each Markdown file in the `skills/` directory begins with a level-1 heading.
+    
+    Checks every `*.md` file under SKILLS_DIR (sorted). For each file, ensures the file is valid UTF-8, skips an optional YAML frontmatter block delimited by `---` on the first line, and verifies that the first non-empty line after that frontmatter starts with `# ` (a level-1 heading). For any violation, appends a descriptive message to `errors`.
+    
+    Parameters:
+        errors (list[str]): Mutable list to which human-readable error messages will be appended (one per violation).
+    """
     if not SKILLS_DIR.exists():
         return
     for md in sorted(SKILLS_DIR.glob("*.md")):
@@ -161,6 +211,15 @@ def check_md_headings(errors: list[str]) -> None:
 
 
 def autofix_orphans(orphans: set[str], data: dict) -> None:
+    """
+    Add manifest entries for orphan Markdown files and write the updated manifest.
+    
+    For each name in `orphans` (sorted), reads the corresponding `skills/<name>.md` file and extracts the first non-empty line (stripping a leading `# ` if present) to use as the entry's `description` (truncated to 160 characters). If the file cannot be read or no non-empty line is found, uses the stem as the description fallback or a descriptive fallback string. Appends a dict with `name`, `description`, and `file` to `data["skills"]` (creating the list if missing), emits a notice annotation for each auto-registered orphan, and writes the updated manifest back to `SKILLS_JSON` using UTF-8, JSON indentation, and a trailing newline.
+    
+    Parameters:
+        orphans (set[str]): Set of Markdown filename stems (without `.md`) to auto-register.
+        data (dict): Parsed manifest object to be mutated in-place; the function ensures `data["skills"]` exists and appends new entries.
+    """
     if not orphans:
         return
     for orphan in sorted(orphans):
@@ -186,6 +245,14 @@ def autofix_orphans(orphans: set[str], data: dict) -> None:
 
 
 def main() -> int:
+    """
+    Validate the skills manifest and corresponding Markdown files, optionally auto-registering orphan MD files.
+    
+    Performs a series of structural checks on SKILLS_JSON and files in SKILLS_DIR, emits annotations for any violations, and can auto-add orphan Markdown files to the manifest when run with the `--fix` flag.
+    
+    Returns:
+        int: `0` on success (no violations, or after successfully auto-registering orphans with `--fix`), `1` if one or more validation violations were found.
+    """
     parser = argparse.ArgumentParser(description="Skills marketplace Schema Sentinel")
     parser.add_argument("--fix", action="store_true", help="Auto-register orphan MDs in skills.json")
     args = parser.parse_args()
