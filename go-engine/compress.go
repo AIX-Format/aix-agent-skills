@@ -7,6 +7,12 @@ import (
 // CompressionResult is the unified return value for all compressors.
 // Callers can read CompressionRatio for analytics regardless of which
 // algorithm produced the result.
+//
+// CompressionRatio reflects the *storage* size reduction. The baseline
+// implementations in this file emit []int8 (1 byte per element) regardless
+// of the logical bit width, so TurboQuant always reports 8.0 (64-bit
+// float -> 8-bit int) even when called with bits<8. A bit-packing variant
+// could legitimately report a higher ratio.
 type CompressionResult struct {
 	Method           string      `json:"method"`
 	Data             interface{} `json:"data"`
@@ -17,18 +23,35 @@ type CompressionResult struct {
 	CompressionRatio float64     `json:"compression_ratio"`
 }
 
+// sanitizeEmbedding replaces any NaN/Inf values with 0 so downstream
+// quantization is deterministic. Returns the (possibly new) slice and the
+// observed max absolute value.
+func sanitizeEmbedding(embedding []float64) ([]float64, float64) {
+	maxAbs := 0.0
+	for i, v := range embedding {
+		if math.IsNaN(v) || math.IsInf(v, 0) {
+			embedding[i] = 0
+			continue
+		}
+		if a := math.Abs(v); a > maxAbs {
+			maxAbs = a
+		}
+	}
+	return embedding, maxAbs
+}
+
 // TurboQuantCompress quantizes a float64 vector to N-bit signed integers.
 // Symmetric quantization: each value normalized to [-maxAbs, maxAbs] then
 // scaled into the int range allowed by `bits`. Returns the packed []int8
 // representation along with the scale factor used.
 //
-// CompressionRatio = (original bytes) / (compressed bytes), where original
-// is 8 bytes/element (float64) and compressed is `bits / 8` bytes/element.
+// NaN and Inf inputs are coerced to 0 to keep the output deterministic;
+// without this, math.Round(NaN/scale) is NaN and the int8 conversion is
+// architecture-dependent.
 //
-// NOTE: This is the reference implementation. Performance-tuned variants
-// TurboQuantCompress quantizes an embedding into signed 8-bit integers using symmetric per-vector scaling.
-// 
-// TurboQuantCompress clamps the requested `bits` to the valid range (values <= 0 or > 8 are set to 8), computes a scale from the maximum absolute component, and maps each element to the integer range [-2^(bits-1), 2^(bits-1)-1] with rounding and clamping. For an empty input it returns an empty `[]int8` payload; for an all-zero input it returns a zeroed `[]int8` of the same length with `Scale = 0`. The returned CompressionResult uses `Method = "turbo_quant"`, sets `OriginalDim` and `CompressedDim` to the input length, includes the (possibly adjusted) `Bits` and computed `Scale` when applicable, and records `CompressionRatio = 64.0 / float64(bits)`.
+// CompressionRatio is fixed at 8.0 because the output is []int8 (1 byte
+// per element) regardless of the requested logical bit width. A true
+// bit-packed variant would report 64.0/bits.
 func TurboQuantCompress(embedding []float64, bits int) CompressionResult {
 	if bits <= 0 || bits > 8 {
 		bits = 8
@@ -46,13 +69,10 @@ func TurboQuantCompress(embedding []float64, bits int) CompressionResult {
 		}
 	}
 
-	// Find max magnitude for symmetric quantization
-	maxAbs := 0.0
-	for _, v := range embedding {
-		if a := math.Abs(v); a > maxAbs {
-			maxAbs = a
-		}
-	}
+	// Mutate-in-place is intentional: callers passing transient embeddings
+	// do not need a copy, and avoiding the allocation matters for the hot
+	// path. If a caller needs the input preserved, copy before calling.
+	embedding, maxAbs := sanitizeEmbedding(embedding)
 	if maxAbs == 0 {
 		return CompressionResult{
 			Method:           "turbo_quant",
@@ -61,7 +81,7 @@ func TurboQuantCompress(embedding []float64, bits int) CompressionResult {
 			CompressedDim:    originalDim,
 			Bits:             bits,
 			Scale:            0,
-			CompressionRatio: 64.0 / float64(bits),
+			CompressionRatio: 8.0,
 		}
 	}
 
@@ -84,7 +104,7 @@ func TurboQuantCompress(embedding []float64, bits int) CompressionResult {
 		CompressedDim:    originalDim,
 		Bits:             bits,
 		Scale:            scale,
-		CompressionRatio: 64.0 / float64(bits), // float64 (8 bytes) -> bits/8 bytes
+		CompressionRatio: 8.0, // []int8 = 1 byte; 64-bit float -> 1 byte = 8x
 	}
 }
 
@@ -93,8 +113,10 @@ func TurboQuantCompress(embedding []float64, bits int) CompressionResult {
 // pseudo-random basis of size len(embedding)/2. Returns the projected vector.
 //
 // Preserves approximate pairwise distances and is sufficient for resonance
-// comparisons. Production implementation should use a true Gaussian random
-// input length, CompressedDim set to the output length, and CompressionRatio equal to float64(original)/float64(compressed).
+// comparisons. The sign of each contribution is derived from the least
+// significant bit of an integer mix; the bitwise check is robust against
+// negative remainders that `% 2` can produce in Go when intermediate
+// values overflow into negative ints.
 func QJLCompress(embedding []float64) CompressionResult {
 	srcDim := len(embedding)
 	if srcDim == 0 {
@@ -116,7 +138,9 @@ func QJLCompress(embedding []float64) CompressionResult {
 		var acc float64
 		for j := 0; j < srcDim; j++ {
 			sign := 1.0
-			if ((i*31+j)*17)%2 == 1 {
+			// Bitwise LSB check avoids the sign-of-modulo trap that
+			// occurs in Go when intermediate ints overflow negative.
+			if ((i*31+j)*17)&1 != 0 {
 				sign = -1.0
 			}
 			acc += sign * embedding[j]
@@ -133,18 +157,11 @@ func QJLCompress(embedding []float64) CompressionResult {
 }
 
 // PolarQuantCompress encodes the embedding as polar (r, theta) pairs.
-// For dimension D, returns D/2 pairs, useful when angular structure
-// matters more than per-axis magnitude. Output is flat
-// [r0, theta0, r1, theta1, ...]; dimensionality is preserved
-// (same count of floats out as in), so compression ratio is 1.0 in size
-// PolarQuantCompress converts an embedding into flat polar-coordinate pairs (r, theta)
-// computed from consecutive component pairs of the input.
-//
-// For an empty input it returns an empty Data payload and zero dimensions.
-// If the input has a single element it returns Data = {abs(x), 0.0}, CompressedDim = 2
-// and CompressionRatio = 0.5. For inputs with length >= 2 it converts each pair (x,y)
-// into r = sqrt(x*x + y*y) and theta = atan2(y, x), sets Method = "polar",
-// CompressedDim = 2*(len(embedding)/2) and CompressionRatio = 1.0.
+// For an even-dimensional D, returns D/2 pairs. For an odd-dimensional D,
+// the trailing element is preserved as a (|v|, 0) pair so no input data is
+// silently dropped. Output is flat [r0, theta0, r1, theta1, ...]; the
+// representation is more interpretable but not smaller in size, so the
+// compression ratio is 1.0.
 func PolarQuantCompress(embedding []float64) CompressionResult {
 	srcDim := len(embedding)
 	if srcDim == 0 {
@@ -157,27 +174,40 @@ func PolarQuantCompress(embedding []float64) CompressionResult {
 		}
 	}
 	pairs := srcDim / 2
-	if pairs == 0 {
+	hasTrailing := srcDim%2 == 1
+
+	outLen := 2 * pairs
+	if hasTrailing {
+		outLen += 2
+	}
+	if outLen == 0 {
+		// srcDim was effectively 0; handled above, but defensive.
 		return CompressionResult{
 			Method:           "polar",
-			Data:             []float64{math.Abs(embedding[0]), 0.0},
+			Data:             []float64{},
 			OriginalDim:      srcDim,
-			CompressedDim:    2,
-			CompressionRatio: 0.5,
+			CompressedDim:    0,
+			CompressionRatio: 0,
 		}
 	}
-	out := make([]float64, 2*pairs)
+
+	out := make([]float64, outLen)
 	for k := 0; k < pairs; k++ {
 		x := embedding[2*k]
 		y := embedding[2*k+1]
 		out[2*k] = math.Sqrt(x*x + y*y)
 		out[2*k+1] = math.Atan2(y, x)
 	}
+	if hasTrailing {
+		// Preserve the trailing scalar as (|v|, 0): magnitude with zero phase.
+		out[2*pairs] = math.Abs(embedding[srcDim-1])
+		out[2*pairs+1] = 0.0
+	}
 	return CompressionResult{
 		Method:           "polar",
 		Data:             out,
 		OriginalDim:      srcDim,
-		CompressedDim:    2 * pairs,
+		CompressedDim:    outLen,
 		CompressionRatio: 1.0,
 	}
 }

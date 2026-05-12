@@ -55,16 +55,18 @@ def annotate(level: str, msg: str, file: Path | None = None) -> None:
         file (Path | None): Optional path related to the message. When running under GitHub Actions, the path will be converted to a repository-relative path when possible and included in the annotation; otherwise it is appended to the human-readable log output.
     """
     if os.environ.get("GITHUB_ACTIONS") == "true":
-        prefix = f"::{level} "
+        # Workflow command syntax requires no space before the closing `::`
+        # when there is no metadata; when a file is included it goes
+        # between a single space and the closing `::`.
+        # See https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions
         if file is not None:
             try:
                 rel = file.relative_to(ROOT)
             except ValueError:
                 rel = file
-            prefix += f"file={rel}::"
+            print(f"::{level} file={rel}::{msg}")
         else:
-            prefix += "::"
-        print(f"{prefix}{msg}")
+            print(f"::{level}::{msg}")
     else:
         marker = {"error": "❌", "warning": "⚠️ ", "notice": "ℹ️ "}.get(level, "•")
         suffix = f" ({file})" if file else ""
@@ -132,23 +134,50 @@ def check_entries(data: dict, errors: list[str]) -> None:
         name = entry.get("name", "")
         desc = entry.get("description", "")
         file_path = entry.get("file", "")
-        if not isinstance(name, str) or not name.strip():
+
+        # Validate name shape, only inserting into the dedup set when it is
+        # a non-empty string; otherwise a list/dict `name` would crash the
+        # set operation with TypeError on unhashable types.
+        name_is_valid_str = isinstance(name, str) and name.strip() != ""
+        if not name_is_valid_str:
             errors.append(f"{ctx}: 'name' must be a non-empty string")
         elif not is_valid_skill_name(name):
             errors.append(
                 f"{ctx} ({name}): name must be kebab-case "
                 f"(a-z0-9, dash-separated) or `_` + snake_case for internal skills"
             )
-        if name in seen_names:
-            errors.append(f"{ctx} ({name}): duplicate skill name")
-        seen_names.add(name)
+        if name_is_valid_str:
+            if name in seen_names:
+                errors.append(f"{ctx} ({name}): duplicate skill name")
+            seen_names.add(name)
+
         if not isinstance(desc, str) or not desc.strip():
             errors.append(f"{ctx} ({name}): 'description' must be a non-empty string")
-        if not isinstance(file_path, str) or not file_path.strip():
+
+        # Same guard for file_path: must be a non-empty string before
+        # joining or set-inserting.
+        file_is_valid_str = isinstance(file_path, str) and file_path.strip() != ""
+        if not file_is_valid_str:
             errors.append(f"{ctx} ({name}): 'file' must be a non-empty string")
             continue
-        if not file_path.startswith("skills/") or not file_path.endswith(".md"):
-            errors.append(f"{ctx} ({name}): 'file' must be 'skills/<name>.md' form, got {file_path!r}")
+
+        # When we have a valid name, the file path must match exactly
+        # `skills/<name>.md`. Swapped references (e.g. two entries pointing
+        # at the same MD) silently corrupt the marketplace; enforce strict
+        # equality so they are caught here.
+        if name_is_valid_str:
+            expected_file = f"skills/{name}.md"
+            if file_path != expected_file:
+                errors.append(
+                    f"{ctx} ({name}): 'file' must equal {expected_file!r}, "
+                    f"got {file_path!r}"
+                )
+        elif not file_path.startswith("skills/") or not file_path.endswith(".md"):
+            errors.append(
+                f"{ctx}: 'file' must be under skills/ and end with .md, "
+                f"got {file_path!r}"
+            )
+
         if file_path in seen_files:
             errors.append(f"{ctx} ({name}): duplicate file path {file_path!r}")
         seen_files.add(file_path)
@@ -171,7 +200,16 @@ def check_orphans(data: dict, errors: list[str]) -> set[str]:
     if not SKILLS_DIR.exists():
         return set()
     on_disk = {p.stem for p in SKILLS_DIR.glob("*.md")}
-    in_manifest = {s.get("name", "") for s in data.get("skills", []) if isinstance(s, dict)}
+    # Guard against non-string / unhashable name fields; malformed entries
+    # are already flagged by check_entries, so silently dropping them here
+    # is correct.
+    in_manifest = {
+        s["name"]
+        for s in data.get("skills", [])
+        if isinstance(s, dict)
+        and isinstance(s.get("name"), str)
+        and s["name"].strip()
+    }
     orphans = on_disk - in_manifest
     for orphan in sorted(orphans):
         errors.append(
@@ -266,7 +304,10 @@ def main() -> int:
         check_md_headings(errors)
         if args.fix and orphans:
             autofix_orphans(orphans, data)
-            return 0
+            # Only the orphan-related errors are resolved by autofix; any
+            # other validation failures (bad headings, duplicates, etc.)
+            # must still cause a non-zero exit so the CI job fails loudly.
+            errors = [e for e in errors if not e.startswith("Orphan MD file:")]
 
     if errors:
         for err in errors:
