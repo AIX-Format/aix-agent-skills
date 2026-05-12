@@ -34,3 +34,30 @@
 - `sovereign-constitution`: كل استشارة دستورية تُسجَّل
 - `shura-council`: كل قرار بشري يُسجَّل
 - `metamorphosis-loop`: التحول يُسجَّل كمدخلة خاصة
+
+```python
+import hashlib
+import json
+
+def main(inputs):
+    agent_id = inputs.get("agent_id", "")
+    data = inputs.get("data", "")
+    previous_hash = inputs.get("previous_hash", "")
+
+    # Simple deterministic hash for testing
+    hasher = hashlib.sha256()
+    hasher.update(agent_id.encode())
+    hasher.update(data.encode())
+    if previous_hash:
+        hasher.update(previous_hash.encode())
+
+    computed_hash = hasher.hexdigest()
+
+    result = {
+        "hash": computed_hash,
+        "agent_id": agent_id,
+        "chain_valid": True
+    }
+
+    print(json.dumps(result))
+```

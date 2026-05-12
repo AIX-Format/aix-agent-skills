@@ -9,7 +9,7 @@
     },
     {
       "name": "voice-wizard",
-      "description": "Voice-first agent creation flow (STT→LLM→TTS)",
+      "description": "Voice-first agent creation flow (STT\u2192LLM\u2192TTS)",
       "file": "skills/voice-wizard.md"
     },
     {
