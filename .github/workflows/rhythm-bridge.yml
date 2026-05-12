@@ -1,0 +1,117 @@
+name: 🌊 Rhythm Bridge
+
+# Runs every 3 hours to synchronize iqra's Pulse369 with this marketplace.
+# Each tick computes which action fires (telemetry mirror, cross-pollinate,
+# tier rebalance, deep reform) based on the modular cadence, then opens a
+# PR if pollination patches were produced.
+
+on:
+  schedule:
+    - cron: "0 */3 * * *"
+  workflow_dispatch:
+    inputs:
+      force_action:
+        description: "Override the cadence (TELEMETRY_MIRROR | CROSS_POLLINATE | TIER_REBALANCE | DEEP_REFORM)"
+        required: false
+        default: ""
+      dry_run:
+        description: "Compute but write nothing"
+        required: false
+        default: "false"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: rhythm-bridge
+  cancel-in-progress: false
+
+jobs:
+  bridge:
+    name: Tide sync
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    timeout-minutes: 10
+    steps:
+      - name: Checkout marketplace
+        uses: actions/checkout@v4
+        with:
+          path: aix-agent-skills
+          # Full history needed for the marketplace activity window.
+          fetch-depth: 50
+
+      - name: Checkout iqra (read-only signal source)
+        uses: actions/checkout@v4
+        with:
+          repository: Moeabdelaziz007/iqra
+          path: iqra
+          # 7-day lookback fits comfortably in 200 commits.
+          fetch-depth: 200
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run rhythm bridge
+        id: bridge
+        working-directory: aix-agent-skills
+        env:
+          FORCE_ACTION: ${{ inputs.force_action }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python3 scripts/rhythm_bridge.py --iqra-repo ../iqra --dry-run
+          else
+            python3 scripts/rhythm_bridge.py --iqra-repo ../iqra
+          fi
+
+      - name: Show summary
+        working-directory: aix-agent-skills
+        run: |
+          echo "## Rhythm Bridge cycle ${{ steps.bridge.outputs.tick }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Action: \`${{ steps.bridge.outputs.action }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Pairs proposed: ${{ steps.bridge.outputs.pairs_count }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f .rhythm/pr_body.md ]; then
+            cat .rhythm/pr_body.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Open cross-pollination PR
+        if: steps.bridge.outputs.pairs_count != '0' && inputs.dry_run != 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          path: aix-agent-skills
+          branch: tide-sync/cycle-${{ steps.bridge.outputs.tick }}
+          base: main
+          title: "🌊 Tide-sync cycle ${{ steps.bridge.outputs.tick }} — ${{ steps.bridge.outputs.pairs_count }} cross-pollinations"
+          body-path: aix-agent-skills/.rhythm/pr_body.md
+          commit-message: |
+            chore(rhythm): tide-sync cycle ${{ steps.bridge.outputs.tick }}
+
+            Action: ${{ steps.bridge.outputs.action }}
+            Pairs: ${{ steps.bridge.outputs.pairs_count }}
+          labels: |
+            tide-sync
+            auto-pollination
+            needs-tribunal
+          add-paths: |
+            skills/*.md
+            .rhythm/tick_counter
+            .rhythm/cooldowns.json
+            .rhythm/history.jsonl
+            .rhythm/pr_body.md
+            .rhythm/patches.json
+
+      - name: Commit telemetry-only update
+        if: steps.bridge.outputs.pairs_count == '0' && inputs.dry_run != 'true'
+        working-directory: aix-agent-skills
+        run: |
+          if [ -n "$(git status --porcelain .rhythm/)" ]; then
+            git config user.name "rhythm-bridge[bot]"
+            git config user.email "rhythm-bridge@users.noreply.github.com"
+            git add .rhythm/tick_counter .rhythm/history.jsonl
+            git commit -m "chore(rhythm): tick ${{ steps.bridge.outputs.tick }} telemetry [skip ci]"
+            git push origin HEAD:main
+          else
+            echo "No state changes this cycle."
+          fi
