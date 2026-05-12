@@ -10,11 +10,9 @@
     },
     {
       "name": "voice-wizard",
-      "description": "Voice-first agent creation flow (STT\u2192LLM\u2192TTS)",
+      "description": "Voice-first agent creation flow (STT→LLM→TTS)",
       "file": "skills/voice-wizard.md",
       "tier": "BASIC_TOOL"
-      "description": "Voice-first agent creation flow (STT→LLM→TTS)",
-      "file": "skills/voice-wizard.md"
     },
     {
       "name": "aix-schema",
