@@ -245,7 +245,7 @@ class TestSkillsJsonEntries(unittest.TestCase):
 
     def test_no_extra_fields_per_entry(self):
         """Each entry must only contain the known keys."""
-        allowed = {"name", "description", "file"}
+        allowed = {"name", "description", "file", "tier"}
         for skill in self.skills:
             with self.subTest(name=skill["name"]):
                 extra = set(skill.keys()) - allowed

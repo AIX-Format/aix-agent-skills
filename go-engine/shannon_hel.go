@@ -52,8 +52,9 @@ func CalculateShannonHEL(text string) ShannonResult {
 	if len(words) > 0 {
 		lastChars := make(map[rune]int)
 		for _, word := range words {
-			if len(word) > 0 {
-				lastChar := rune(word[len(word)-1])
+			runes := []rune(word)
+			if len(runes) > 0 {
+				lastChar := runes[len(runes)-1]
 				lastChars[lastChar]++
 			}
 		}

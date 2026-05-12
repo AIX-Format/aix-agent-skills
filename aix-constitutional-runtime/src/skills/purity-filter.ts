@@ -63,6 +63,8 @@ const HARAM_PATTERNS: HaramRule[] = [
     label: "الكذب والتضليل والتحريف",
     severity: "absolute",
     patterns: [
+      /fabricat|falsif|deceiv|manipulat|spread\s+false/i,
+      /اكذب|ضلل|زيف|خادع/i,
       /fabricat|falsif|deceiv|manipulat|spread.*false|deepfake|impersonat|forge\b|counterfeit|misinform|lie\b/i,
       /اكذب|ضلل|زيف|خادع|انتحل|زور|حرف الحقائق|كذب\b/i,
     ],
@@ -72,6 +74,8 @@ const HARAM_PATTERNS: HaramRule[] = [
     label: "إيذاء النفس أو الغير",
     severity: "absolute",
     patterns: [
+      /how\s+(?:to\s+)?(?:kill|harm|hurt|attack|bomb|poison)\s+(?:someone|people|person)/i,
+      /كيف\s+(?:أقتل|أضر|أؤذي|أهاجم)/i,
       /how\s+(?:to\s+)?(?:kill|harm|hurt|attack|bomb|poison|kidnap|harass|stalk)\s+(?:someone|people|person|innocents|minor|child)/i,
       /doxx|reveal\s+private\s+info|cyberbully|harass|threaten\s+violence/i,
       /كيف\s+(?:أقتل|أضر|أؤذي|أهاجم|أفجر|أسمم|أخطف|أتحرش)\s+(?:شخص|ناس|أبرياء|طفل)/i,
@@ -83,6 +87,9 @@ const HARAM_PATTERNS: HaramRule[] = [
     label: "الإفساد والجرائم الرقمية والمالية",
     severity: "absolute",
     patterns: [
+      /hack\s+(?:bank|hospital|government|election)/i,
+      /bypass[\s\S]*(?:security|auth|firewall)/i,
+      /اخترق|تلاعب بـ|أفسد/i,
       /(?:hack|exploit|penetrate|ransomware|phish|malware|sql\s+inject|ddos|brute\s+force|keylog|backdoor)\b.*?\b(?:bank|hospital|government|election|infrastructure|server|database|network|cloud)/i,
       /bypass\b.*?\b(?:security|auth|firewall|guard|encryption|license|password|mfa|2fa|gate|wall)/i,
       /money\s*(?:laundering|launder|landr)|bribe|embezzle|fraud\b|scam\b|ponzi|pyramid\s+scheme|identity\s+theft|credit\s+card\s+theft/i,
@@ -94,6 +101,8 @@ const HARAM_PATTERNS: HaramRule[] = [
     label: "معاونة الظالم أو انتهاك الخصوصية",
     severity: "absolute",
     patterns: [
+      /\bstalk(?:ing)?\b[\s\S]*(?:someone|somebody|a\s+person|people|him|her|them|my\s+ex|my\s+partner)|surveil[\s\S]*without[\s\S]*consent|track[\s\S]*location[\s\S]*secretly/i,
+      /تتبع[\s\S]*دون[\s\S]*إذن|مراقبة[\s\S]*سرية/i,
       /(?:stalk|surveil|monitor|spy|track)\b.*?\bwithout\s+consent|track\b.*?\blocation\b.*?\bsecretly/i,
       /intercept\s+(?:messages|calls|traffic|data)|wiretap|access\s+private\s+(?:camera|mic|files|email)/i,
       /تتبع\s+دون\s+إذن|مراقبة\s+سرية|تجسس|اختراق خصوصية|تنصت|مراقبة المكالمات/i,
@@ -113,6 +122,8 @@ const WARN_PATTERNS: WarnRule[] = [
   {
     layer: "intent",
     severity: "medium",
+    reason: "محتوى مُضلِّل محتمل",
+    patterns: [/write[\s\S]*fake[\s\S]*review|generate[\s\S]*spam|create[\s\S]*phishing/i],
     reason: "محتوى مُضلِّل أو دعائي محتمل",
     patterns: [
       /write.*?fake.*?review|generate.*?spam|create.*?phishing|clickbait|shilling/i,
@@ -122,6 +133,8 @@ const WARN_PATTERNS: WarnRule[] = [
   {
     layer: "impact",
     severity: "high",
+    reason: "طلب ذو أثر واسع يستوجب مراجعة",
+    patterns: [/send[\s\S]*to[\s\S]*all|broadcast[\s\S]*to[\s\S]*everyone|mass[\s\S]*message/i],
     reason: "طلب ذو أثر واسع أو تغيير جذري يستوجب مراجعة",
     patterns: [
       /(?:send|broadcast|post|mass).*?(?:to\s+)?(?:all|everyone|everybody)/i,
@@ -144,6 +157,8 @@ const WARN_PATTERNS: WarnRule[] = [
   {
     layer: "timing",
     severity: "low",
+    reason: "محتوى خارج السياق المعتاد",
+    patterns: [/ignore[\s\S]*previous[\s\S]*instructions|forget[\s\S]*rules/i],
     reason: "طلب متكرر في وقت قصير (اشتباه في سلوك آلي)",
     patterns: [/repeat.*?100.*?times|loop.*?forever/i],
   },

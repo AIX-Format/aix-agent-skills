@@ -1,15 +1,16 @@
 /**
  * standalone-runtime.ts
  * Constitutional Runtime Kernel (Node.js standalone)
- * 
+ *
  * Execution flow:
  *   Request → PurityFilter → [if passed] → Skill Execution → TrustChain Append → Response
  *   Request → PurityFilter → [if blocked] → TrustChain Append (blocked) → 403 Response
- * 
+ *
  * No Next.js required. Run with: npx tsx standalone-runtime.ts
  */
 
 import { runPurityFilter, type PurityFilterInput, type PurityFilterResult } from "../skills/purity-filter.js";
+import { TrustChain, type AppendInput } from "../skills/trust-chain.js";
 import { TrustChain, type AppendInput, type TrustChainState } from "../skills/trust-chain.js";
 import { reportSkillFailure } from "../skills/tasbih-resilience.js";
 
