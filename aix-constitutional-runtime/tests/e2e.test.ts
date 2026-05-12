@@ -174,8 +174,8 @@ describe("trust-chain", () => {
     });
 
     // Raw sensitive data should NOT be in the entry
-    assert.strictEqual((entry as Record<string, unknown>).input, undefined);
-    assert.strictEqual((entry as Record<string, unknown>).output, undefined);
+    assert.strictEqual((entry as any).input, undefined);
+    assert.strictEqual((entry as any).output, undefined);
     // But hashes should be present
     assert.strictEqual(entry.inputHash.length, 64);
     assert.strictEqual(entry.outputHash.length, 64);
@@ -282,7 +282,7 @@ describe("constitutional-runtime", () => {
     assert.deepStrictEqual(runtime.verifyChain(), { valid: true });
 
     const state = runtime.getChainState();
-    const checks = state.entries.map(e => e.constitutionalCheck);
+    const checks = state.entries.map((e: any) => e.constitutionalCheck);
     assert.deepStrictEqual(checks, ["passed", "blocked", "blocked", "passed"]);
   });
 

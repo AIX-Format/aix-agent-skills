@@ -131,6 +131,45 @@ Here is how these layers combine to create fully functional, ready-to-deploy age
 
 ---
 
+## 🔌 MCP Tools & Integrations
+
+The marketplace ships with **Model Context Protocol (MCP)** tools that let AI agents interact with the ecosystem directly. Add these to your MCP client config to give your agent sovereign access:
+
+| Tool | Description | Endpoint / Config |
+|------|-------------|-------------------|
+| **skills-mcp** | List, search, and execute marketplace skills | `skills.json` registry |
+| **trustchain-mcp** | Verify SHA-256 ledger integrity, inspect immutable execution traces | `aix-constitutional-runtime` |
+| **topology-mcp** | Map skill dependencies, discover hidden topology connections | `go-engine` resonance API |
+| **orchestrator-mcp** | Chain skills sequentially, pass data between pipeline stages | `orchestrator.py` |
+| **registry-mcp** | Browse skill tiers (SOVEREIGN → BASIC), check skill-evaluator scores | `skills/` directory |
+| **analytics-mcp** | Run LID, Shannon entropy, and persistent homology analysis on text | `go-engine` (port 8082) |
+| **memory-mcp** | Read/write to 5-tier memory bridge (Hot → Archive) | `memory-bridge` skill |
+
+### Quick Start — MCP Config
+
+Add to your MCP client configuration:
+
+```json
+{
+  "mcpServers": {
+    "iqra-marketplace": {
+      "command": "python3",
+      "args": ["/path/to/orchestrator.py", "run"],
+      "env": {}
+    },
+    "iqra-analytics": {
+      "command": "go-engine",
+      "args": ["run", "."],
+      "env": {}
+    }
+  }
+}
+```
+
+> New MCP tools welcome! Submit via PR following the `sovereign-constitution`.
+
+---
+
 ## 👨‍💻 Architects & Visionaries
 
 This sovereign ecosystem was conceived and engineered by:
@@ -155,3 +194,62 @@ This sovereign ecosystem was conceived and engineered by:
     </tr>
   </table>
 </div>
+
+## ⚡ The Go Engine
+The `go-engine/` directory hosts a high-performance parallel processing engine written in Go. This standalone HTTP server provides extreme performance for computationally heavy intelligence tasks such as:
+- Semantic resonance detection
+- Language Identification (LID)
+- Topological homology analysis
+- Shannon Entropy calculations (H_EL)
+
+It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js event loop limits.
+
+<!-- DASHBOARD_START -->
+<div align='center'>
+
+## 📊 Live Ecosystem Dashboard
+
+_Last updated: 2026-05-12 23:37 UTC_
+
+---
+
+### 🏗️ Repository Health
+
+| Component | Type | Status |
+|---|---|---|
+| 🐍 Python Tests | `pytest` | ✅ Pass |
+| 🟦 TypeScript Runtime | `tsc --noEmit` | ❌ Fail |
+| 🟦 TS E2E Tests | `node --test` | ❌ Fail |
+| 🔷 Go Engine | `go build` | ✅ Pass |
+
+---
+
+### 🧩 Skill Registry — 57 Total Skills across 6 Tiers
+
+| Tier | Count | Skills |
+|---|---|---|
+| 👑 Sovereign | 4 | `sovereign-constitution`, `covenant-guard`, `quran-resonance`, `multiverse-lab-pro` |
+| ⚙️ Advanced Infrastructure | 8 | `shura-council`, `version-guard`, `memory-bridge`, `circuit-breaker`, `purity-filter`, `awesome-curator`, `community-support-layer`, `topology-fork-engine` |
+| 🔧 Pro | 26 | `topology-orchestrator`, `skill-bank-evolution`, `mission-control`, `pipeline-store`, `resonance-engine`, `mcts-simulator`, `metamorphosis-loop`, `reward-engine`, `model-council`, `edge-whisperer`, `trust-chain`, `skill-evaluator`, `skill-sandbox`, `prompt-evaluator`, `red-team-guard`, `cross-model-judge`, `ci-cd-ai-guard`, `chain-tracer`, `hidden-topology`, `fractal-memory`, `pre-built-memories`, `fine-tuned-vault`, `integration-packs`, `blockchain-trading-kit`, `shadow-exchange`, `shadow-hospital` |
+| 🛠️ Advanced Tool | 8 | `intent-dispatcher`, `prompt-weaver`, `persona-forge`, `role-tribunal`, `voice-identity`, `persona-marketplace`, `agent-division-loader`, `multi-tool-exporter` |
+| 🔨 Basic Tool | 4 | `data-alchemist`, `open-mcp-connectors`, `_test_tool`, `prompt-templates` |
+| 📦 UNCLASSIFIED | 7 | `agent-memory`, `voice-wizard`, `aix-schema`, `api-route-standard`, `skills-system`, `vercel-deploy`, `antigravity-jules` |
+
+---
+
+### 🔄 Recent Activity
+
+| Commit | Message | Author |
+|---|---|---|
+| [`9c894b8`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/9c894b8) | Merge pull request #11 from Moeabdelaziz007/chore/sentinel-and-cleanup | Mohamed Abdelaziz ‬‏ |
+| [`d2c456b`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/d2c456b) | fix: address review comments on sentinel, compress.go, workflow | Moeabdelaziz007 |
+| [`e721bc2`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/e721bc2) | Merge remote-tracking branch 'origin/main' into chore/sentinel-and-cleanup Co-authored-by: Codesmith <codesmith-bot@users.noreply.github.com> | Moeabdelaziz007 |
+| [`a26352e`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/a26352e) | Merge branch 'chore/sentinel-and-cleanup' of https://github.com/Moeabdelaziz007/aix-agent-skills into chore/sentinel-and-cleanup | Moeabdelaziz007 |
+| [`5af1e24`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/5af1e24) | Merge remote-tracking branch 'origin/main' into chore/sentinel-and-cleanup | Moeabdelaziz007 |
+
+---
+
+<sub>🤖 Dashboard auto-generated by `.github/workflows/dashboard.yml`</sub>
+
+</div>
+<!-- DASHBOARD_END -->

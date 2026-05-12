@@ -187,8 +187,35 @@ class TestReadmeSovereignLayers(unittest.TestCase):
 class TestReadmeSkillMentions(unittest.TestCase):
     """Key skills added in this PR should be mentioned in the README."""
 
+    # Backticks in the README can wrap many things that look kebab-case but
+    # aren't skills: tool names, repo directories, command names, commit
+    # SHAs, etc. Exclude well-known non-skill tokens so the
+    # `test_all_backtick_skill_references_exist_as_files` invariant only
+    # flags genuinely missing skill files.
+    _NON_SKILL_BACKTICKS = frozenset({
+        "pytest",
+        "go-engine",
+        "aix-constitutional-runtime",
+        "skills",
+        "tests",
+        "scripts",
+        "main",
+        "node",
+        "npm",
+        "tsx",
+        "vitest",
+    })
+    # Match commit-SHA-like tokens (7+ hex chars) so they're filtered too.
+    _SHA_RE = re.compile(r"^[0-9a-f]{7,}$")
+
     def _skills_mentioned(self, content: str):
-        return set(re.findall(r"`([a-z][a-z0-9-]+[a-z0-9])`", content))
+        all_matches = set(re.findall(r"`([a-z][a-z0-9-]+[a-z0-9])`", content))
+        return {
+            name
+            for name in all_matches
+            if name not in self._NON_SKILL_BACKTICKS
+            and not self._SHA_RE.match(name)
+        }
 
     def test_covenant_guard_mentioned(self):
         content = _read_readme()
