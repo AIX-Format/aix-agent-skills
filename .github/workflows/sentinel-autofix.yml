@@ -79,8 +79,8 @@ jobs:
 
             Detected by Schema Sentinel autofix run #${{ github.run_number }}.
             Orphans: ${{ steps.sentinel.outputs.orphans }}
-          author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
-          committer: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          author: "Iqra Marketplace Bot <bot@iqra.sovereign>"
+          committer: "Iqra Marketplace Bot <bot@iqra.sovereign>"
           title: "🛡️ Sentinel: auto-register orphan skill(s)"
           body: |
             The Schema Sentinel detected one or more Markdown files under
