@@ -1,0 +1,30 @@
+{
+  "name": "iqra-persona-marketplace",
+  "description": "شخصيات وكلاء منظمة لأنظمة الذكاء الاصطناعي بنظام IQRA",
+  "personas": [
+    {
+      "name": "sovereign-constitution",
+      "display_name": { "ar": "الدستور السيادي", "en": "Sovereign Constitution" },
+      "tier": "SOVEREIGN",
+      "category": "strategy",
+      "description": "الضمير الحي والقاعدة الصفرية التي تحكم كل تصرفات النظام",
+      "file": "personas/0-sovereign/sovereign-constitution.md"
+    },
+    {
+      "name": "backend-architect",
+      "display_name": { "ar": "مهندس البنية الخلفية", "en": "Backend Architect" },
+      "tier": "PRO",
+      "category": "engineering",
+      "description": "يصمم الأنظمة التي تحمل كل شيء — قواعد البيانات، APIs، السحابة، والتوسع",
+      "file": "personas/2-pro/backend-architect.md"
+    },
+    {
+      "name": "security-engineer",
+      "display_name": { "ar": "مهندس الأمن", "en": "Security Engineer" },
+      "tier": "PRO",
+      "category": "engineering",
+      "description": "حارس النظام الذي يفكر كالمخترق ليحمي الأصول",
+      "file": "personas/2-pro/security-engineer.md"
+    }
+  ]
+}
