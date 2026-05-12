@@ -71,6 +71,12 @@ class TestVoiceWizardDescriptionUpdated:
         assert "voice-wizard" in skill_by_name, "voice-wizard skill must still exist in skills.json"
 
     def test_voice_wizard_description_uses_unicode_arrow(self, skill_by_name):
+        """
+        Check that the "voice-wizard" skill description contains the Unicode right-arrow character U+2192.
+        
+        Parameters:
+            skill_by_name (dict): Mapping of skill names to their metadata dicts; used to access the "voice-wizard" entry.
+        """
         description = skill_by_name["voice-wizard"]["description"]
         # The PR changed ASCII → (→) to Unicode → (U+2192)
         assert "\u2192" in description, (
@@ -78,14 +84,21 @@ class TestVoiceWizardDescriptionUpdated:
         )
 
     def test_voice_wizard_description_does_not_use_html_entity(self, skill_by_name):
-        """The old description must not contain the HTML entity form (e.g. `&rarr;`)
-        or an ASCII arrow `->`. The Unicode U+2192 arrow IS expected and tested by
-        `test_voice_wizard_description_uses_unicode_arrow`."""
+        """
+        Ensure the "voice-wizard" skill description does not contain the HTML entity "&rarr;" or the ASCII arrow "->".
+        
+        Asserts that the description string for the "voice-wizard" skill does not include the HTML entity form of a right arrow or the ASCII arrow sequence.
+        """
         description = skill_by_name["voice-wizard"]["description"]
         assert "&rarr;" not in description
         assert "->" not in description
 
     def test_voice_wizard_description_content(self, skill_by_name):
+        """
+        Verify the 'voice-wizard' skill description includes the substrings "STT", "LLM", and "TTS".
+        
+        Asserts that the registry entry for "voice-wizard" has a description containing each of these acronyms.
+        """
         description = skill_by_name["voice-wizard"]["description"]
         assert "STT" in description
         assert "LLM" in description

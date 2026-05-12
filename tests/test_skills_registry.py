@@ -299,14 +299,19 @@ class TestNewSkillEntries(unittest.TestCase):
         )
 
     def test_blockchain_trading_kit_description(self):
+        """
+        Verify the 'blockchain-trading-kit' skill is present in the manifest and that its name or description contains the substring "blockchain".
+        
+        This ensures the manifest includes the expected entry and that the entry references blockchain-related functionality.
+        """
         self.assertIn("blockchain-trading-kit", self.skills_by_name)
         entry = self.skills_by_name["blockchain-trading-kit"]
         self.assertIn("blockchain", entry["description"].lower() + entry["name"].lower())
 
     def test_multiverse_lab_pro_registered(self):
-        """multiverse-lab-pro.md was previously an orphan MD (file present but
-        not in skills.json). It has now been registered as part of the manifest
-        cleanup; the Schema Sentinel enforces that no orphans remain."""
+        """
+        Check that the 'multiverse-lab-pro' markdown file exists under skills/ and that its skill name is present in the skills.json manifest.
+        """
         md_path = os.path.join(REPO_ROOT, "skills", "multiverse-lab-pro.md")
         self.assertTrue(os.path.isfile(md_path), "multiverse-lab-pro.md must exist")
         self.assertIn(
@@ -316,8 +321,9 @@ class TestNewSkillEntries(unittest.TestCase):
         )
 
     def test_community_support_layer_registered(self):
-        """community-support-layer.md was previously an orphan MD and has now
-        been registered as part of the manifest cleanup."""
+        """
+        Asserts that skills/community-support-layer.md exists on disk and that "community-support-layer" is present in the skills.json manifest.
+        """
         md_path = os.path.join(REPO_ROOT, "skills", "community-support-layer.md")
         self.assertTrue(
             os.path.isfile(md_path), "community-support-layer.md must exist"
@@ -452,6 +458,11 @@ class TestSkillsJsonFileIntegrity(unittest.TestCase):
         self.assertGreater(size, 0)
 
     def test_raw_bytes_decode_as_json(self):
+        """
+        Verify that the raw bytes read from the repository's `skills.json` file parse as JSON and produce a top-level object.
+        
+        Asserts that decoding the file's raw bytes with `json.loads` yields a `dict`.
+        """
         with open(SKILLS_JSON_PATH, "rb") as fh:
             raw = fh.read()
         parsed = json.loads(raw)
