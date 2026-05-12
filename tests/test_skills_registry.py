@@ -92,6 +92,12 @@ VALID_TIERS = {
 
 # Regex for valid kebab-case skill names (lowercase letters, digits, hyphens).
 KEBAB_CASE_RE = re.compile(r"^[a-z][a-z0-9-]+[a-z0-9]$")
+# Internal/test-only skills opt out of kebab-case via a leading underscore;
+# the rest of the name uses snake_case (mirrors the Schema Sentinel rule).
+INTERNAL_NAME_RE = re.compile(r"^_[a-z0-9]+(?:_[a-z0-9]+)*$")
+SKILL_NAME_RE = re.compile(
+    rf"({KEBAB_CASE_RE.pattern})|({INTERNAL_NAME_RE.pattern})"
+)
 
 
 def _load_skills_json():
@@ -239,8 +245,9 @@ class TestSkillsJsonEntries(unittest.TestCase):
             with self.subTest(name=skill["name"]):
                 self.assertRegex(
                     skill["name"],
-                    KEBAB_CASE_RE,
-                    f"Skill name '{skill['name']}' is not kebab-case",
+                    SKILL_NAME_RE,
+                    f"Skill name '{skill['name']}' is not kebab-case "
+                    f"(or `_` + snake_case for internal skills)",
                 )
 
     def test_no_extra_fields_per_entry(self):
@@ -299,33 +306,39 @@ class TestNewSkillEntries(unittest.TestCase):
         )
 
     def test_blockchain_trading_kit_description(self):
+        """
+        Verify the 'blockchain-trading-kit' skill is present in the manifest and that its name or description contains the substring "blockchain".
+        
+        This ensures the manifest includes the expected entry and that the entry references blockchain-related functionality.
+        """
         self.assertIn("blockchain-trading-kit", self.skills_by_name)
         entry = self.skills_by_name["blockchain-trading-kit"]
         self.assertIn("blockchain", entry["description"].lower() + entry["name"].lower())
 
-    def test_multiverse_lab_pro_not_in_registry(self):
-        """multiverse-lab-pro.md was added as a skill file but intentionally
-        omitted from skills.json in this PR — the file exists but is not
-        registered."""
+    def test_multiverse_lab_pro_registered(self):
+        """
+        Check that the 'multiverse-lab-pro' markdown file exists under skills/ and that its skill name is present in the skills.json manifest.
+        """
         md_path = os.path.join(REPO_ROOT, "skills", "multiverse-lab-pro.md")
         self.assertTrue(os.path.isfile(md_path), "multiverse-lab-pro.md must exist")
-        # It should NOT be in skills.json (not added in the diff)
-        self.assertNotIn(
+        self.assertIn(
             "multiverse-lab-pro",
             self.skill_names,
-            "multiverse-lab-pro should not be in skills.json (unregistered skill)",
+            "multiverse-lab-pro must be registered in skills.json",
         )
 
-    def test_community_support_layer_not_in_registry(self):
-        """community-support-layer.md was added but not registered in skills.json."""
+    def test_community_support_layer_registered(self):
+        """
+        Asserts that skills/community-support-layer.md exists on disk and that "community-support-layer" is present in the skills.json manifest.
+        """
         md_path = os.path.join(REPO_ROOT, "skills", "community-support-layer.md")
         self.assertTrue(
             os.path.isfile(md_path), "community-support-layer.md must exist"
         )
-        self.assertNotIn(
+        self.assertIn(
             "community-support-layer",
             self.skill_names,
-            "community-support-layer should not be in skills.json",
+            "community-support-layer must be registered in skills.json",
         )
 
     def test_intent_dispatcher_entry(self):
@@ -452,20 +465,33 @@ class TestSkillsJsonFileIntegrity(unittest.TestCase):
         self.assertGreater(size, 0)
 
     def test_raw_bytes_decode_as_json(self):
+        """
+        Verify that the raw bytes read from the repository's `skills.json` file parse as JSON and produce a top-level object.
+        
+        Asserts that decoding the file's raw bytes with `json.loads` yields a `dict`.
+        """
         with open(SKILLS_JSON_PATH, "rb") as fh:
             raw = fh.read()
         parsed = json.loads(raw)
         self.assertIsInstance(parsed, dict)
 
-    def test_total_skill_count_after_pr(self):
-        """After the PR the registry should have exactly 50 entries
-        (6 original + 44 new)."""
+    def test_total_skill_count_matches_disk(self):
+        """The manifest count must match the number of skill files on disk.
+        This is the durable invariant: any orphan MD or dead manifest entry
+        is a structural bug. The Schema Sentinel CI job enforces the same
+        invariant on every push.
+        """
+        import pathlib
         data = _load_skills_json()
-        self.assertEqual(
-            len(data["skills"]),
-            50,
-            f"Expected 50 skills after PR, found {len(data['skills'])}",
-        )
+        skills_dir = pathlib.Path(REPO_ROOT) / "skills"
+        on_disk = {p.stem for p in skills_dir.glob("*.md")}
+        in_manifest = {s["name"] for s in data["skills"]}
+        orphans = on_disk - in_manifest
+        dead = in_manifest - on_disk
+        self.assertFalse(orphans, f"Skill MDs on disk but not in manifest: {sorted(orphans)}")
+        self.assertFalse(dead, f"Manifest entries with no MD file: {sorted(dead)}")
+        self.assertEqual(len(data["skills"]), len(on_disk),
+                         f"Manifest has {len(data['skills'])} entries but disk has {len(on_disk)} MDs")
 
 
 if __name__ == "__main__":

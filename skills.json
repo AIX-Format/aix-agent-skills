@@ -10,11 +10,9 @@
     },
     {
       "name": "voice-wizard",
-      "description": "Voice-first agent creation flow (STT\u2192LLM\u2192TTS)",
+      "description": "Voice-first agent creation flow (STT→LLM→TTS)",
       "file": "skills/voice-wizard.md",
       "tier": "BASIC_TOOL"
-      "description": "Voice-first agent creation flow (STT→LLM→TTS)",
-      "file": "skills/voice-wizard.md"
     },
     {
       "name": "aix-schema",
@@ -299,15 +297,45 @@
       "tier": "PRO"
     },
     {
-      "name": "prompt-templates",
-      "description": "A managed, versioned library of dynamic prompt templates",
-      "file": "skills/prompt-templates.md",
-      "tier": "BASIC_TOOL"
+      "name": "community-support-layer",
+      "description": "Forum-per-skill layer turning the marketplace into a living community",
+      "file": "skills/community-support-layer.md"
+    },
+    {
+      "name": "multiverse-lab-pro",
+      "description": "Layer-0 meta-pack for training agents in parallel universes before touching reality",
+      "file": "skills/multiverse-lab-pro.md"
+    },
+    {
+      "name": "shadow-exchange",
+      "description": "Parallel financial sandbox for blockchain-trading-kit dry runs",
+      "file": "skills/shadow-exchange.md"
+    },
+    {
+      "name": "shadow-hospital",
+      "description": "100% simulated healthcare environment for Clinician's Cortex skills",
+      "file": "skills/shadow-hospital.md"
+    },
+    {
+      "name": "topology-fork-engine",
+      "description": "Reality-forking executor that runs missions across branching universes",
+      "file": "skills/topology-fork-engine.md"
+    },
+    {
+      "name": "_test_tool",
+      "description": "Test Tool — TIER: BASIC_TOOL",
+      "file": "skills/_test_tool.md"
     },
     {
       "name": "antigravity-jules",
       "description": "Shared task board and resonance synchronization between Antigravity and Jules",
       "file": "skills/antigravity-jules.md"
+    },
+    {
+      "name": "prompt-templates",
+      "description": "A managed, versioned library of dynamic prompt templates",
+      "file": "skills/prompt-templates.md",
+      "tier": "BASIC_TOOL"
     }
   ]
 }
