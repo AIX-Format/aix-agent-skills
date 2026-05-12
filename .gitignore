@@ -1,0 +1,41 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Build artifacts
+dist/
+build/
+*.tsbuildinfo
+go-engine/engine
+go-engine/iqra-engine
+
+# Compiled JS next to TS sources (we run via tsx)
+aix-constitutional-runtime/src/**/*.js
+aix-constitutional-runtime/tests/**/*.js
+
+# Local runtime state
+.iqra/
+*.log
+
+# Backups
+*.bak
+*.backup
+*.orig
+*~
+
+# Env
+.env
+.env.local
+.env.*.local

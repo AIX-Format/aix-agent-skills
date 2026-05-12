@@ -78,10 +78,12 @@ class TestVoiceWizardDescriptionUpdated:
         )
 
     def test_voice_wizard_description_does_not_use_html_entity(self, skill_by_name):
-        """The old description used the HTML entity &rarr; or encoded sequence → — verify it's gone."""
+        """The old description must not contain the HTML entity form (e.g. `&rarr;`)
+        or an ASCII arrow `->`. The Unicode U+2192 arrow IS expected and tested by
+        `test_voice_wizard_description_uses_unicode_arrow`."""
         description = skill_by_name["voice-wizard"]["description"]
         assert "&rarr;" not in description
-        assert "→" not in description  # HTML entity form
+        assert "->" not in description
 
     def test_voice_wizard_description_content(self, skill_by_name):
         description = skill_by_name["voice-wizard"]["description"]

@@ -9,8 +9,8 @@
  * No Next.js required. Run with: npx tsx standalone-runtime.ts
  */
 
-import { runPurityFilter, type PurityFilterInput, type PurityFilterResult } from "./skills/purity-filter.js";
-import { TrustChain, type AppendInput } from "./skills/trust-chain.js";
+import { runPurityFilter, type PurityFilterInput, type PurityFilterResult } from "../skills/purity-filter.js";
+import { TrustChain, type AppendInput } from "../skills/trust-chain.js";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 

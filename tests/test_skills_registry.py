@@ -303,29 +303,29 @@ class TestNewSkillEntries(unittest.TestCase):
         entry = self.skills_by_name["blockchain-trading-kit"]
         self.assertIn("blockchain", entry["description"].lower() + entry["name"].lower())
 
-    def test_multiverse_lab_pro_not_in_registry(self):
-        """multiverse-lab-pro.md was added as a skill file but intentionally
-        omitted from skills.json in this PR — the file exists but is not
-        registered."""
+    def test_multiverse_lab_pro_registered(self):
+        """multiverse-lab-pro.md was previously an orphan MD (file present but
+        not in skills.json). It has now been registered as part of the manifest
+        cleanup; the Schema Sentinel enforces that no orphans remain."""
         md_path = os.path.join(REPO_ROOT, "skills", "multiverse-lab-pro.md")
         self.assertTrue(os.path.isfile(md_path), "multiverse-lab-pro.md must exist")
-        # It should NOT be in skills.json (not added in the diff)
-        self.assertNotIn(
+        self.assertIn(
             "multiverse-lab-pro",
             self.skill_names,
-            "multiverse-lab-pro should not be in skills.json (unregistered skill)",
+            "multiverse-lab-pro must be registered in skills.json",
         )
 
-    def test_community_support_layer_not_in_registry(self):
-        """community-support-layer.md was added but not registered in skills.json."""
+    def test_community_support_layer_registered(self):
+        """community-support-layer.md was previously an orphan MD and has now
+        been registered as part of the manifest cleanup."""
         md_path = os.path.join(REPO_ROOT, "skills", "community-support-layer.md")
         self.assertTrue(
             os.path.isfile(md_path), "community-support-layer.md must exist"
         )
-        self.assertNotIn(
+        self.assertIn(
             "community-support-layer",
             self.skill_names,
-            "community-support-layer should not be in skills.json",
+            "community-support-layer must be registered in skills.json",
         )
 
     def test_intent_dispatcher_entry(self):
@@ -457,15 +457,23 @@ class TestSkillsJsonFileIntegrity(unittest.TestCase):
         parsed = json.loads(raw)
         self.assertIsInstance(parsed, dict)
 
-    def test_total_skill_count_after_pr(self):
-        """After the PR the registry should have exactly 50 entries
-        (6 original + 44 new)."""
+    def test_total_skill_count_matches_disk(self):
+        """The manifest count must match the number of skill files on disk.
+        This is the durable invariant: any orphan MD or dead manifest entry
+        is a structural bug. The Schema Sentinel CI job enforces the same
+        invariant on every push.
+        """
+        import pathlib
         data = _load_skills_json()
-        self.assertEqual(
-            len(data["skills"]),
-            50,
-            f"Expected 50 skills after PR, found {len(data['skills'])}",
-        )
+        skills_dir = pathlib.Path(REPO_ROOT) / "skills"
+        on_disk = {p.stem for p in skills_dir.glob("*.md")}
+        in_manifest = {s["name"] for s in data["skills"]}
+        orphans = on_disk - in_manifest
+        dead = in_manifest - on_disk
+        self.assertFalse(orphans, f"Skill MDs on disk but not in manifest: {sorted(orphans)}")
+        self.assertFalse(dead, f"Manifest entries with no MD file: {sorted(dead)}")
+        self.assertEqual(len(data["skills"]), len(on_disk),
+                         f"Manifest has {len(data['skills'])} entries but disk has {len(on_disk)} MDs")
 
 
 if __name__ == "__main__":
