@@ -1,0 +1,173 @@
+#!/usr/bin/env python3
+"""
+Link Doctor: weekly broken-link crawler for the marketplace.
+
+Extracts every http(s) URL from markdown files under the repo root,
+de-duplicates, and HEADs each one with a short timeout. Writes a
+report to `signals/link-health-YYYY-MM-DD.md` listing only the
+broken URLs and which files reference them. Healthy URLs are not
+listed (the report stays short and readable).
+
+Zero external dependencies: stdlib `urllib.request` is used directly.
+Per-request timeout caps the total run time even when many links
+are stale.
+
+Exit code 0 if the script completed; non-zero only on infrastructure
+errors (cannot read files, etc.). Broken-link counts are reported in
+the markdown output and printed to stdout; CI can decide whether to
+fail on a threshold.
+"""
+
+from __future__ import annotations
+
+import argparse
+import re
+import socket
+import ssl
+import sys
+import urllib.error
+import urllib.request
+from collections import defaultdict
+from datetime import date
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+SIGNALS = ROOT / "signals"
+
+# Greedy URL extractor that stops at whitespace, common Markdown
+# punctuation, and closing delimiters. Inline Markdown link syntax
+# `[text](url)` and bare URLs are both handled because we strip the
+# trailing `)` if present.
+URL_RE = re.compile(r"https?://[^\s\)\]\"'<>`]+")
+
+# Hosts / patterns we never check: badge shields, image services,
+# anchors with fragments, localhost. Add freely.
+SKIP_HOSTS = (
+    "img.shields.io",
+    "shields.io",
+    "img.icons8.com",
+    "avatars.githubusercontent.com",
+    "www.gstatic.com",
+    "github.com/Moeabdelaziz007/aix-agent-skills/commit/",
+    "github.com/Moeabdelaziz007/aix-agent-skills/pull/",
+)
+
+
+def _should_skip(url: str) -> bool:
+    return any(host in url for host in SKIP_HOSTS)
+
+
+def _gather_links() -> dict[str, list[str]]:
+    """Return {url: [file paths that reference it]}, sorted file lists."""
+    by_url: dict[str, set[str]] = defaultdict(set)
+    for md in ROOT.rglob("*.md"):
+        if any(part in (".git", "node_modules", ".compost") for part in md.parts):
+            continue
+        try:
+            text = md.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        rel = str(md.relative_to(ROOT))
+        for raw in URL_RE.findall(text):
+            url = raw.rstrip(".,);:")
+            if _should_skip(url):
+                continue
+            by_url[url].add(rel)
+    return {u: sorted(files) for u, files in by_url.items()}
+
+
+def _check(url: str, timeout: float) -> tuple[int | None, str]:
+    """
+    Return (status, message). status is the HTTP status if reachable,
+    None on network/SSL/timeout failure. message is empty on 2xx/3xx,
+    otherwise a short reason string.
+    """
+    req = urllib.request.Request(
+        url,
+        method="HEAD",
+        headers={
+            "User-Agent": "iqra-link-doctor/1.0",
+            # Some endpoints reject HEAD; we fall back below.
+            "Accept": "*/*",
+        },
+    )
+    ctx = ssl.create_default_context()
+    try:
+        with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
+            return resp.status, ""
+    except urllib.error.HTTPError as exc:
+        # HEAD not allowed: retry with a tiny GET.
+        if exc.code in (403, 405, 501):
+            try:
+                req2 = urllib.request.Request(url, method="GET",
+                                              headers={"User-Agent": "iqra-link-doctor/1.0",
+                                                       "Range": "bytes=0-0"})
+                with urllib.request.urlopen(req2, timeout=timeout, context=ctx) as resp:
+                    return resp.status, ""
+            except Exception as inner:
+                return None, f"{exc.code} then {type(inner).__name__}"
+        return exc.code, f"HTTP {exc.code}"
+    except (urllib.error.URLError, socket.timeout, ssl.SSLError, ConnectionError, OSError) as exc:
+        return None, type(exc).__name__
+
+
+def _is_broken(status: int | None) -> bool:
+    if status is None:
+        return True
+    return status >= 400
+
+
+def _render(report_date: date, results: list[tuple[str, list[str], int | None, str]]) -> str:
+    broken = [r for r in results if _is_broken(r[2])]
+    total = len(results)
+    out: list[str] = []
+    out.append(f"# Link Health: {report_date.isoformat()}")
+    out.append("")
+    out.append(
+        f"Scanned **{total}** unique URL(s) across the repo. "
+        f"Found **{len(broken)}** unreachable or 4xx/5xx."
+    )
+    out.append("")
+    if not broken:
+        out.append("_All links healthy._")
+        out.append("")
+        return "\n".join(out) + "\n"
+    out.append("## Broken links")
+    out.append("")
+    out.append("| URL | Status | Referenced in |")
+    out.append("| --- | --- | --- |")
+    for url, files, status, msg in broken:
+        status_str = msg if msg else (str(status) if status else "unreachable")
+        files_str = ", ".join(f"`{f}`" for f in files[:5])
+        if len(files) > 5:
+            files_str += f", +{len(files) - 5} more"
+        out.append(f"| {url} | {status_str} | {files_str} |")
+    out.append("")
+    return "\n".join(out) + "\n"
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Link health crawler")
+    parser.add_argument("--timeout", type=float, default=8.0,
+                        help="Per-request HTTP timeout (seconds, default 8)")
+    parser.add_argument("--fail-on-broken", action="store_true",
+                        help="Exit 1 if any broken links are found")
+    args = parser.parse_args()
+
+    by_url = _gather_links()
+    results: list[tuple[str, list[str], int | None, str]] = []
+    for url in sorted(by_url):
+        status, msg = _check(url, args.timeout)
+        results.append((url, by_url[url], status, msg))
+
+    SIGNALS.mkdir(parents=True, exist_ok=True)
+    today = date.today()
+    target = SIGNALS / f"link-health-{today.isoformat()}.md"
+    target.write_text(_render(today, results), encoding="utf-8")
+    broken = sum(1 for r in results if _is_broken(r[2]))
+    print(f"Link Doctor: scanned {len(results)} URLs, {broken} broken. Wrote {target.relative_to(ROOT)}")
+    return 1 if (args.fail_on_broken and broken) else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
