@@ -67,12 +67,30 @@ def _recent_log(n: int) -> list[str]:
 
 
 def _load_state() -> dict:
-    if STATE.is_file():
-        try:
-            return json.loads(STATE.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
-            return {}
-    return {}
+    """
+    Load `signals/cycles.json` and return it as a dict. Guards against
+    a malformed file (non-object root, non-int counters) so a corrupt
+    state file can never crash the workflow; on any structural issue
+    the state is treated as empty and rebuilt from the git history.
+    """
+    if not STATE.is_file():
+        return {}
+    try:
+        raw = json.loads(STATE.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+    if not isinstance(raw, dict):
+        return {}
+    cleaned: dict = {}
+    for label, _ in TIERS:
+        value = raw.get(label, 0)
+        cleaned[label] = value if isinstance(value, int) and value >= 0 else 0
+    last_total = raw.get("last_total", 0)
+    if isinstance(last_total, int) and last_total >= 0:
+        cleaned["last_total"] = last_total
+    if isinstance(raw.get("last_run"), str):
+        cleaned["last_run"] = raw["last_run"]
+    return cleaned
 
 
 def _save_state(state: dict) -> None:
@@ -109,7 +127,6 @@ def _emit(tier_label: str, ordinal: int, total_merges: int, recent: list[str]) -
 def main() -> int:
     total = _count_merges_on_main()
     state = _load_state()
-    last_seen = state.get("last_total", 0)
     fired: list[str] = []
 
     for label, modulus in TIERS:
@@ -122,11 +139,14 @@ def main() -> int:
             fired.append(str(path.relative_to(ROOT)))
         state[label] = already
 
-    state["last_total"] = total
-    state["last_run"] = datetime.now(timezone.utc).isoformat()
-    _save_state(state)
-
+    # Only persist state when at least one milestone fired. Otherwise
+    # the file would change (last_run timestamp) on every workflow run
+    # and pollute the git history with no-op commits. Idempotency is
+    # the contract: same merge count + same state -> no writes.
     if fired:
+        state["last_total"] = total
+        state["last_run"] = datetime.now(timezone.utc).isoformat()
+        _save_state(state)
         print("Milestones: fired " + ", ".join(fired))
     else:
         print(f"Milestones: nothing to fire (total merges = {total})")
