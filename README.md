@@ -299,7 +299,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-13 13:49 UTC_
+_Last updated: 2026-05-13 13:56 UTC_
 
 ---
 
@@ -331,11 +331,11 @@ _Last updated: 2026-05-13 13:49 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`f9d45f4`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/f9d45f4) | docs(agents): add AGENTS.md scaffold pointing at stack-wide AXIOM.md (#28) | Mohamed Abdelaziz ‬‏ |
+| [`ca56fe3`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/ca56fe3) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`b150261`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/b150261) | feat(personas): import 6 archetype personas from GemClaw (#27) | Mohamed Abdelaziz ‬‏ |
 | [`e44417f`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/e44417f) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`d730052`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/d730052) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`cf9fa31`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/cf9fa31) | chore: add Apache-2.0 LICENSE file and package.json license field (#26) | Mohamed Abdelaziz ‬‏ |
-| [`c0ddd5c`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/c0ddd5c) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 
 ---
 
