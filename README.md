@@ -349,7 +349,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-13 18:08 UTC_
+_Last updated: 2026-05-13 18:21 UTC_
 
 ---
 
@@ -364,12 +364,12 @@ _Last updated: 2026-05-13 18:08 UTC_
 
 ---
 
-### 🧩 Skill Registry — 58 Total Skills across 6 Tiers
+### 🧩 Skill Registry — 59 Total Skills across 6 Tiers
 
 | Tier | Count | Skills |
 |---|---|---|
 | 👑 Sovereign | 4 | `sovereign-constitution`, `covenant-guard`, `quran-resonance`, `multiverse-lab-pro` |
-| ⚙️ Advanced Infrastructure | 8 | `shura-council`, `version-guard`, `memory-bridge`, `circuit-breaker`, `purity-filter`, `awesome-curator`, `community-support-layer`, `topology-fork-engine` |
+| ⚙️ Advanced Infrastructure | 9 | `shura-council`, `version-guard`, `memory-bridge`, `circuit-breaker`, `purity-filter`, `awesome-curator`, `community-support-layer`, `topology-fork-engine`, `owasp-agentic-guard` |
 | 🔧 Pro | 27 | `topology-orchestrator`, `skill-bank-evolution`, `mission-control`, `pipeline-store`, `resonance-engine`, `mcts-simulator`, `local-journal`, `metamorphosis-loop`, `reward-engine`, `model-council`, `edge-whisperer`, `trust-chain`, `skill-evaluator`, `skill-sandbox`, `prompt-evaluator`, `red-team-guard`, `cross-model-judge`, `ci-cd-ai-guard`, `chain-tracer`, `hidden-topology`, `fractal-memory`, `pre-built-memories`, `fine-tuned-vault`, `integration-packs`, `blockchain-trading-kit`, `shadow-exchange`, `shadow-hospital` |
 | 🛠️ Advanced Tool | 8 | `intent-dispatcher`, `prompt-weaver`, `persona-forge`, `role-tribunal`, `voice-identity`, `persona-marketplace`, `agent-division-loader`, `multi-tool-exporter` |
 | 🔨 Basic Tool | 4 | `data-alchemist`, `open-mcp-connectors`, `_test_tool`, `prompt-templates` |
@@ -381,11 +381,11 @@ _Last updated: 2026-05-13 18:08 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
-| [`5613ad0`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/5613ad0) | feat(stack): Echo369 doctrine + v2 assets + aix.* metadata + AGENTS.md naming fix (#31) | Mohamed Abdelaziz ‬‏ |
-| [`bd07e91`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/bd07e91) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`87ba271`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/87ba271) | feat(quality): add skill quality gate to block stub skills (#30) | Mohamed Abdelaziz ‬‏ |
-| [`7ade3cc`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/7ade3cc) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`1265170`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/1265170) | docs(readme): Sovereign AI Stack meta-badge + refreshed Architects section (#29) | Mohamed Abdelaziz ‬‏ |
+| [`ccd8f1d`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/ccd8f1d) | chore(ci): bump actions/setup-python from 4 to 6 (#46) | dependabot[bot] |
+| [`1482287`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/1482287) | CodeRabbit Generated Unit Tests: Add unit tests (#44) | coderabbitai[bot] |
+| [`0c0c08d`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/0c0c08d) | CodeRabbit Generated Unit Tests: Generate unit tests (#42) | coderabbitai[bot] |
+| [`512f954`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/512f954) | feat(skills): fill intelligence layer with research-backed content (#36) | Mohamed Abdelaziz ‬‏ |
+| [`c240ec8`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/c240ec8) | feat(skills): fill orchestration layer with research-backed content (#35) | Mohamed Abdelaziz ‬‏ |
 
 ---
 
