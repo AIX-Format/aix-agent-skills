@@ -1,0 +1,77 @@
+name: Growth Loops (batch 2)
+
+# Two zero-cost loops:
+#   1. Link Doctor: weekly HEAD-check on every URL in the repo's MDs.
+#      Writes signals/link-health-YYYY-MM-DD.md. Only broken URLs are
+#      listed in the report so it stays small.
+#   2. Talent Scout: rebuilds CONTRIBUTORS.md from git log on every
+#      push to main and weekly. Idempotent: re-running on the same
+#      git state produces a byte-identical file.
+#
+# Both commit back to main as github-actions[bot] with [skip ci] so
+# they cannot recursively trigger themselves or downstream workflows.
+on:
+  schedule:
+    # Sunday 02:00 UTC, slow-cadence so we never DOS external hosts.
+    - cron: "0 2 * * 0"
+  push:
+    branches: [main]
+    paths:
+      # Only re-run talent scout when the commit graph actually grows.
+      - "**/*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: growth-loops-2
+  cancel-in-progress: false
+
+jobs:
+  loops:
+    name: Link + Talent
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Talent Scout needs the full history for accurate counts.
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Talent Scout (every run)
+        run: python3 scripts/talent_scout.py
+
+      - name: Link Doctor (scheduled or manual only)
+        # Skip on push events to avoid hammering external hosts on
+        # every commit. Weekly cadence + manual dispatch is enough.
+        if: github.event_name != 'push'
+        run: python3 scripts/link_doctor.py --timeout 8
+
+      - name: Detect changes
+        id: diff
+        # `git diff --quiet` only sees tracked-file modifications and
+        # misses untracked files. Use `git status --porcelain` scoped
+        # to the paths we actually write to, so a fresh report under
+        # signals/ or a new CONTRIBUTORS.md is correctly picked up.
+        run: |
+          if [[ -z "$(git status --porcelain -- CONTRIBUTORS.md signals/)" ]]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit & push
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add CONTRIBUTORS.md signals/ 2>/dev/null || true
+          git commit -m "growth-loops-2: refresh contributors + link health [skip ci]"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin HEAD:main
