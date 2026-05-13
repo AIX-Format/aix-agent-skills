@@ -123,7 +123,9 @@ def body_is_stub(body: list[str]) -> bool:
     if not meaningful:
         return True
     for line in meaningful:
-        if not any(pat.match(line) for pat in STUB_PATTERNS):
+        # Strip leading list markers (-, *, +, 1., a., etc.) before pattern matching
+        normalized_line = re.sub(r"^[-*+]|\d+\.|[a-zA-Z]\.", "", line).strip()
+        if not any(pat.match(normalized_line) for pat in STUB_PATTERNS):
             return False
     return True
 
@@ -170,7 +172,7 @@ def collect_all_skills() -> list[Path]:
     if not SKILLS_DIR.is_dir():
         return []
     return sorted(
-        p for p in SKILLS_DIR.glob("*.md") if not p.name.startswith("_")
+        p for p in SKILLS_DIR.rglob("*.md") if not p.name.startswith("_")
     )
 
 
