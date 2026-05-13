@@ -62,10 +62,14 @@ fall back to a softer evaluator, it escalates.
    against the expected output schema. Any deterministic failure is
    final and short-circuits the judge phase.
 3. **Run multi-judge rubric**. Send the prompt and the rubric to at
-   least three independent judge models (local, edge, cloud). Each
-   judge returns a per-criterion score 0 to 1 with a written
-   justification. Length-controlled scoring is used to mitigate the
-   verbosity-bias documented in the LLM-as-Judge literature.
+   least three independent judge models, all executed on-device to
+   honour the 100% local-privacy guarantee in the Lab Integration
+   section above. Independence comes from running different model
+   families, sizes, or quantisations rather than from different
+   execution locations. Each judge returns a per-criterion score 0 to
+   1 with a written justification. Length-controlled scoring is used
+   to mitigate the verbosity-bias documented in the LLM-as-Judge
+   literature.
 4. **Aggregate**. Weighted average by judge reputation and
    self-reported confidence. Apply the three-judge agreement floor:
    if fewer than two judges agree on each criterion within the
@@ -82,7 +86,7 @@ fall back to a softer evaluator, it escalates.
 
 | Mode | Detection | Recovery |
 |------|-----------|----------|
-| Fewer than three judges available | Judge roster query returns less than the minimum | Refuse to issue a certificate; surface `judge_pool_insufficient` rather than degrade silently |
+| Fewer than three local judges available | Judge roster query returns less than the minimum locally available | Refuse to issue a certificate; surface `judge_pool_insufficient` rather than degrade by reaching to a remote model and breaking the privacy guarantee |
 | Judges disagree systematically | Per-criterion variance across judges exceeds the tolerance band | Return `inconclusive`; escalate to `shura-council`; treat the prompt as not certified |
 | Verbosity bias inflates a judge score | Length-controlled metric flags the discrepancy | Recompute the score with the length correction; if the corrected score crosses the threshold, reject |
 | Banned-phrase scan miss (zero-day phrase) | Detected only at production-model invocation by the runtime | Add the phrase to the live list, revoke any in-flight certificates that contain it, redo evaluation |
