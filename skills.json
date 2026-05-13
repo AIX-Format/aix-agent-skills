@@ -349,6 +349,12 @@
       "description": "A managed, versioned library of dynamic prompt templates",
       "file": "skills/prompt-templates.md",
       "tier": "BASIC_TOOL"
+    },
+    {
+      "name": "owasp-agentic-guard",
+      "description": "Runtime gate that maps OWASP Top 10 for Agentic Applications 2026 (ASI01-ASI10) to mitigation skills",
+      "file": "skills/owasp-agentic-guard.md",
+      "tier": "ADVANCED_INFRASTRUCTURE"
     }
   ]
 }
