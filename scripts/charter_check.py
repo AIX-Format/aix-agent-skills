@@ -39,6 +39,21 @@ RULES_FILE = ROOT / "charter.rules.txt"
 
 
 def load_rules() -> list[tuple[str, str, re.Pattern]]:
+    """
+    Load and compile rules from the repository's charter.rules.txt file.
+    
+    Reads RULES_FILE, parses non-empty, non-comment lines as tab-delimited
+    LEVEL, NAME, REGEX entries, and returns a list of (level, name, compiled regex)
+    for rules whose level is `warn` or `error`. Lines with the wrong field count
+    or with invalid regular expressions are skipped. If RULES_FILE is missing,
+    an informational message is written to stderr and an empty list is returned.
+    Malformed-line and invalid-regex diagnostics are written to stderr.
+    
+    Returns:
+        rules (list[tuple[str, str, re.Pattern]]): Parsed rule entries where the
+        first element is the normalized level (`"warn"` or `"error"`), the second
+        is the rule name, and the third is the compiled regular expression.
+    """
     if not RULES_FILE.is_file():
         print(f"[!] no charter.rules.txt at {RULES_FILE}; nothing to check", file=sys.stderr)
         return []
@@ -63,6 +78,15 @@ def load_rules() -> list[tuple[str, str, re.Pattern]]:
 
 
 def annotate(level: str, msg: str, file: str | None = None, line: int | None = None) -> None:
+    """
+    Emit a GitHub Actions workflow annotation when running in that environment, otherwise print a plain bracketed message.
+    
+    Parameters:
+        level (str): Annotation severity; typically "warning" or "error".
+        msg (str): The annotation message text.
+        file (str | None): Optional filename to attach to the annotation.
+        line (int | None): Optional line number to attach to the annotation.
+    """
     if os.environ.get("GITHUB_ACTIONS") == "true":
         loc = ""
         if file:
@@ -77,6 +101,14 @@ def annotate(level: str, msg: str, file: str | None = None, line: int | None = N
 def iter_targets() -> list[Path]:
     # If stdin has data, treat each non-empty line as a path; else
     # fall back to every tracked text file under the repo root.
+    """
+    Select target file paths for charter scanning.
+    
+    When standard input provides a list of paths (stdin is not a TTY), each non-empty line is treated as a candidate path; otherwise the repository is scanned for files with extensions .md, .py, .ts, .go, .yml, and .yaml. Paths inside `node_modules` or `.git` are excluded in the fallback scan.
+    
+    Returns:
+        targets (list[Path]): Existing file paths to be scanned.
+    """
     if not sys.stdin.isatty():
         paths = [Path(p.strip()) for p in sys.stdin.read().splitlines() if p.strip()]
     else:
@@ -91,6 +123,14 @@ def iter_targets() -> list[Path]:
 
 
 def main() -> int:
+    """
+    Scan repository targets using rules loaded from the charter rules file, emit annotations for each match, and return an exit status reflecting whether any error-level rules were found.
+    
+    Loads rules, determines target files (stdin-provided paths or a fallback glob), scans each file line-by-line for rule regex matches, emits GitHub Actions annotations (or bracketed console messages) for each match, and prints a summary of findings.
+    
+    Returns:
+        int: exit code 1 if any `error`-level rule matched, otherwise 0.
+    """
     rules = load_rules()
     if not rules:
         return 0

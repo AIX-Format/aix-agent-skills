@@ -44,6 +44,15 @@ UNIT_SUFFIX_RE = re.compile(r"(?:v\d+|\d+d|\d+h|\d+c|\d+vcpu)$")
 
 
 def annotate(level: str, msg: str) -> None:
+    """
+    Emit an annotation message formatted for GitHub Actions when GITHUB_ACTIONS=="true", otherwise print a prefixed console message.
+    
+    When the GITHUB_ACTIONS environment variable equals "true", prints a workflow annotation in the form "::<level>::<msg>". Otherwise prints "[<marker>] <msg>" where markers map to severity: "error" → "X", "warning" → "!", "notice" → "i", and other levels → "-".
+    
+    Parameters:
+        level (str): Severity label for the annotation (e.g., "error", "warning", "notice").
+        msg (str): The message text to emit.
+    """
     if os.environ.get("GITHUB_ACTIONS") == "true":
         print(f"::{level}::{msg}")
     else:
@@ -52,7 +61,20 @@ def annotate(level: str, msg: str) -> None:
 
 
 def check_name(name: str) -> list[tuple[str, str]]:
-    """Return a list of (level, message) findings for one skill name."""
+    """
+    Check a skill name against marketplace naming rules and collect any findings.
+    
+    Examines a single skill name for issues such as double dashes, trailing separators,
+    reserved public prefixes, token count extremes, cryptic tokens, and tokens that
+    end with digits without an allowed unit suffix.
+    
+    Parameters:
+        name (str): Skill name to validate.
+    
+    Returns:
+        findings (list[tuple[str, str]]): List of (level, message) tuples where
+            `level` is `"error"` or `"warning"` and `message` describes the issue.
+    """
     findings: list[tuple[str, str]] = []
     is_internal = name.startswith("_")
 
@@ -82,6 +104,14 @@ def check_name(name: str) -> list[tuple[str, str]]:
 
 
 def main() -> int:
+    """
+    Run naming validation for skills listed in SKILLS_JSON and emit findings.
+    
+    Parses the `--strict` flag from the command line, loads and parses SKILLS_JSON, validates each skill's `name`, emits annotations for each finding, and prints a summary line. The process returns a nonzero status when a fatal read/parse error occurs, when any `error` finding is reported, or when `--strict` is set and any `warning` findings are present.
+    
+    Returns:
+        int: `0` on success; `1` on read/parse failure, on any `error` finding, or on any `warning` when `--strict` is enabled.
+    """
     parser = argparse.ArgumentParser(description="Naming drift checks for the skills manifest")
     parser.add_argument(
         "--strict",

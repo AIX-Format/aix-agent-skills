@@ -40,6 +40,15 @@ TIERS = (
 
 
 def _git(*args: str) -> str:
+    """
+    Run `git` with the given arguments in the repository root and return the command output.
+    
+    Parameters:
+        *args (str): Arguments to pass to the `git` command (e.g., `"log"`, `"--first-parent"`).
+    
+    Returns:
+        str: The command's stdout with leading/trailing whitespace removed, or an empty string if the git command fails.
+    """
     try:
         return subprocess.check_output(["git", "-C", str(ROOT), *args], text=True).strip()
     except subprocess.CalledProcessError:
@@ -47,6 +56,12 @@ def _git(*args: str) -> str:
 
 
 def _count_merges_on_main() -> int:
+    """
+    Count merge commits on the `main` branch using first-parent history.
+    
+    Returns:
+        int: The number of merge commits found on `main`. Returns 0 if no merges are found or the underlying git command produced no output.
+    """
     raw = _git("log", "--first-parent", "--merges", "main", "--pretty=format:%H")
     if not raw:
         return 0
@@ -54,6 +69,15 @@ def _count_merges_on_main() -> int:
 
 
 def _recent_log(n: int) -> list[str]:
+    """
+    Fetch the most recent merge commit log entries from `main`, formatted and limited to `n` entries.
+    
+    Parameters:
+        n (int): Maximum number of merge commits to include.
+    
+    Returns:
+        list[str]: Formatted log lines (each like "- `<short-hash>` YYYY-MM-DD: message"); empty list if no output is available.
+    """
     raw = _git(
         "log",
         f"-n{n}",
@@ -68,10 +92,13 @@ def _recent_log(n: int) -> list[str]:
 
 def _load_state() -> dict:
     """
-    Load `signals/cycles.json` and return it as a dict. Guards against
-    a malformed file (non-object root, non-int counters) so a corrupt
-    state file can never crash the workflow; on any structural issue
-    the state is treated as empty and rebuilt from the git history.
+    Load and sanitize persisted milestone firing state from signals/cycles.json.
+    
+    If the file is missing or malformed (invalid JSON, non-object root, or invalid values) this returns an empty dict. The returned mapping contains a non-negative integer counter for each tier label defined in TIERS. When present and valid, the mapping also includes "last_total" (an int >= 0) and "last_run" (an ISO timestamp string).
+    
+    Returns:
+        dict: Mapping of tier labels to non-negative integer counters; may include
+        "last_total" (int >= 0) and "last_run" (str) when available and valid.
     """
     if not STATE.is_file():
         return {}
@@ -94,11 +121,34 @@ def _load_state() -> dict:
 
 
 def _save_state(state: dict) -> None:
+    """
+    Persist the given state mapping to the signals cycles JSON file.
+    
+    Ensures the signals directory exists, then writes `state` as pretty-printed JSON (two-space indent) encoded as UTF-8 with a trailing newline to the module's `STATE` path.
+    
+    Parameters:
+        state (dict): Mapping containing per-tier counters and optional metadata (e.g., `last_total`, `last_run`) to persist.
+    """
     SIGNALS.mkdir(parents=True, exist_ok=True)
     STATE.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
 
 
 def _emit(tier_label: str, ordinal: int, total_merges: int, recent: list[str]) -> Path:
+    """
+    Create or update a milestone Markdown file for the given tier and ordinal.
+    
+    The file records the emission timestamp, the current short HEAD, the total merge count at emission time,
+    and a "Last <tier> merges leading here" section populated from `recent`.
+    
+    Parameters:
+    	tier_label (str): Tier label used in the filename and headings (e.g. "7", "49", "369").
+    	ordinal (int): Ordinal number for this milestone within the tier (1-based).
+    	total_merges (int): Total number of merge commits on `main` at the time of emission.
+    	recent (list[str]): Lines describing recent merge commits to include under the "Last <tier> merges" section.
+    
+    Returns:
+    	target (Path): Path to the Markdown file written under the milestones directory.
+    """
     MILESTONES.mkdir(parents=True, exist_ok=True)
     target = MILESTONES / f"{tier_label}-{ordinal}.md"
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
@@ -125,6 +175,14 @@ def _emit(tier_label: str, ordinal: int, total_merges: int, recent: list[str]) -
 
 
 def main() -> int:
+    """
+    Emit milestone Markdown files for tiers when the merge commit count on `main` crosses their thresholds and persist per-tier progress.
+    
+    When one or more new milestones are generated this run, writes milestone files under the `milestones/` directory and updates `signals/cycles.json` with per-tier ordinals plus `last_total` and `last_run`. If no milestones are generated, no files or state are modified.
+    
+    Returns:
+        int: Exit code `0` on successful completion.
+    """
     total = _count_merges_on_main()
     state = _load_state()
     fired: list[str] = []
