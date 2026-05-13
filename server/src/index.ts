@@ -116,8 +116,19 @@ app.use('/skills/:name/manifest', async (c, next) => {
   // x402-hono's paymentMiddleware accepts a route -> price map. We
   // construct it dynamically per request because the route is a path
   // parameter.
+  // Runtime validation of the receiving wallet. A TypeScript cast cannot
+  // catch a missing or malformed env binding; if the operator forgot to
+  // run `wrangler secret put RECEIVING_WALLET`, we must fail fast with a
+  // clear error rather than letting x402 reject every paid request with
+  // an opaque internal-server-error downstream.
+  const wallet = c.env.RECEIVING_WALLET;
+  if (!wallet || !/^0x[a-fA-F0-9]{40}$/.test(wallet)) {
+    throw new Error(
+      'gateway misconfigured: RECEIVING_WALLET must be a valid 0x-prefixed 40-hex address (set via `wrangler secret put RECEIVING_WALLET`)',
+    );
+  }
   const middleware = paymentMiddleware(
-    c.env.RECEIVING_WALLET as `0x${string}`,
+    wallet as `0x${string}`,
     {
       [`/skills/${name}/manifest`]: {
         price: `$${price}`,

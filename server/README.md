@@ -16,7 +16,7 @@ about one second on Base.
 
 ## Architecture
 
-```
+```text
 [buyer/agent] --HTTP GET--> [Cloudflare Worker (Hono + x402)] --verify--> [x402 facilitator] --settle--> [Base USDC]
                                           |
                                           +--> stream skill manifest (markdown)

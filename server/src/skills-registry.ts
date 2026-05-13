@@ -30,6 +30,18 @@ for (const entry of data.skills) {
     // boot rather than silently using the first or last occurrence.
     throw new Error(`skills-registry: duplicate skill name "${entry.name}"`);
   }
+  // Reject malformed prices at boot so a typo in skills.json fails the
+  // worker startup rather than silently flipping paid/free gating at
+  // request time. We accept "0", positive decimal strings, and `undefined`;
+  // anything else (NaN, negative, non-numeric) is a content-layer bug.
+  if (entry.price_usdc !== undefined) {
+    const parsed = Number(entry.price_usdc);
+    if (!Number.isFinite(parsed) || parsed < 0) {
+      throw new Error(
+        `skills-registry: invalid price_usdc "${entry.price_usdc}" for skill "${entry.name}"`,
+      );
+    }
+  }
   index.set(entry.name, entry);
 }
 
@@ -69,8 +81,11 @@ export function priceFor(entry: SkillEntry): string {
 
 /** True iff the skill is payment-gated (price > 0). */
 export function isPaid(entry: SkillEntry): boolean {
-  const price = priceFor(entry);
-  return price !== '0' && parseFloat(price) > 0;
+  // Number() handles "0", "0.10", and " " uniformly; isFinite + > 0
+  // collapses the previous double-check (string compare AND parseFloat)
+  // into a single boolean and rejects NaN cleanly. Boot-time validation
+  // already guarantees the value is non-negative.
+  return Number(priceFor(entry)) > 0;
 }
 
 /**
