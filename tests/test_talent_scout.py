@@ -371,3 +371,100 @@ class TestCollect:
             humans, _ = ts._collect()
         assert humans["Dave"]["added"] == 0
         assert humans["Dave"]["removed"] == 3
+
+
+# ─── main ─────────────────────────────────────────────────────────────────────
+
+
+class TestMain:
+    """
+    Tests for main() using mocked _collect and filesystem I/O so we never
+    touch the real git repo or write to the actual CONTRIBUTORS.md.
+    """
+
+    _HUMANS = {
+        "Alice": {"commits": 5, "added": 100, "removed": 20, "first": "2026-01-01", "last": "2026-05-13"},
+    }
+    _BOTS = {
+        "github-actions[bot]": {"commits": 2, "added": 10, "removed": 5, "first": "2026-02-01", "last": "2026-04-01"},
+    }
+
+    def test_success_returns_zero(self, tmp_path, monkeypatch):
+        target = tmp_path / "CONTRIBUTORS.md"
+        monkeypatch.setattr(ts, "ROOT", tmp_path)
+        monkeypatch.setattr(ts, "TARGET", target)
+        with patch.object(ts, "_collect", return_value=(self._HUMANS, self._BOTS)):
+            rc = ts.main()
+        assert rc == 0
+
+    def test_success_writes_contributors_file(self, tmp_path, monkeypatch):
+        target = tmp_path / "CONTRIBUTORS.md"
+        monkeypatch.setattr(ts, "ROOT", tmp_path)
+        monkeypatch.setattr(ts, "TARGET", target)
+        with patch.object(ts, "_collect", return_value=(self._HUMANS, self._BOTS)):
+            ts.main()
+        assert target.exists()
+        content = target.read_text(encoding="utf-8")
+        assert "# Contributors" in content
+
+    def test_success_output_contains_human_and_bot_counts(self, tmp_path, monkeypatch, capsys):
+        target = tmp_path / "CONTRIBUTORS.md"
+        monkeypatch.setattr(ts, "ROOT", tmp_path)
+        monkeypatch.setattr(ts, "TARGET", target)
+        with patch.object(ts, "_collect", return_value=(self._HUMANS, self._BOTS)):
+            ts.main()
+        captured = capsys.readouterr()
+        assert "1 humans" in captured.out
+        assert "1 bots" in captured.out
+
+    def test_runtime_error_returns_one(self, tmp_path, monkeypatch):
+        target = tmp_path / "CONTRIBUTORS.md"
+        monkeypatch.setattr(ts, "ROOT", tmp_path)
+        monkeypatch.setattr(ts, "TARGET", target)
+        with patch.object(ts, "_collect", side_effect=RuntimeError("git failed")):
+            rc = ts.main()
+        assert rc == 1
+
+    def test_runtime_error_prints_to_stderr(self, tmp_path, monkeypatch, capsys):
+        target = tmp_path / "CONTRIBUTORS.md"
+        monkeypatch.setattr(ts, "ROOT", tmp_path)
+        monkeypatch.setattr(ts, "TARGET", target)
+        with patch.object(ts, "_collect", side_effect=RuntimeError("fatal: broken repo")):
+            ts.main()
+        captured = capsys.readouterr()
+        assert "fatal: broken repo" in captured.err
+
+    def test_runtime_error_does_not_write_file(self, tmp_path, monkeypatch):
+        target = tmp_path / "CONTRIBUTORS.md"
+        monkeypatch.setattr(ts, "ROOT", tmp_path)
+        monkeypatch.setattr(ts, "TARGET", target)
+        with patch.object(ts, "_collect", side_effect=RuntimeError("git failed")):
+            ts.main()
+        assert not target.exists()
+
+    def test_empty_humans_and_bots_writes_placeholder(self, tmp_path, monkeypatch):
+        target = tmp_path / "CONTRIBUTORS.md"
+        monkeypatch.setattr(ts, "ROOT", tmp_path)
+        monkeypatch.setattr(ts, "TARGET", target)
+        with patch.object(ts, "_collect", return_value=({}, {})):
+            ts.main()
+        content = target.read_text(encoding="utf-8")
+        assert "_No human contributors recorded yet._" in content
+
+    def test_written_file_includes_human_name(self, tmp_path, monkeypatch):
+        target = tmp_path / "CONTRIBUTORS.md"
+        monkeypatch.setattr(ts, "ROOT", tmp_path)
+        monkeypatch.setattr(ts, "TARGET", target)
+        with patch.object(ts, "_collect", return_value=(self._HUMANS, {})):
+            ts.main()
+        content = target.read_text(encoding="utf-8")
+        assert "Alice" in content
+
+    def test_zero_bots_no_bots_section(self, tmp_path, monkeypatch):
+        target = tmp_path / "CONTRIBUTORS.md"
+        monkeypatch.setattr(ts, "ROOT", tmp_path)
+        monkeypatch.setattr(ts, "TARGET", target)
+        with patch.object(ts, "_collect", return_value=(self._HUMANS, {})):
+            ts.main()
+        content = target.read_text(encoding="utf-8")
+        assert "## Bots" not in content

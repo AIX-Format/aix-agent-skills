@@ -404,3 +404,112 @@ class TestCheck:
             status, msg = ld._check("https://example.com/", 5)
         assert status is None
         assert "403" in msg
+
+
+# ─── main ────────────────────────────────────────────────────────────────────
+
+
+class TestMain:
+    """
+    Tests for main() using mocked _gather_links, _check, and filesystem I/O
+    so we never make real network calls or write to the real signals/ dir.
+    """
+
+    def _run_main(self, argv: list[str], tmp_path, monkeypatch, by_url: dict, check_results: dict):
+        """
+        Helper: patch ROOT/SIGNALS, _gather_links, _check, and sys.argv,
+        then call ld.main() and return its exit code.
+
+        check_results maps url -> (status, msg).
+        """
+        signals_dir = tmp_path / "signals"
+        signals_dir.mkdir()
+        monkeypatch.setattr(ld, "ROOT", tmp_path)
+        monkeypatch.setattr(ld, "SIGNALS", signals_dir)
+
+        def fake_gather():
+            return by_url
+
+        def fake_check(url, timeout):
+            return check_results.get(url, (200, ""))
+
+        import sys as _sys
+        monkeypatch.setattr(_sys, "argv", ["link_doctor.py"] + argv)
+        with patch.object(ld, "_gather_links", side_effect=fake_gather), \
+             patch.object(ld, "_check", side_effect=fake_check):
+            return ld.main()
+
+    def test_no_urls_exits_zero(self, tmp_path, monkeypatch):
+        rc = self._run_main([], tmp_path, monkeypatch, {}, {})
+        assert rc == 0
+
+    def test_all_healthy_exits_zero(self, tmp_path, monkeypatch):
+        by_url = {"https://example.com/": ["README.md"]}
+        check_results = {"https://example.com/": (200, "")}
+        rc = self._run_main([], tmp_path, monkeypatch, by_url, check_results)
+        assert rc == 0
+
+    def test_broken_link_without_flag_exits_zero(self, tmp_path, monkeypatch):
+        """Broken links do not cause failure unless --fail-on-broken is set."""
+        by_url = {"https://dead.example.com/": ["README.md"]}
+        check_results = {"https://dead.example.com/": (404, "HTTP 404")}
+        rc = self._run_main([], tmp_path, monkeypatch, by_url, check_results)
+        assert rc == 0
+
+    def test_broken_link_with_fail_flag_exits_one(self, tmp_path, monkeypatch):
+        by_url = {"https://dead.example.com/": ["README.md"]}
+        check_results = {"https://dead.example.com/": (404, "HTTP 404")}
+        rc = self._run_main(["--fail-on-broken"], tmp_path, monkeypatch, by_url, check_results)
+        assert rc == 1
+
+    def test_fail_on_broken_with_healthy_links_exits_zero(self, tmp_path, monkeypatch):
+        by_url = {"https://good.example.com/": ["README.md"]}
+        check_results = {"https://good.example.com/": (200, "")}
+        rc = self._run_main(["--fail-on-broken"], tmp_path, monkeypatch, by_url, check_results)
+        assert rc == 0
+
+    def test_report_written_to_signals_dir(self, tmp_path, monkeypatch):
+        by_url = {"https://example.com/": ["README.md"]}
+        check_results = {"https://example.com/": (200, "")}
+        self._run_main([], tmp_path, monkeypatch, by_url, check_results)
+        report = tmp_path / "signals" / "link-health.md"
+        assert report.exists()
+        content = report.read_text(encoding="utf-8")
+        assert "# Link Health:" in content
+
+    def test_report_lists_broken_urls(self, tmp_path, monkeypatch):
+        by_url = {"https://broken.example.com/page": ["a.md"]}
+        check_results = {"https://broken.example.com/page": (503, "HTTP 503")}
+        self._run_main([], tmp_path, monkeypatch, by_url, check_results)
+        report = tmp_path / "signals" / "link-health.md"
+        content = report.read_text(encoding="utf-8")
+        assert "broken.example.com" in content
+        assert "503" in content
+
+    def test_report_all_healthy_message(self, tmp_path, monkeypatch):
+        by_url = {"https://ok.example.com/": ["x.md"]}
+        check_results = {"https://ok.example.com/": (200, "")}
+        self._run_main([], tmp_path, monkeypatch, by_url, check_results)
+        report = tmp_path / "signals" / "link-health.md"
+        content = report.read_text(encoding="utf-8")
+        assert "_All links healthy._" in content
+
+    def test_unreachable_counted_as_broken_with_fail_flag(self, tmp_path, monkeypatch):
+        by_url = {"https://gone.example.com/": ["README.md"]}
+        check_results = {"https://gone.example.com/": (None, "URLError")}
+        rc = self._run_main(["--fail-on-broken"], tmp_path, monkeypatch, by_url, check_results)
+        assert rc == 1
+
+    def test_signals_dir_created_if_missing(self, tmp_path, monkeypatch):
+        signals_dir = tmp_path / "signals"
+        # Do NOT pre-create signals_dir — main() must create it.
+        monkeypatch.setattr(ld, "ROOT", tmp_path)
+        monkeypatch.setattr(ld, "SIGNALS", signals_dir)
+
+        import sys as _sys
+        monkeypatch.setattr(_sys, "argv", ["link_doctor.py"])
+
+        with patch.object(ld, "_gather_links", return_value={}), \
+             patch.object(ld, "_check", return_value=(200, "")):
+            ld.main()
+        assert signals_dir.exists()
