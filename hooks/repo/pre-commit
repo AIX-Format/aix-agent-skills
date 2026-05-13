@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Local pre-commit helper for the L3 marketplace.
+#
+# Install with:
+#   ln -sf ../../hooks/repo/pre-commit .git/hooks/pre-commit
+#   chmod +x hooks/repo/pre-commit
+#
+# Runs the skill quality gate against files staged for commit. Mirrors
+# the CI behaviour in .github/workflows/skill-quality.yml so authors get
+# the same verdict locally that CI will give them.
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+
+# Collect staged skill files (added, copied, modified, renamed) under skills/.
+mapfile -t staged < <(git diff --cached --name-only --diff-filter=ACMR -- ':(glob)skills/**/*.md' || true)
+
+if [ ${#staged[@]} -eq 0 ]; then
+  exit 0
+fi
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "[skill-quality] python3 not found, skipping local gate" >&2
+  exit 0
+fi
+
+printf '%s\n' "${staged[@]}" | python3 scripts/validate_skill_quality.py --mode=changed

@@ -8,6 +8,9 @@
 
 - `skills/` — markdown skill definitions, snake_case names matching `^[a-z0-9_]+$`.
 - `personas/` — versioned agent persona profiles.
+- `templates/` — canonical authoring templates. Copy `templates/skill-template.md` when adding a new skill.
+- `rules/` — path-scoped quality rules enforced in CI. See `rules/skills.md` for the skill quality gate.
+- `hooks/repo/` — optional local git hooks (`pre-commit`) that mirror the CI gates so authors can validate before pushing.
 - `aix-constitutional-runtime/` — sample TypeScript runtime that consumes `@axiom/*` packages.
 - `go-engine/` — high-performance compute engine for Shannon entropy, topology, and resonance.
 
@@ -23,7 +26,8 @@
 
 1. [`AXIOM.md`](https://github.com/Moeabdelaziz007/aix-format/blob/main/AXIOM.md) — the supreme constitution.
 2. [`charter.rules.txt`](./charter.rules.txt) — repo-local lint rules (AWS keys, em-dash, etc.).
-3. The skill or persona template most similar to what you are adding.
+3. [`rules/skills.md`](./rules/skills.md) — the skill quality gate (no stubs may land on `main`).
+4. The skill or persona template most similar to what you are adding (`templates/skill-template.md` for skills).
 
 ## Sovereign Stack layers
 
