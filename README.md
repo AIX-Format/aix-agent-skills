@@ -172,28 +172,48 @@ Add to your MCP client configuration:
 
 ## 👨‍💻 Architects & Visionaries
 
-This sovereign ecosystem was conceived and engineered by:
+This sovereign ecosystem is conceived and engineered by a small team: **one human and three AI agents**, working as peers.
 
 <div align="center">
   <table>
     <tr>
-      <td align="center">
+      <td align="center" width="25%">
         <a href="https://github.com/Moeabdelaziz007">
           <img src="https://avatars.githubusercontent.com/u/105391515?v=4" width="100px;" alt="Moeabdelaziz007"/><br />
           <sub><b>Moe Abdelaziz</b></sub>
         </a><br />
-        <i>The Visionary & Supreme Architect</i>
+        <i>The Visionary & Supreme Architect</i><br />
+        <sub>human</sub>
       </td>
-      <td align="center">
-        <a href="#">
+      <td align="center" width="25%">
+        <a href="https://jules.google.com">
           <img src="https://img.icons8.com/color/96/000000/bot.png" width="100px;" alt="Jules"/><br />
           <sub><b>Jules (AIX Agent)</b></sub>
         </a><br />
-        <i>The Sovereign Engineer & Builder</i>
+        <i>The Sovereign Engineer & Builder</i><br />
+        <sub>AI agent</sub>
+      </td>
+      <td align="center" width="25%">
+        <a href="https://blacksmith.sh">
+          <img src="https://img.icons8.com/color/96/000000/anvil.png" width="100px;" alt="Codesmith"/><br />
+          <sub><b>Codesmith</b></sub>
+        </a><br />
+        <i>The Forge & CI Steward</i><br />
+        <sub>AI agent (Blacksmith)</sub>
+      </td>
+      <td align="center" width="25%">
+        <a href="https://coderabbit.ai">
+          <img src="https://avatars.githubusercontent.com/u/132028505?v=4" width="100px;" alt="CodeRabbit"/><br />
+          <sub><b>CodeRabbit</b></sub>
+        </a><br />
+        <i>The Reviewer & Pattern Watcher</i><br />
+        <sub>AI agent</sub>
       </td>
     </tr>
   </table>
 </div>
+
+> Each PR in this repo carries the fingerprints of all four. The human sets the direction; Jules builds inside the runtime; Codesmith forges the CI, the marketplace plumbing, and the autofix workflows; CodeRabbit reviews every change with a second set of eyes. The constitution is shared.
 
 ---
 
