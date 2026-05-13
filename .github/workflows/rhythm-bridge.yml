@@ -34,14 +34,14 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout marketplace
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: aix-agent-skills
           # Full history needed for the marketplace activity window.
           fetch-depth: 50
 
       - name: Checkout iqra (read-only signal source)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: Moeabdelaziz007/iqra
           path: iqra

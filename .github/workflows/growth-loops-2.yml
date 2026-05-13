@@ -33,7 +33,7 @@ jobs:
     name: Link + Talent
     runs-on: blacksmith-2vcpu-ubuntu-2404
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           # Talent Scout needs the full history for accurate counts.
           fetch-depth: 0
