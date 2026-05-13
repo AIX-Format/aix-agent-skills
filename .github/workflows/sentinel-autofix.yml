@@ -3,9 +3,12 @@ name: Schema Sentinel Autofix
 # Sibling workflow to `schema-sentinel.yml`. The strict sentinel keeps PRs
 # honest by failing on any orphan MD; this workflow runs on a schedule (and
 # on pushes to main) to auto-register any orphan that lands on the default
-# branch and commit the registration directly back to main under the
-# github-actions[bot] identity. The commit carries `[skip ci]` so the
-# autofix cannot recursively re-trigger itself.
+# branch.
+#
+# Behavior (Nov 2026): opens a pull request instead of pushing directly to
+# main. Direct push to main from a bot bypasses human review and was the
+# root cause of marketplace stub accumulation (see #21 cleanup). The PR
+# path adds a human gate and keeps the marketplace honest.
 on:
   push:
     branches: [main]
@@ -21,6 +24,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: sentinel-autofix
@@ -28,7 +32,7 @@ concurrency:
 
 jobs:
   autofix:
-    name: Auto-register orphan skills
+    name: Open PR for orphan skills
     runs-on: blacksmith-2vcpu-ubuntu-2404
     steps:
       - name: Checkout main
@@ -72,18 +76,34 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Commit & push autofix to main
+      - name: Open pull request for autofix
         if: steps.diff.outputs.changed == 'true'
-        # Direct commit to main under the github-actions[bot] identity,
-        # matching the existing pattern in `dashboard.yml`. The trailing
-        # `[skip ci]` prevents this workflow (and others gated on push to
-        # main) from re-triggering on the autofix commit itself.
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add skills.json skills/
-          git commit -m "🛡️ sentinel: auto-register ${{ steps.sentinel.outputs.orphan_count || 'orphan' }} skill(s) [skip ci]" \
-                     -m "Orphans: ${{ steps.sentinel.outputs.orphans }}" \
-                     -m "Detected by Schema Sentinel autofix run #${{ github.run_number }} (${{ github.event_name }})."
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git push origin HEAD:main
+        # peter-evans/create-pull-request handles branch creation, commit,
+        # push, and PR open/update in one step. The action is idempotent:
+        # rerunning with new orphans updates the existing PR in place.
+        # Reviewer ensures we never silently merge low-quality stubs again.
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: sentinel-autofix/orphan-skills
+          base: main
+          commit-message: |
+            🛡️ sentinel: auto-register orphan skill(s)
+
+            Detected by Schema Sentinel autofix run #${{ github.run_number }} (${{ github.event_name }}).
+          title: "🛡️ sentinel: register orphan skill(s)"
+          body: |
+            Schema Sentinel found orphan MD files under `skills/` that are
+            not registered in `skills.json`. This PR registers them so the
+            strict sentinel passes.
+
+            **⚠️ Review carefully before merging.** Auto-generated stubs
+            (14-line files with TODOs only) should generally be deleted at
+            the source rather than registered. Prefer rejecting this PR
+            and cleaning up the orphan MDs if they have no real content.
+
+            Triggered by run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) on event `${{ github.event_name }}`.
+          labels: |
+            automated
+            sentinel
+          delete-branch: true
