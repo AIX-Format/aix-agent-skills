@@ -40,10 +40,10 @@
 # IQRA Agentic Marketplace 🌌
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Architecture-9_Layers-gold?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Protocol-IQRA_Sovereign-green?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Security-Red_Teamed-red?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Ecosystem-Triple_Integration-blue?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Architecture-9_Layers-gold?style=flat-square" alt="Architecture: 9 Layers"/>
+  <img src="https://img.shields.io/badge/Protocol-IQRA_Sovereign-green?style=flat-square" alt="Protocol: IQRA Sovereign"/>
+  <img src="https://img.shields.io/badge/Security-Red_Teamed-red?style=flat-square" alt="Security: Red Teamed"/>
+  <img src="https://img.shields.io/badge/Ecosystem-Triple_Integration-blue?style=flat-square" alt="Ecosystem: Triple Integration"/>
 </div>
 
 Welcome to the **Agentic Marketplace** for [IQRA](https://github.com/Moeabdelaziz007/iqra): the supreme multi-agent AI operating system.
@@ -96,7 +96,7 @@ The marketplace thrives on a continuous cycle of creation, testing, and evolutio
 
 ## 🏛️ The 9 Sovereign Layers & 58 Core Skills
 
-We currently host an expansive suite of capabilities structured into 9 profound layers (numbered 0 through 8) across 6 tiers.
+We currently host an expansive suite of capabilities structured into 9 profound layers (numbered 0 through 8) across 6 tiers. The 58 figure is a core-catalogue snapshot; for the authoritative live total, see the [Live Ecosystem Dashboard](#-live-ecosystem-dashboard) below.
 
 ### 0. The Sovereignty Layer (السيادة والدستور)
 The absolute core. This layer acts as the living conscience of the agent. Skills here cannot be overridden.
