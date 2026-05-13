@@ -83,6 +83,40 @@ Outside the strict L1/L2/L3 chain sits the root authority and a tier of satellit
 
 ---
 
+## 🛒 Buy a Skill (Phase 6 . x402 gateway)
+
+The marketplace is reachable over the [x402 protocol](https://www.x402.org/).
+A buyer (typically an autonomous agent in L4/L5/L6) requests a skill
+manifest, the gateway responds with `402 Payment Required` plus an x402
+payload, the buyer signs and re-requests with the `X-PAYMENT` header,
+the configured facilitator settles the payment on-chain, and the
+manifest is streamed back. Round trip on Base settles in about one
+second.
+
+```bash
+# Discovery (free):
+curl https://skills.axiomid.app/
+curl https://skills.axiomid.app/skills
+
+# Paid manifest (400ms after payment settles):
+curl https://skills.axiomid.app/skills/agent-memory/manifest
+# -> 402 Payment Required, X-PAYMENT-REQUIRED: { "price": "$0.10", "network": "base", ... }
+
+# Re-request with a signed X-PAYMENT header:
+curl -H "X-PAYMENT: <base64-payload>" \
+     https://skills.axiomid.app/skills/agent-memory/manifest
+# -> 200 OK, X-PAYMENT-RESPONSE: { ... }, body: the skill markdown
+```
+
+Free skills (no `price_usdc` in `skills.json` or set to `0`) bypass the
+402 round trip entirely. The gateway source lives under
+[`server/`](./server) (Hono on Cloudflare Workers); see
+[`server/README.md`](./server/README.md) for local development,
+deployment, and configuration. Initial paid catalogue (Phase 6
+baseline): `agent-memory`, `voice-wizard`, `aix-schema`,
+`api-route-standard`, `skills-system`. Every other skill remains free
+while the economy bootstraps.
+
 ## 🔥 The Sovereign Innovation Loop
 
 The marketplace thrives on a continuous cycle of creation, testing, and evolution:

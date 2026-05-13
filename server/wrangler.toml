@@ -1,0 +1,53 @@
+# Cloudflare Workers configuration for the L3 skills gateway.
+#
+# The gateway runs at https://skills.axiomid.app and serves the
+# aix-agent-skills marketplace over the x402 payment protocol. Buyers
+# pay in USDC on Base (default) and the gateway streams the skill
+# manifest after a successful payment verification.
+#
+# Local development: `wrangler dev` (binds to 127.0.0.1:8787 by default).
+# Deploy: `wrangler deploy`. Secrets are managed via `wrangler secret put`.
+
+name = "aix-skills-gateway"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Default vars (non-secret). Override per environment below.
+[vars]
+X402_NETWORK = "base-sepolia"
+X402_FACILITATOR_URL = "https://x402.org/facilitator"
+GATEWAY_VERSION = "0.1.0"
+
+# Production environment: pin to Base mainnet and the Coinbase-hosted facilitator.
+[env.production]
+name = "aix-skills-gateway"
+route = { pattern = "skills.axiomid.app", custom_domain = true }
+
+[env.production.vars]
+X402_NETWORK = "base"
+X402_FACILITATOR_URL = "https://x402.org/facilitator"
+GATEWAY_VERSION = "0.1.0"
+
+# Staging environment: Base Sepolia testnet.
+[env.staging]
+name = "aix-skills-gateway-staging"
+
+[env.staging.vars]
+X402_NETWORK = "base-sepolia"
+X402_FACILITATOR_URL = "https://x402.org/facilitator"
+GATEWAY_VERSION = "0.1.0-staging"
+
+# Receiving wallet address (the seller). Stored as a secret to avoid
+# leaking it through the public wrangler.toml. Set via:
+#   wrangler secret put RECEIVING_WALLET --env production
+#
+# Anti-replay nonce store (Cloudflare KV). Create with:
+#   wrangler kv namespace create NONCE_STORE
+#   wrangler kv namespace create NONCE_STORE --preview
+# then paste the returned ids below.
+#
+# [[kv_namespaces]]
+# binding = "NONCE_STORE"
+# id = ""
+# preview_id = ""
