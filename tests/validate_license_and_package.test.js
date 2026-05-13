@@ -205,9 +205,68 @@ async function runTests() {
     );
   });
 
+  // --- package.json `aix` metadata block removal (this PR) ---
+  // The PR removed the top-level `aix` object that previously held
+  // stackVersion, stackCodename, spec, layer, layerName, and authority.
+  // These tests guard against accidental reintroduction.
+
+  test('package.json does not contain an "aix" top-level field', () => {
+    assert.ok(
+      !Object.prototype.hasOwnProperty.call(pkg, 'aix'),
+      'package.json must not have an "aix" metadata block after this PR'
+    );
+  });
+
+  test('package.json does not contain a top-level "stackVersion" field', () => {
+    assert.ok(
+      !Object.prototype.hasOwnProperty.call(pkg, 'stackVersion'),
+      'package.json must not have a top-level "stackVersion" field'
+    );
+  });
+
+  test('package.json does not contain a top-level "stackCodename" field', () => {
+    assert.ok(
+      !Object.prototype.hasOwnProperty.call(pkg, 'stackCodename'),
+      'package.json must not have a top-level "stackCodename" field'
+    );
+  });
+
+  test('package.json does not contain a top-level "spec" field', () => {
+    assert.ok(
+      !Object.prototype.hasOwnProperty.call(pkg, 'spec'),
+      'package.json must not have a top-level "spec" field'
+    );
+  });
+
+  test('package.json does not contain a top-level "authority" field', () => {
+    assert.ok(
+      !Object.prototype.hasOwnProperty.call(pkg, 'authority'),
+      'package.json must not have a top-level "authority" field'
+    );
+  });
+
+  test('package.json has only the expected top-level keys after aix block removal', () => {
+    const allowed = new Set(['name', 'version', 'description', 'license', 'scripts']);
+    const actual = Object.keys(pkg);
+    const unexpected = actual.filter(k => !allowed.has(k));
+    assert.deepStrictEqual(
+      unexpected,
+      [],
+      `Unexpected top-level keys in package.json: ${unexpected.join(', ')}`
+    );
+  });
+
+  test('package.json "name" field is still "aix-agent-skills"', () => {
+    assert.strictEqual(pkg.name, 'aix-agent-skills', '"name" must remain "aix-agent-skills"');
+  });
+
+  test('package.json "version" field is still "1.0.0"', () => {
+    assert.strictEqual(pkg.version, '1.0.0', '"version" must remain "1.0.0"');
+  });
+
   // Summary
   console.log(`\nResults: ${passed} passed, ${failed} failed`);
   if (failed > 0) process.exit(1);
-}
+
 
 runTests();
