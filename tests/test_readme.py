@@ -64,32 +64,44 @@ class TestReadmeBasicProperties(unittest.TestCase):
 
 
 class TestReadmeTitle(unittest.TestCase):
-    """The README was rewritten to describe the IQRA Agentic Marketplace."""
+    """The README was rewritten to describe the IQRA Agentic Marketplace.
+
+    The README may include an HTML banner/comment block before the H1
+    heading. These tests locate the first real H1 (a line starting with
+    "# ") rather than assuming it is on line 0.
+    """
+
+    @staticmethod
+    def _first_h1(content: str) -> str:
+        for line in content.splitlines():
+            if line.startswith("# "):
+                return line
+        return ""
 
     def test_h1_title_is_iqra_marketplace(self):
         content = _read_readme()
-        first_line = content.splitlines()[0]
+        h1 = self._first_h1(content)
         self.assertIn(
             "IQRA",
-            first_line,
-            f"README.md H1 should mention 'IQRA'; got: {first_line!r}",
+            h1,
+            f"README.md H1 should mention 'IQRA'; got: {h1!r}",
         )
 
     def test_title_mentions_marketplace(self):
         content = _read_readme()
-        first_line = content.splitlines()[0]
+        h1 = self._first_h1(content)
         self.assertIn(
             "Marketplace",
-            first_line,
-            f"README.md H1 should mention 'Marketplace'; got: {first_line!r}",
+            h1,
+            f"README.md H1 should mention 'Marketplace'; got: {h1!r}",
         )
 
     def test_title_is_h1(self):
         content = _read_readme()
-        first_line = content.splitlines()[0]
+        h1 = self._first_h1(content)
         self.assertTrue(
-            first_line.startswith("# "),
-            f"README.md first line should be an H1 heading; got: {first_line!r}",
+            h1.startswith("# "),
+            f"README.md should contain an H1 heading; none found",
         )
 
 
@@ -142,9 +154,9 @@ class TestReadmeSovereignInnovationLoop(unittest.TestCase):
 class TestReadmeSovereignLayers(unittest.TestCase):
     """All 8 layer headings added in the rewrite must be present."""
 
-    def test_heading_seven_layers(self):
+    def test_heading_nine_layers(self):
         content = _read_readme()
-        self.assertIn("7 Sovereign Layers", content)
+        self.assertIn("9 Sovereign Layers", content)
 
     def test_sovereignty_layer_heading(self):
         content = _read_readme()
@@ -204,6 +216,15 @@ class TestReadmeSkillMentions(unittest.TestCase):
         "npm",
         "tsx",
         "vitest",
+        # Sovereign Stack repo names referenced in the README. They live
+        # in their own repositories, not as skills in this catalogue.
+        "aix-format",
+        "aix-agent-skills",
+        "iqra",
+        "axiomid-project",
+        "AlphaAxiom",
+        "PiWorker-OS",
+        "GemClaw",
     })
     # Match commit-SHA-like tokens (7+ hex chars) so they're filtered too.
     _SHA_RE = re.compile(r"^[0-9a-f]{7,}$")
