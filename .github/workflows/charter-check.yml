@@ -1,0 +1,56 @@
+name: Charter Compliance
+
+# Light grep-based linter that surfaces forbidden patterns from
+# charter.rules.txt as PR annotations. Hard rules (LEVEL=error) fail
+# the workflow so secrets-shaped strings cannot land silently; warn
+# rules are advisory only.
+on:
+  pull_request:
+    paths:
+      - "**/*.md"
+      - "**/*.py"
+      - "**/*.ts"
+      - "**/*.go"
+      - "**/*.yml"
+      - "**/*.yaml"
+      - "charter.rules.txt"
+      - "scripts/charter_check.py"
+      - ".github/workflows/charter-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  charter:
+    name: Check charter compliance
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Collect changed files
+        id: changed
+        run: |
+          # PR event has base_ref pre-fetched via fetch-depth: 0.
+          base="origin/${{ github.event.pull_request.base.ref }}"
+          if [ -n "${{ github.event.pull_request.base.ref }}" ]; then
+            git diff --name-only "$base"...HEAD > .changed.txt || true
+          else
+            : > .changed.txt
+          fi
+          echo "n=$(wc -l < .changed.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Run charter check
+        run: |
+          if [ -s .changed.txt ]; then
+            python3 scripts/charter_check.py < .changed.txt
+          else
+            python3 scripts/charter_check.py
+          fi

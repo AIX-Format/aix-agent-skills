@@ -1,0 +1,40 @@
+name: Naming Drift
+
+# Soft naming-convention checks beyond what schema-sentinel.yml
+# already enforces. Runs as a warning-only advisor on PRs that
+# touch the manifest; flip --strict on once the corpus is cleaned.
+on:
+  pull_request:
+    paths:
+      - "skills.json"
+      - "scripts/naming_drift.py"
+      - ".github/workflows/naming-drift.yml"
+  workflow_dispatch:
+    inputs:
+      strict:
+        description: "Treat warnings as failures"
+        required: false
+        default: "false"
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    name: Check naming drift
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run naming drift checks
+        run: |
+          if [ "${{ github.event.inputs.strict }}" = "true" ]; then
+            python3 scripts/naming_drift.py --strict
+          else
+            python3 scripts/naming_drift.py || true
+          fi

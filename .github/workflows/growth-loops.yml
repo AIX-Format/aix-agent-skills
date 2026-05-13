@@ -1,0 +1,67 @@
+name: Growth Loops
+
+# Append-only growth signals. Runs on a monthly cron and on every
+# push to main (for milestone tracking). All three sub-scripts write
+# to dedicated directories (signals/, milestones/) and never mutate
+# existing files; conflicts with watermark/Sentinel are impossible
+# by construction.
+on:
+  schedule:
+    # First of every month at 04:00 UTC, slightly after the chronicle.
+    - cron: "0 4 1 * *"
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: growth-loops
+  cancel-in-progress: false
+
+jobs:
+  loops:
+    name: Run growth loops
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Milestones script counts merges on main; needs full history.
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Milestones (every run)
+        # Cheap; checks against signals/cycles.json and only writes
+        # when a 7/49/369 threshold is freshly crossed.
+        run: python3 scripts/milestones.py
+
+      - name: Commit Lexicon (monthly only)
+        # Only run on schedule or manual dispatch; we don't want to
+        # rewrite the lexicon file on every push.
+        if: github.event_name != 'push'
+        run: python3 scripts/commit_lexicon.py
+
+      - name: Detect changes
+        id: diff
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit & push
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add signals/ milestones/
+          git commit -m "growth-loops: append signals + milestones [skip ci]"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin HEAD:main

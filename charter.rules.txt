@@ -1,0 +1,19 @@
+# Charter Compliance rules. One rule per line, fields separated by a
+# single TAB:
+#
+#   LEVEL<TAB>NAME<TAB>REGEX
+#
+# LEVEL is `warn` (advisory) or `error` (fails the workflow).
+# Lines beginning with `#` and blank lines are ignored.
+# Edit freely; the workflow re-reads this file on every run.
+
+# Hardcoded credential shapes that should never appear in source.
+error	aws-access-key	AKIA[0-9A-Z]{16}
+error	private-key-header	-----BEGIN [A-Z ]*PRIVATE KEY-----
+error	gh-pat	gh[pousr]_[A-Za-z0-9]{36,}
+
+# Style hints (warn only).
+warn	em-dash	\u2014
+warn	tab-in-md	^.*\t.*$
+warn	tmp-path	/tmp/[A-Za-z0-9_/.-]+
+warn	todo-marker	(TODO|FIXME|XXX):
