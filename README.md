@@ -1,14 +1,17 @@
 <!-- ════════════════ AIX SOVEREIGN STACK · UNIFIED BRANDING ════════════════ -->
 
 <div align="center">
-  <img src="./assets/aix-stack-header.svg" alt="The AIX Sovereign Stack — L1 PROTOCOL · L2 RUNTIME · L3 MARKETPLACE" width="100%"/>
+  <img src="./assets/aix-stack-header-v2.svg" alt="The AIX Sovereign Stack · Echo369: L0 Root · L1 Protocol · L2 Runtime · L3 Marketplace · L4-L6 Satellites" width="100%"/>
 </div>
 
 <div align="center">
 
+[![AIX Stack](https://img.shields.io/badge/AIX%20STACK-Echo369-39FF14?style=for-the-badge&labelColor=050505)](https://github.com/Moeabdelaziz007/aix-format/blob/main/AXIOM.md)
+[![Spec](https://img.shields.io/badge/SPEC-AIX%2F1.0-39FF14?style=for-the-badge&labelColor=050505)](https://github.com/Moeabdelaziz007/aix-format/blob/main/AXIOM.md)
 [![Layer](https://img.shields.io/badge/LAYER-L3%20%C2%B7%20MARKETPLACE-39FF14?style=for-the-badge&labelColor=050505)](https://github.com/Moeabdelaziz007/aix-agent-skills)
-[![Stack](https://img.shields.io/badge/AIX%20STACK-v0.369.0-39FF14?style=for-the-badge&labelColor=050505)](https://github.com/Moeabdelaziz007/aix-format)
+[![Version](https://img.shields.io/badge/version-v1.0.0-39FF14?style=for-the-badge&labelColor=050505)](./package.json)
 [![Skills](https://img.shields.io/badge/ARCHITECTURE-7%20LAYERS-39FF14?style=for-the-badge&labelColor=050505)](#architecture)
+[![License](https://img.shields.io/badge/LICENSE-Apache_2.0-39FF14?style=for-the-badge&labelColor=050505)](./LICENSE)
 
 </div>
 
@@ -20,7 +23,13 @@
 
 <div align="center">
 
-[**← L1 · PROTOCOL · `aix-format`**](https://github.com/Moeabdelaziz007/aix-format) &nbsp;·&nbsp; [**← L2 · RUNTIME · `iqra`**](https://github.com/Moeabdelaziz007/iqra) &nbsp;·&nbsp; **🟢 L3 · MARKETPLACE · `aix-agent-skills` · YOU ARE HERE**
+**Sovereign Stack** &nbsp;·&nbsp; [**← L1 · PROTOCOL · `aix-format`**](https://github.com/Moeabdelaziz007/aix-format) &nbsp;·&nbsp; [**← L2 · RUNTIME · `iqra`**](https://github.com/Moeabdelaziz007/iqra) &nbsp;·&nbsp; **🟢 L3 · MARKETPLACE · `aix-agent-skills` · YOU ARE HERE**
+
+</div>
+
+<div align="center">
+
+<sub>Root Authority · [**L0 · `axiomid-project` ↑**](https://github.com/Moeabdelaziz007/axiomid-project) &nbsp;·&nbsp; Satellites · [**L4 · `AlphaAxiom` ↓**](https://github.com/Moeabdelaziz007/AlphaAxiom) &nbsp;·&nbsp; [**L5 · `PiWorker-OS` ↓**](https://github.com/Moeabdelaziz007/PiWorker-OS) &nbsp;·&nbsp; [**L6 · `GemClaw` ↓**](https://github.com/Moeabdelaziz007/GemClaw)</sub>
 
 </div>
 
@@ -37,7 +46,7 @@
   <img src="https://img.shields.io/badge/Ecosystem-Triple_Integration-blue?style=flat-square"/>
 </div>
 
-Welcome to the **Agentic Marketplace** for [IQRA](https://github.com/Moeabdelaziz007/iqra) — the supreme multi-agent AI operating system.
+Welcome to the **Agentic Marketplace** for [IQRA](https://github.com/Moeabdelaziz007/iqra): the supreme multi-agent AI operating system.
 
 This repository is not a mere directory of scripts; it is a **secure, sovereign, and self-evolving cognitive ecosystem**. By combining the supreme architectural sovereignty of IQRA with rigorous security paradigms, we have built a marketplace where every skill is battle-tested, every persona is forged with precision, and every memory is immutable.
 
@@ -45,11 +54,13 @@ This repository is not a mere directory of scripts; it is a **secure, sovereign,
 
 ## 🌐 THE STACK | المنظومة المتكاملة
 
-`aix-agent-skills` is **L3** of the AIX Sovereign Stack — the capability marketplace whose skills are signed against the [`aix-format`](https://github.com/Moeabdelaziz007/aix-format) protocol and orchestrated at execution time by the [`iqra`](https://github.com/Moeabdelaziz007/iqra) runtime.
+`aix-agent-skills` is **L3** of the AIX Sovereign Stack: the capability marketplace whose skills are signed against the [`aix-format`](https://github.com/Moeabdelaziz007/aix-format) protocol and orchestrated at execution time by the [`iqra`](https://github.com/Moeabdelaziz007/iqra) runtime. Around the stack sits a **root authority** (L0) and a tier of **satellite layers** (L4-L6) that buy skills from this marketplace via x402.
 
 <div align="center">
-  <img src="./assets/aix-stack-diagram.svg" alt="AIX Stack Topology — L1 Protocol, L2 Runtime, L3 Marketplace" width="100%"/>
+  <img src="./assets/aix-stack-diagram-v2.svg" alt="AIX Stack Topology · Echo369: Root Authority, Sovereign Core, Satellite Layers" width="100%"/>
 </div>
+
+### Sovereign Stack (the three core repos)
 
 | Layer | Repo | Role | Status |
 |:---:|:---|:---|:---:|
@@ -58,6 +69,17 @@ This repository is not a mere directory of scripts; it is a **secure, sovereign,
 | 🟢 **L3** | [`aix-agent-skills`](https://github.com/Moeabdelaziz007/aix-agent-skills) | **Marketplace** · 7 Layers · Constitutional · TrustChain | **You are here** |
 
 > The three repositories are **one project in three layers**. The protocol is the contract, the runtime is the engine, the marketplace is the catalog. Same constitution, same TrustChain, same palette, same author.
+
+### Extended Ecosystem (root authority + satellites)
+
+Outside the strict L1/L2/L3 chain sits the root authority and a tier of satellite layers. They consume the stack and ride the protocol; they do NOT define it. See [`AXIOM.md §4.5`](https://github.com/Moeabdelaziz007/aix-format/blob/main/AXIOM.md) for the full doctrine and [`AIX_STACK_VERSIONING.md`](https://github.com/Moeabdelaziz007/aix-format/blob/main/AIX_STACK_VERSIONING.md) for the independent-SemVer + `Echo369` codename rule.
+
+| Tier | Repo | Role |
+|:---:|:---|:---|
+| 👑 **L0** | [`axiomid-project`](https://github.com/Moeabdelaziz007/axiomid-project) | **Root Authority** · sole issuer of `did:axiom:axiomid.app:*` · proprietary |
+| 💹 **L4** | [`AlphaAxiom`](https://github.com/Moeabdelaziz007/AlphaAxiom) | **Satellite · Trading** · MT5/Bybit/EVM adapters · skill plugin runtime |
+| π **L5** | [`PiWorker-OS`](https://github.com/Moeabdelaziz007/PiWorker-OS) | **Satellite · Pi** · Pi Network workers · Pi SDK · KYC anchor |
+| 🎙️ **L6** | [`GemClaw`](https://github.com/Moeabdelaziz007/GemClaw) | **Satellite · Voice** · voice forge · Gemini Live · Firebase |
 
 ---
 
@@ -197,7 +219,7 @@ The marketplace ships with **Model Context Protocol (MCP)** tools that let AI ag
 | **analytics-mcp** | Run LID, Shannon entropy, and persistent homology analysis on text | `go-engine` (port 8082) |
 | **memory-mcp** | Read/write to 5-tier memory bridge (Hot → Archive) | `memory-bridge` skill |
 
-### Quick Start — MCP Config
+### Quick Start: MCP Config
 
 Add to your MCP client configuration:
 
@@ -327,7 +349,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-13 16:32 UTC_
+_Last updated: 2026-05-13 18:08 UTC_
 
 ---
 
@@ -359,11 +381,11 @@ _Last updated: 2026-05-13 16:32 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`5613ad0`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/5613ad0) | feat(stack): Echo369 doctrine + v2 assets + aix.* metadata + AGENTS.md naming fix (#31) | Mohamed Abdelaziz ‬‏ |
+| [`bd07e91`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/bd07e91) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`87ba271`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/87ba271) | feat(quality): add skill quality gate to block stub skills (#30) | Mohamed Abdelaziz ‬‏ |
 | [`7ade3cc`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/7ade3cc) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`1265170`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/1265170) | docs(readme): Sovereign AI Stack meta-badge + refreshed Architects section (#29) | Mohamed Abdelaziz ‬‏ |
-| [`aea068a`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/aea068a) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`f9d45f4`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/f9d45f4) | docs(agents): add AGENTS.md scaffold pointing at stack-wide AXIOM.md (#28) | Mohamed Abdelaziz ‬‏ |
 
 ---
 
@@ -383,7 +405,13 @@ _Last updated: 2026-05-13 16:32 UTC_
 </div>
 
 <div align="center">
-  <img src="./assets/aix-footer-quote.svg" alt="AIX Stack — King isn't Born, he is Made." width="100%"/>
+
+<sub>L0 · [`axiomid-project`](https://github.com/Moeabdelaziz007/axiomid-project) &nbsp;·&nbsp; L4 · [`AlphaAxiom`](https://github.com/Moeabdelaziz007/AlphaAxiom) &nbsp;·&nbsp; L5 · [`PiWorker-OS`](https://github.com/Moeabdelaziz007/PiWorker-OS) &nbsp;·&nbsp; L6 · [`GemClaw`](https://github.com/Moeabdelaziz007/GemClaw)</sub>
+
+</div>
+
+<div align="center">
+  <img src="./assets/aix-footer-quote-v2.svg" alt="AIX Stack · Echo369: King isn't Born, he is Made." width="100%"/>
 </div>
 
 <!-- ════════════════ /AIX SOVEREIGN STACK · FOOTER ════════════════ -->
