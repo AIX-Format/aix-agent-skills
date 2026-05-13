@@ -95,7 +95,12 @@ def _collect() -> tuple[dict, dict]:
     raw = _git(
         "log",
         "--no-merges",
-        "--pretty=format:COMMIT%x09%an%x09%ae%x09%ad",
+        # Use %aN/%aE (mailmap-aware) rather than %an/%ae so any
+        # identity merges defined in .mailmap are respected by the
+        # generated CONTRIBUTORS.md. Without this the docstring's
+        # advice to "fix it at the git level (via .mailmap)" would
+        # be a lie: %an/%ae return raw author fields untouched.
+        "--pretty=format:COMMIT%x09%aN%x09%aE%x09%ad",
         "--date=short",
         "--shortstat",
     )

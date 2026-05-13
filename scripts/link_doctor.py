@@ -36,11 +36,25 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parent.parent
 SIGNALS = ROOT / "signals"
 
-# Greedy URL extractor that stops at whitespace, common Markdown
-# punctuation, and closing delimiters. Inline Markdown link syntax
-# `[text](url)` and bare URLs are both handled because we strip the
-# trailing `)` if present.
-URL_RE = re.compile(r"https?://[^\s\)\]\"'<>`]+")
+# URL extractor with two shapes:
+#   1. Markdown inline link `[text](url)` where `url` may contain a
+#      single level of balanced parentheses. Wikipedia URLs like
+#      `https://en.wikipedia.org/wiki/Foo_(disambiguation)` need
+#      this so they are not truncated at the first `)`.
+#   2. Bare URL outside a markdown link, terminated at whitespace,
+#      angle brackets, quotes, or backticks.
+#
+# `_BALANCED` matches characters that are either non-paren and
+# non-whitespace, or a `(...)` pair with no nested parens. One level
+# of balance handles every URL we have seen in the corpus; adding
+# deeper nesting would require the `regex` module's recursive
+# patterns and the marginal gain is not worth the dependency.
+_BALANCED = r"(?:[^\s<>\"'`()]+|\([^()]*\))+"
+URL_RE = re.compile(
+    rf"\]\((?P<md>https?://{_BALANCED})\)"
+    r"|"
+    rf"(?P<bare>https?://{_BALANCED})",
+)
 
 # Hosts and host+path-prefix combinations we never check. Badges and
 # image hosts habitually 403 on HEAD; commit/pull URLs are noisy
@@ -80,18 +94,30 @@ def _should_skip(url: str) -> bool:
 
 
 def _gather_links() -> dict[str, list[str]]:
-    """Return {url: [file paths that reference it]}, sorted file lists."""
+    """
+    Return {url: [file paths that reference it]}, sorted file lists.
+
+    Excludes generated signal reports under `signals/` so a broken
+    URL listed in a prior `link-health.md` cannot bounce back into
+    the crawl as a self-referential input and produce a persistent
+    false positive after the original source reference has been
+    removed.
+    """
     by_url: dict[str, set[str]] = defaultdict(set)
+    skip_dirs = (".git", "node_modules", ".compost", "signals")
     for md in ROOT.rglob("*.md"):
-        if any(part in (".git", "node_modules", ".compost") for part in md.parts):
+        if any(part in skip_dirs for part in md.parts):
             continue
         try:
             text = md.read_text(encoding="utf-8", errors="ignore")
         except OSError:
             continue
         rel = str(md.relative_to(ROOT))
-        for raw in URL_RE.findall(text):
-            url = raw.rstrip(".,);:")
+        for match in URL_RE.finditer(text):
+            raw = match.group("md") or match.group("bare") or ""
+            url = raw.rstrip(".,;:")
+            if not url:
+                continue
             if _should_skip(url):
                 continue
             by_url[url].add(rel)
