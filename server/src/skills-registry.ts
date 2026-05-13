@@ -5,6 +5,7 @@
  * rather than producing 500s on the first request.
  */
 
+import { SUPPORTED_NETWORKS } from './types';
 import type { PublicSkill, SkillEntry, SkillTier } from './types';
 
 // Static import so Cloudflare Workers bundles the JSON into the worker.
@@ -41,6 +42,17 @@ for (const entry of data.skills) {
         `skills-registry: invalid price_usdc "${entry.price_usdc}" for skill "${entry.name}"`,
       );
     }
+  }
+  // Reject unsupported network overrides at boot. The TypeScript narrow
+  // type only catches authored values; if skills.json drifts (e.g., a
+  // future contributor adds "solana" expecting an adapter that does not
+  // exist yet) the runtime would have happily handed an unsupported
+  // string to paymentMiddleware, which then either errors opaquely or
+  // settles on the wrong chain. Surface the drift loudly here.
+  if (entry.network !== undefined && !SUPPORTED_NETWORKS.includes(entry.network)) {
+    throw new Error(
+      `skills-registry: unsupported network "${entry.network}" for skill "${entry.name}" (supported: ${SUPPORTED_NETWORKS.join(', ')})`,
+    );
   }
   index.set(entry.name, entry);
 }

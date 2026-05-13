@@ -2,7 +2,7 @@
 
 [![AIX Stack](https://img.shields.io/badge/AIX%20STACK-Echo369-39FF14?style=flat-square&labelColor=050505)](https://github.com/Moeabdelaziz007/aix-format/blob/main/AXIOM.md)
 [![Spec](https://img.shields.io/badge/SPEC-AIX%2F1.0-39FF14?style=flat-square&labelColor=050505)](https://github.com/Moeabdelaziz007/aix-format/blob/main/AXIOM.md)
-[![Layer](https://img.shields.io/badge/LAYER-L3%20%C2%B7%20MARKETPLACE-39FF14?style=flat-square&labelColor=050505)](#)
+[![Layer](https://img.shields.io/badge/LAYER-L3%20%C2%B7%20MARKETPLACE-39FF14?style=flat-square&labelColor=050505)](../README.md)
 
 This subdirectory holds the production gateway that puts the
 aix-agent-skills marketplace behind the

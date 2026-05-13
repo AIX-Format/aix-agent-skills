@@ -14,6 +14,21 @@ export type SkillTier =
   | 'SOVEREIGN';
 
 /**
+ * Supported x402 networks at the gateway level. Phase 6 ships USDC on
+ * Base only (mainnet + Sepolia); Solana and Polygon facilitator
+ * adapters are intentional follow-ups and not in the supported set
+ * here. The registry loader rejects any entry whose `network` field
+ * falls outside this list at boot so paymentMiddleware never receives
+ * a value it cannot handle.
+ */
+export type SupportedNetwork = 'base' | 'base-sepolia';
+
+export const SUPPORTED_NETWORKS: readonly SupportedNetwork[] = [
+  'base',
+  'base-sepolia',
+] as const;
+
+/**
  * Authored shape of an entry in /skills.json. Only `name`, `description`,
  * `file`, and `tier` were present pre-Phase-6; the rest are new and optional
  * so existing consumers (the constitutional runtime, the go-engine sentinel)
@@ -31,9 +46,11 @@ export interface SkillEntry {
   price_usdc?: string;
   /**
    * Phase 6: optional x402 network override. Defaults to env
-   * X402_NETWORK ("base" prod / "base-sepolia" staging).
+   * X402_NETWORK ("base" prod / "base-sepolia" staging). MUST be one
+   * of SUPPORTED_NETWORKS; the registry rejects unsupported values at
+   * boot.
    */
-  network?: 'base' | 'base-sepolia' | 'solana' | 'polygon';
+  network?: SupportedNetwork;
 }
 
 /**

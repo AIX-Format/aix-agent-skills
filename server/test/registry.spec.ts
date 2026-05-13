@@ -46,13 +46,25 @@ describe('skills-registry', () => {
   });
 
   it('falls back to "0" price for skills without explicit pricing', () => {
+    // Use a synthetic entry rather than a real one so this test is not
+    // conditional on whether the fixture currently has a price (which
+    // would silently turn the assertion into a false positive).
+    const synthetic = {
+      name: 'synthetic-free-skill',
+      description: 'test',
+      file: 'skills/synthetic-free.md',
+      tier: 'PRO' as const,
+    };
+    expect(priceFor(synthetic)).toBe('0');
+  });
+
+  it('the named registry lookup returns a real entry for the seed catalogue', () => {
+    // Decoupled from the price-fallback test above so the lookup
+    // semantics get their own assertion that does not depend on
+    // pricing state.
     const entry = getSkill('agent-memory');
     expect(entry).not.toBeNull();
-    // Without a price_usdc, priceFor returns the tier default which is
-    // "0" for every tier in the Phase 6 baseline.
-    if (!entry?.price_usdc) {
-      expect(priceFor(entry!)).toBe('0');
-    }
+    expect(entry?.name).toBe('agent-memory');
   });
 
   it('returns the authored price when present', () => {

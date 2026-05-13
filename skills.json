@@ -339,7 +339,7 @@
     },
     {
       "name": "_test_tool",
-      "description": "Test Tool \u2014 TIER: BASIC_TOOL",
+      "description": "Test Tool - TIER: BASIC_TOOL",
       "file": "skills/_test_tool.md",
       "tier": "BASIC_TOOL"
     },
