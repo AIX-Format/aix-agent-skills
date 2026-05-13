@@ -233,7 +233,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-12 23:52 UTC_
+_Last updated: 2026-05-13 00:07 UTC_
 
 ---
 
@@ -241,14 +241,14 @@ _Last updated: 2026-05-12 23:52 UTC_
 
 | Component | Type | Status |
 |---|---|---|
-| 🐍 Python Tests | `pytest` | ✅ Pass |
+| 🐍 Python Tests | `pytest` | ❌ Fail |
 | 🟦 TypeScript Runtime | `tsc --noEmit` | ❌ Fail |
 | 🟦 TS E2E Tests | `node --test` | ❌ Fail |
 | 🔷 Go Engine | `go build` | ✅ Pass |
 
 ---
 
-### 🧩 Skill Registry — 58 Total Skills across 6 Tiers
+### 🧩 Skill Registry — 75 Total Skills across 6 Tiers
 
 | Tier | Count | Skills |
 |---|---|---|
@@ -257,7 +257,7 @@ _Last updated: 2026-05-12 23:52 UTC_
 | 🔧 Pro | 27 | `topology-orchestrator`, `skill-bank-evolution`, `mission-control`, `pipeline-store`, `resonance-engine`, `mcts-simulator`, `local-journal`, `metamorphosis-loop`, `reward-engine`, `model-council`, `edge-whisperer`, `trust-chain`, `skill-evaluator`, `skill-sandbox`, `prompt-evaluator`, `red-team-guard`, `cross-model-judge`, `ci-cd-ai-guard`, `chain-tracer`, `hidden-topology`, `fractal-memory`, `pre-built-memories`, `fine-tuned-vault`, `integration-packs`, `blockchain-trading-kit`, `shadow-exchange`, `shadow-hospital` |
 | 🛠️ Advanced Tool | 8 | `intent-dispatcher`, `prompt-weaver`, `persona-forge`, `role-tribunal`, `voice-identity`, `persona-marketplace`, `agent-division-loader`, `multi-tool-exporter` |
 | 🔨 Basic Tool | 4 | `data-alchemist`, `open-mcp-connectors`, `_test_tool`, `prompt-templates` |
-| 📦 UNCLASSIFIED | 7 | `agent-memory`, `voice-wizard`, `aix-schema`, `api-route-standard`, `skills-system`, `vercel-deploy`, `antigravity-jules` |
+| 📦 UNCLASSIFIED | 24 | `agent-memory`, `voice-wizard`, `aix-schema`, `api-route-standard`, `skills-system`, `vercel-deploy`, `antigravity-jules`, `DATA_GUARDIAN`, `TOPOLOGICAL_CURIOSITY`, `compute_router`, `damir_check`, `memory_management`, `opportunity_hunter`, `pattern_validate`, `quran_deep_analysis`, `quran_search`, `sovereign_identity`, `sovereign_reasoning`, `trading_skill`, `SKILLS`, `TrustChain`, `CavemanSkill`, `FatihaTopology`, `Go_Engine` |
 
 ---
 
@@ -265,11 +265,11 @@ _Last updated: 2026-05-12 23:52 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
-| [`201c2bf`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/201c2bf) | Merge pull request #10 from Moeabdelaziz007/testing-improvement-lid-analyzer-14690447894894071446 | Mohamed Abdelaziz ‬‏ |
-| [`56b37cf`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/56b37cf) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`d18ecd2`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/d18ecd2) | Merge pull request #8 from Moeabdelaziz007/feature/local-journal-redteam-guard-13119829717655763685 | Mohamed Abdelaziz ‬‏ |
-| [`f066ee6`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/f066ee6) | Merge branch 'main' into feature/local-journal-redteam-guard-13119829717655763685 | Mohamed Abdelaziz ‬‏ |
-| [`c03589d`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/c03589d) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
+| [`9aa850b`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/9aa850b) | Merge pull request #9 from Moeabdelaziz007/jules-3474253802154875185-b5f54eaf | Mohamed Abdelaziz ‬‏ |
+| [`43c4e1c`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/43c4e1c) | Merge pull request #16 from Moeabdelaziz007/feat/chronicle | Mohamed Abdelaziz ‬‏ |
+| [`5d7ec9b`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/5d7ec9b) | Merge pull request #15 from Moeabdelaziz007/feat/sentinel-watermark | Mohamed Abdelaziz ‬‏ |
+| [`eadc88f`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/eadc88f) | feat(chronicle): monthly auto-generated marketplace history | Moeabdelaziz007 |
+| [`c279ac4`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/c279ac4) | feat(watermark): add steganographic HMAC watermark for skill MDs | Moeabdelaziz007 |
 
 ---
 
