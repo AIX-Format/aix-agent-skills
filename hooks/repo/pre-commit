@@ -14,7 +14,7 @@ ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
 # Collect staged skill files (added, copied, modified, renamed) under skills/.
-mapfile -t staged < <(git diff --cached --name-only --diff-filter=ACMR -- 'skills/*.md' || true)
+mapfile -t staged < <(git diff --cached --name-only --diff-filter=ACMR -- ':(glob)skills/**/*.md' || true)
 
 if [ ${#staged[@]} -eq 0 ]; then
   exit 0
