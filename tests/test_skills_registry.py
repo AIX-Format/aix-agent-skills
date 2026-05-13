@@ -441,11 +441,9 @@ class TestNewSkillEntries(unittest.TestCase):
             f"Unexpected agent-division-loader description: '{entry['description']}'",
         )
 
-    def test_prompt_templates_is_last_new_entry(self):
-        """prompt-templates was the last entry added in this PR."""
-        data = json.loads(open(SKILLS_JSON_PATH, encoding="utf-8").read())
-        last_skill = data["skills"][-1]
-        self.assertEqual(last_skill["name"], "prompt-templates")
+    def test_prompt_templates_is_registered(self):
+        """prompt-templates must remain in the registry."""
+        self.assertIn("prompt-templates", self.skill_names)
 
     def test_prompt_templates_entry(self):
         self.assertIn("prompt-templates", self.skills_by_name)
@@ -493,6 +491,103 @@ class TestSkillsJsonFileIntegrity(unittest.TestCase):
         self.assertFalse(dead, f"Manifest entries with no MD file: {sorted(dead)}")
         self.assertEqual(len(data["skills"]), len(on_disk),
                          f"Manifest has {len(data['skills'])} entries but disk has {len(on_disk)} MDs")
+
+
+class TestOwaspAgenticGuardEntry(unittest.TestCase):
+    """Tests for the owasp-agentic-guard skill added in this PR."""
+
+    SKILL_NAME = "owasp-agentic-guard"
+    EXPECTED_FILE = "skills/owasp-agentic-guard.md"
+    EXPECTED_TIER = "ADVANCED_INFRASTRUCTURE"
+
+    def setUp(self):
+        data = _load_skills_json()
+        self.skills_by_name = {s["name"]: s for s in data["skills"]}
+        self.skill_names = set(self.skills_by_name.keys())
+        self.entry = self.skills_by_name.get(self.SKILL_NAME)
+
+    def test_owasp_agentic_guard_is_registered(self):
+        self.assertIn(
+            self.SKILL_NAME,
+            self.skill_names,
+            "owasp-agentic-guard must be registered in skills.json",
+        )
+
+    def test_owasp_agentic_guard_is_last_entry(self):
+        """owasp-agentic-guard was the last skill added in this PR."""
+        data = _load_skills_json()
+        last_skill = data["skills"][-1]
+        self.assertEqual(
+            last_skill["name"],
+            self.SKILL_NAME,
+            "owasp-agentic-guard must be the last entry in skills.json",
+        )
+
+    def test_owasp_agentic_guard_file_reference(self):
+        self.assertIsNotNone(self.entry)
+        self.assertEqual(
+            self.entry["file"],
+            self.EXPECTED_FILE,
+            f"Expected file '{self.EXPECTED_FILE}', got '{self.entry['file']}'",
+        )
+
+    def test_owasp_agentic_guard_tier(self):
+        self.assertIsNotNone(self.entry)
+        self.assertEqual(
+            self.entry.get("tier"),
+            self.EXPECTED_TIER,
+            f"Expected tier '{self.EXPECTED_TIER}', got '{self.entry.get('tier')}'",
+        )
+
+    def test_owasp_agentic_guard_description_non_empty(self):
+        self.assertIsNotNone(self.entry)
+        desc = self.entry.get("description", "")
+        self.assertGreater(len(desc), 0, "description must not be empty")
+
+    def test_owasp_agentic_guard_description_mentions_owasp(self):
+        self.assertIsNotNone(self.entry)
+        desc = self.entry.get("description", "").lower()
+        self.assertIn("owasp", desc, "description must mention OWASP")
+
+    def test_owasp_agentic_guard_description_mentions_asi_categories(self):
+        self.assertIsNotNone(self.entry)
+        desc = self.entry.get("description", "")
+        self.assertIn("ASI01", desc, "description must reference ASI01")
+        self.assertIn("ASI10", desc, "description must reference ASI10")
+
+    def test_owasp_agentic_guard_file_exists_on_disk(self):
+        full_path = os.path.join(REPO_ROOT, self.EXPECTED_FILE)
+        self.assertTrue(
+            os.path.isfile(full_path),
+            f"Referenced file does not exist on disk: {self.EXPECTED_FILE}",
+        )
+
+    def test_owasp_agentic_guard_name_is_kebab_case(self):
+        self.assertRegex(
+            self.SKILL_NAME,
+            KEBAB_CASE_RE,
+            f"Skill name '{self.SKILL_NAME}' must be kebab-case",
+        )
+
+    def test_owasp_agentic_guard_no_duplicate(self):
+        data = _load_skills_json()
+        all_names = [s["name"] for s in data["skills"]]
+        count = all_names.count(self.SKILL_NAME)
+        self.assertEqual(count, 1, "owasp-agentic-guard must appear exactly once in skills.json")
+
+    def test_prompt_templates_still_registered_before_owasp_guard(self):
+        """prompt-templates must remain present; owasp-agentic-guard must appear after it."""
+        data = _load_skills_json()
+        names = [s["name"] for s in data["skills"]]
+        self.assertIn("prompt-templates", names)
+        self.assertIn(self.SKILL_NAME, names)
+        pt_idx = names.index("prompt-templates")
+        owasp_idx = names.index(self.SKILL_NAME)
+        self.assertGreater(
+            owasp_idx,
+            pt_idx,
+            "owasp-agentic-guard must appear after prompt-templates in the skills list",
+        )
 
 
 if __name__ == "__main__":

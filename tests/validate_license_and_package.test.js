@@ -205,9 +205,75 @@ async function runTests() {
     );
   });
 
+  // --- package.json "aix" block removal tests (PR: removed aix metadata) ---
+
+  test('package.json does not contain an "aix" metadata block', () => {
+    assert.ok(
+      !Object.prototype.hasOwnProperty.call(pkg, 'aix'),
+      'package.json must NOT contain an "aix" field (removed in this PR)'
+    );
+  });
+
+  test('package.json does not contain "stackVersion" field', () => {
+    assert.ok(
+      !Object.prototype.hasOwnProperty.call(pkg, 'stackVersion'),
+      'package.json must not have a top-level "stackVersion" field'
+    );
+  });
+
+  test('package.json does not contain "stackCodename" field', () => {
+    assert.ok(
+      !Object.prototype.hasOwnProperty.call(pkg, 'stackCodename'),
+      'package.json must not have a top-level "stackCodename" field'
+    );
+  });
+
+  test('package.json "aix" block nested fields are not at top level', () => {
+    const removedFields = ['stackVersion', 'stackCodename', 'spec', 'layer', 'layerName', 'authority'];
+    for (const field of removedFields) {
+      assert.ok(
+        !Object.prototype.hasOwnProperty.call(pkg, field),
+        `package.json must not expose "${field}" at the top level`
+      );
+    }
+  });
+
+  test('package.json has expected top-level keys after aix removal', () => {
+    const expectedKeys = ['name', 'version', 'description', 'license', 'scripts'];
+    for (const key of expectedKeys) {
+      assert.ok(
+        Object.prototype.hasOwnProperty.call(pkg, key),
+        `package.json must still have the "${key}" field`
+      );
+    }
+  });
+
+  test('package.json "name" is "aix-agent-skills"', () => {
+    assert.strictEqual(
+      pkg.name,
+      'aix-agent-skills',
+      'package.json "name" must be "aix-agent-skills"'
+    );
+  });
+
+  test('package.json "version" is "1.0.0"', () => {
+    assert.strictEqual(
+      pkg.version,
+      '1.0.0',
+      'package.json "version" must be "1.0.0"'
+    );
+  });
+
+  test('package.json "scripts.test" is defined and non-empty', () => {
+    assert.ok(
+      pkg.scripts && typeof pkg.scripts.test === 'string' && pkg.scripts.test.length > 0,
+      'package.json must define a non-empty "scripts.test" command'
+    );
+  });
+
   // Summary
   console.log(`\nResults: ${passed} passed, ${failed} failed`);
   if (failed > 0) process.exit(1);
-}
+
 
 runTests();
