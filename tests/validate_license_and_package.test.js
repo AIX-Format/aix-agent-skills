@@ -205,9 +205,139 @@ async function runTests() {
     );
   });
 
+  // --- Additional LICENSE section tests ---
+
+  test('LICENSE contains Submission of Contributions section', () => {
+    assert.ok(
+      licenseContent.includes('5. Submission of Contributions.'),
+      'LICENSE must contain section "5. Submission of Contributions."'
+    );
+  });
+
+  test('LICENSE contains Trademarks section', () => {
+    assert.ok(
+      licenseContent.includes('6. Trademarks.'),
+      'LICENSE must contain section "6. Trademarks."'
+    );
+  });
+
+  test('LICENSE contains Accepting Warranty or Additional Liability section', () => {
+    assert.ok(
+      licenseContent.includes('9. Accepting Warranty or Additional Liability.'),
+      'LICENSE must contain section "9. Accepting Warranty or Additional Liability."'
+    );
+  });
+
+  test('LICENSE contains APPENDIX section', () => {
+    assert.ok(
+      licenseContent.includes('APPENDIX: How to apply the Apache License to your work.'),
+      'LICENSE must contain the APPENDIX section'
+    );
+  });
+
+  test('LICENSE contains the full copy URL (LICENSE-2.0)', () => {
+    assert.ok(
+      licenseContent.includes('http://www.apache.org/licenses/LICENSE-2.0'),
+      'LICENSE must contain the full Apache 2.0 copy URL'
+    );
+  });
+
+  test('LICENSE has at least 200 lines', () => {
+    const lineCount = licenseContent.split('\n').length;
+    assert.ok(lineCount >= 200, `LICENSE must have at least 200 lines, got ${lineCount}`);
+  });
+
+  test('LICENSE contains "AS IS" disclaimer text', () => {
+    assert.ok(
+      licenseContent.includes('"AS IS"'),
+      'LICENSE must contain the "AS IS" warranty disclaimer text'
+    );
+  });
+
+  test('LICENSE contains "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND"', () => {
+    assert.ok(
+      licenseContent.includes('WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND'),
+      'LICENSE must contain the "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND" disclaimer'
+    );
+  });
+
+  test('LICENSE boilerplate states it is licensed under Apache License Version 2.0', () => {
+    assert.ok(
+      licenseContent.includes('Licensed under the Apache License, Version 2.0 (the "License")'),
+      'LICENSE boilerplate must state it is licensed under Apache License Version 2.0'
+    );
+  });
+
+  // --- Additional package.json tests ---
+
+  test('package.json has a "name" field with value "aix-agent-skills"', () => {
+    assert.strictEqual(
+      pkg.name,
+      'aix-agent-skills',
+      'package.json "name" must be "aix-agent-skills"'
+    );
+  });
+
+  test('package.json has a "scripts" field', () => {
+    assert.ok(
+      Object.prototype.hasOwnProperty.call(pkg, 'scripts'),
+      'package.json must have a "scripts" field'
+    );
+  });
+
+  test('package.json "scripts" has a "test" property', () => {
+    assert.ok(
+      pkg.scripts && Object.prototype.hasOwnProperty.call(pkg.scripts, 'test'),
+      'package.json "scripts" must have a "test" property'
+    );
+  });
+
+  test('package.json scripts.test includes validate_license_and_package.test.js', () => {
+    assert.ok(
+      pkg.scripts && typeof pkg.scripts.test === 'string' &&
+        pkg.scripts.test.includes('validate_license_and_package.test.js'),
+      'package.json "scripts.test" must include "validate_license_and_package.test.js"'
+    );
+  });
+
+  test('package.json scripts.test includes all three test files', () => {
+    const testScript = pkg.scripts && pkg.scripts.test || '';
+    assert.ok(
+      testScript.includes('validate_manifest.test.js'),
+      'package.json "scripts.test" must include "validate_manifest.test.js"'
+    );
+    assert.ok(
+      testScript.includes('validate_skill_format.test.js'),
+      'package.json "scripts.test" must include "validate_skill_format.test.js"'
+    );
+    assert.ok(
+      testScript.includes('validate_license_and_package.test.js'),
+      'package.json "scripts.test" must include "validate_license_and_package.test.js"'
+    );
+  });
+
+  test('package.json "license" is exactly "Apache-2.0" (case-sensitive)', () => {
+    assert.ok(
+      pkg.license === 'Apache-2.0',
+      `package.json "license" must be exactly "Apache-2.0", got "${pkg.license}"`
+    );
+    assert.ok(
+      pkg.license !== 'apache-2.0' && pkg.license !== 'APACHE-2.0',
+      'package.json "license" must use the correct SPDX casing "Apache-2.0"'
+    );
+  });
+
+  test('package.json "license" does not contain extra whitespace', () => {
+    assert.strictEqual(
+      pkg.license,
+      pkg.license && pkg.license.trim(),
+      'package.json "license" must not have leading or trailing whitespace'
+    );
+  });
+
   // Summary
   console.log(`\nResults: ${passed} passed, ${failed} failed`);
   if (failed > 0) process.exit(1);
-}
+
 
 runTests();
