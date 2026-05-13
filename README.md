@@ -349,7 +349,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-13 16:32 UTC_
+_Last updated: 2026-05-13 18:08 UTC_
 
 ---
 
@@ -364,7 +364,7 @@ _Last updated: 2026-05-13 16:32 UTC_
 
 ---
 
-### 🧩 Skill Registry: 58 Total Skills across 6 Tiers
+### 🧩 Skill Registry — 58 Total Skills across 6 Tiers
 
 | Tier | Count | Skills |
 |---|---|---|
@@ -381,11 +381,11 @@ _Last updated: 2026-05-13 16:32 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`5613ad0`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/5613ad0) | feat(stack): Echo369 doctrine + v2 assets + aix.* metadata + AGENTS.md naming fix (#31) | Mohamed Abdelaziz ‬‏ |
+| [`bd07e91`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/bd07e91) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`87ba271`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/87ba271) | feat(quality): add skill quality gate to block stub skills (#30) | Mohamed Abdelaziz ‬‏ |
 | [`7ade3cc`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/7ade3cc) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`1265170`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/1265170) | docs(readme): Sovereign AI Stack meta-badge + refreshed Architects section (#29) | Mohamed Abdelaziz ‬‏ |
-| [`aea068a`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/aea068a) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`f9d45f4`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/f9d45f4) | docs(agents): add AGENTS.md scaffold pointing at stack-wide AXIOM.md (#28) | Mohamed Abdelaziz ‬‏ |
 
 ---
 
