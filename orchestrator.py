@@ -6,23 +6,29 @@ import subprocess
 from pathlib import Path
 import tempfile
 import re
+import functools
 
 ROOT = Path(__file__).parent.resolve()
 SKILLS_JSON = ROOT / "skills.json"
 
+@functools.lru_cache(maxsize=1)
+def _load_skills_json(path):
+    if not path.exists():
+        return None
+    with open(path) as f:
+        return json.load(f)
+
 def list_skills():
-    if not SKILLS_JSON.exists():
+    data = _load_skills_json(SKILLS_JSON)
+    if data is None:
         print("[]")
         return
-    with open(SKILLS_JSON) as f:
-        data = json.load(f)
     print("\n".join(s["name"] for s in data.get("skills", [])))
 
 def get_skill_file(skill_name):
-    if not SKILLS_JSON.exists():
+    data = _load_skills_json(SKILLS_JSON)
+    if data is None:
         return None
-    with open(SKILLS_JSON) as f:
-        data = json.load(f)
     for s in data.get("skills", []):
         if s["name"] == skill_name:
             return ROOT / s["file"]
