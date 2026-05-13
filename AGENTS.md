@@ -6,7 +6,7 @@
 
 `aix-agent-skills` is the L3 marketplace of the Sovereign Stack: a public catalogue of skills, personas, and runtime adapters consumed by sovereign runtimes (notably IQRA). It hosts:
 
-- `skills/` — markdown skill definitions, snake_case names matching `^[a-z0-9_]+$`.
+- `skills/` — markdown skill definitions. Public skill names are kebab-case matching `^[a-z0-9]+(?:-[a-z0-9]+)*$`; internal or test-only skills may use a leading underscore plus snake_case (e.g. `_test_tool`). Enforced by `scripts/schema_sentinel.py`.
 - `personas/` — versioned agent persona profiles.
 - `aix-constitutional-runtime/` — sample TypeScript runtime that consumes `@axiom/*` packages.
 - `go-engine/` — high-performance compute engine for Shannon entropy, topology, and resonance.
@@ -14,7 +14,7 @@
 ## Conventions
 
 - **License**: Apache-2.0.
-- **Skill names**: snake_case (`^[a-z0-9_]+$`) per the AIX schema.
+- **Skill names**: public skills are kebab-case (`^[a-z0-9]+(?:-[a-z0-9]+)*$`), internal/test fixtures use `_` + snake_case (`^_[a-z0-9]+(?:_[a-z0-9]+)*$`). Enforced by `scripts/schema_sentinel.py`.
 - **Branches**: kebab-case (`chore/...`, `feat/...`, `fix/...`).
 - **Charter rules**: see `charter.rules.txt`; CI enforces them via `charter-check.yml`.
 - **Conventional Commits** preferred for commit subjects.
