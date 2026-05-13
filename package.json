@@ -2,7 +2,8 @@
   "name": "aix-agent-skills",
   "version": "1.0.0",
   "description": "AIX Format coding skills for AI agents",
+  "license": "Apache-2.0",
   "scripts": {
-    "test": "node tests/validate_manifest.test.js && node tests/validate_skill_format.test.js"
+    "test": "node tests/validate_manifest.test.js && node tests/validate_skill_format.test.js && node tests/validate_license_and_package.test.js"
   }
 }
