@@ -55,8 +55,12 @@ jobs:
 
       - name: Detect changes
         id: diff
+        # `git diff --quiet` only sees tracked-file modifications and
+        # misses untracked files. Use `git status --porcelain` scoped
+        # to the paths we actually write to, so a fresh report under
+        # signals/ or a new CONTRIBUTORS.md is correctly picked up.
         run: |
-          if git diff --quiet; then
+          if [[ -z "$(git status --porcelain -- CONTRIBUTORS.md signals/)" ]]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"

@@ -22,6 +22,7 @@ from __future__ import annotations
 import re
 import subprocess
 import sys
+import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
@@ -48,10 +49,35 @@ BOT_EMAILS = (
 
 
 def _git(*args: str) -> str:
-    try:
-        return subprocess.check_output(["git", "-C", str(ROOT), *args], text=True)
-    except subprocess.CalledProcessError:
-        return ""
+    """
+    Run a git subcommand and return stdout. Raises RuntimeError on
+    non-zero exit so callers cannot silently produce an empty or
+    inaccurate CONTRIBUTORS.md from a broken git invocation.
+    """
+    cp = subprocess.run(
+        ["git", "-C", str(ROOT), *args],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if cp.returncode != 0:
+        raise RuntimeError(f"git {' '.join(args)} failed: {cp.stderr.strip()}")
+    return cp.stdout
+
+
+def _normalize_identity(name: str) -> str:
+    """
+    Canonical form of a git author display name for grouping.
+
+    Applies NFKC normalisation so visually identical glyphs collapse
+    onto the same string, then strips Unicode format characters
+    (category Cf, e.g. U+202C `POP DIRECTIONAL FORMATTING`,
+    U+200B `ZERO WIDTH SPACE`). Without this two commits from the
+    same person with a stray invisible char produce two rows in the
+    contributor table.
+    """
+    normalized = unicodedata.normalize("NFKC", name)
+    return "".join(ch for ch in normalized if unicodedata.category(ch) != "Cf").strip()
 
 
 def _is_bot(name: str, email: str) -> bool:
@@ -83,12 +109,7 @@ def _collect() -> tuple[dict, dict]:
     for line in raw.splitlines():
         if line.startswith("COMMIT\t"):
             _, raw_name, email, date = line.split("\t", 3)
-            # Strip invisible Unicode control characters (U+202C and
-            # friends) that occasionally sneak into git author names
-            # from copy-pasted identities. Without this two commits
-            # from the same person with one stray U+202C produce two
-            # rows in the contributor table.
-            name = "".join(c for c in raw_name if c.isprintable()).strip()
+            name = _normalize_identity(raw_name)
             current_name = name
             current_email = email
             current_date = date
@@ -157,7 +178,11 @@ def _render(humans: dict, bots: dict) -> str:
 
 
 def main() -> int:
-    humans, bots = _collect()
+    try:
+        humans, bots = _collect()
+    except RuntimeError as exc:
+        print(f"Talent Scout: {exc}", file=sys.stderr)
+        return 1
     body = _render(humans, bots)
     TARGET.write_text(body, encoding="utf-8")
     print(f"Talent Scout: wrote {TARGET.relative_to(ROOT)} ({len(humans)} humans, {len(bots)} bots)")

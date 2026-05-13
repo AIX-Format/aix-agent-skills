@@ -31,6 +31,7 @@ from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date
 from pathlib import Path
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 SIGNALS = ROOT / "signals"
@@ -41,21 +42,41 @@ SIGNALS = ROOT / "signals"
 # trailing `)` if present.
 URL_RE = re.compile(r"https?://[^\s\)\]\"'<>`]+")
 
-# Hosts / patterns we never check: badge shields, image services,
-# anchors with fragments, localhost. Add freely.
-SKIP_HOSTS = (
+# Hosts and host+path-prefix combinations we never check. Badges and
+# image hosts habitually 403 on HEAD; commit/pull URLs are noisy
+# self-references that don't need health checks.
+SKIP_HOSTS = frozenset({
     "img.shields.io",
     "shields.io",
     "img.icons8.com",
     "avatars.githubusercontent.com",
     "www.gstatic.com",
-    "github.com/Moeabdelaziz007/aix-agent-skills/commit/",
-    "github.com/Moeabdelaziz007/aix-agent-skills/pull/",
+})
+# (host, path_prefix) pairs that should also be skipped. Matched with
+# `parsed.path.startswith(prefix)`, never substring-matched against
+# the raw URL.
+SKIP_HOST_PREFIXES = (
+    ("github.com", "/Moeabdelaziz007/aix-agent-skills/commit/"),
+    ("github.com", "/Moeabdelaziz007/aix-agent-skills/pull/"),
 )
 
 
 def _should_skip(url: str) -> bool:
-    return any(host in url for host in SKIP_HOSTS)
+    """
+    Decide whether to skip an URL using parsed host/path rather than
+    substring matching against the raw URL. Substring matching gave
+    false negatives (e.g. an unrelated link with "shields.io" in a
+    query string would be skipped) and could hide genuine breakage.
+    """
+    parsed = urlparse(url)
+    host = (parsed.hostname or "").lower()
+    path = parsed.path or ""
+    if host in SKIP_HOSTS:
+        return True
+    for skip_host, prefix in SKIP_HOST_PREFIXES:
+        if host == skip_host and path.startswith(prefix):
+            return True
+    return False
 
 
 def _gather_links() -> dict[str, list[str]]:
