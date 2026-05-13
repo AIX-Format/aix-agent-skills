@@ -119,7 +119,8 @@
     {
       "name": "local-journal",
       "description": "Local memory + Local files + Trust Chain for private reflections",
-      "file": "skills/local-journal.md"
+      "file": "skills/local-journal.md",
+      "tier": "PRO"
     },
     {
       "name": "metamorphosis-loop",
@@ -304,128 +305,50 @@
     {
       "name": "community-support-layer",
       "description": "Forum-per-skill layer turning the marketplace into a living community",
-      "file": "skills/community-support-layer.md"
+      "file": "skills/community-support-layer.md",
+      "tier": "ADVANCED_INFRASTRUCTURE"
     },
     {
       "name": "multiverse-lab-pro",
       "description": "Layer-0 meta-pack for training agents in parallel universes before touching reality",
-      "file": "skills/multiverse-lab-pro.md"
+      "file": "skills/multiverse-lab-pro.md",
+      "tier": "SOVEREIGN"
     },
     {
       "name": "shadow-exchange",
       "description": "Parallel financial sandbox for blockchain-trading-kit dry runs",
-      "file": "skills/shadow-exchange.md"
+      "file": "skills/shadow-exchange.md",
+      "tier": "PRO"
     },
     {
       "name": "shadow-hospital",
       "description": "100% simulated healthcare environment for Clinician's Cortex skills",
-      "file": "skills/shadow-hospital.md"
+      "file": "skills/shadow-hospital.md",
+      "tier": "PRO"
     },
     {
       "name": "topology-fork-engine",
       "description": "Reality-forking executor that runs missions across branching universes",
-      "file": "skills/topology-fork-engine.md"
+      "file": "skills/topology-fork-engine.md",
+      "tier": "ADVANCED_INFRASTRUCTURE"
     },
     {
       "name": "_test_tool",
       "description": "Test Tool — TIER: BASIC_TOOL",
-      "file": "skills/_test_tool.md"
+      "file": "skills/_test_tool.md",
+      "tier": "BASIC_TOOL"
     },
     {
       "name": "antigravity-jules",
       "description": "Shared task board and resonance synchronization between Antigravity and Jules",
-      "file": "skills/antigravity-jules.md"
+      "file": "skills/antigravity-jules.md",
+      "tier": "ADVANCED_INFRASTRUCTURE"
     },
     {
       "name": "prompt-templates",
       "description": "A managed, versioned library of dynamic prompt templates",
       "file": "skills/prompt-templates.md",
       "tier": "BASIC_TOOL"
-    },
-    {
-      "name": "DATA_GUARDIAN",
-      "description": "Auto-generated stub for DATA_GUARDIAN",
-      "file": "skills/data-guardian.md"
-    },
-    {
-      "name": "TOPOLOGICAL_CURIOSITY",
-      "description": "Auto-generated stub for TOPOLOGICAL_CURIOSITY",
-      "file": "skills/topological-curiosity.md"
-    },
-    {
-      "name": "compute_router",
-      "description": "Auto-generated stub for compute_router",
-      "file": "skills/compute-router.md"
-    },
-    {
-      "name": "damir_check",
-      "description": "Auto-generated stub for damir_check",
-      "file": "skills/damir-check.md"
-    },
-    {
-      "name": "memory_management",
-      "description": "Auto-generated stub for memory_management",
-      "file": "skills/memory-management.md"
-    },
-    {
-      "name": "opportunity_hunter",
-      "description": "Auto-generated stub for opportunity_hunter",
-      "file": "skills/opportunity-hunter.md"
-    },
-    {
-      "name": "pattern_validate",
-      "description": "Auto-generated stub for pattern_validate",
-      "file": "skills/pattern-validate.md"
-    },
-    {
-      "name": "quran_deep_analysis",
-      "description": "Auto-generated stub for quran_deep_analysis",
-      "file": "skills/quran-deep-analysis.md"
-    },
-    {
-      "name": "quran_search",
-      "description": "Auto-generated stub for quran_search",
-      "file": "skills/quran-search.md"
-    },
-    {
-      "name": "sovereign_identity",
-      "description": "Auto-generated stub for sovereign_identity",
-      "file": "skills/sovereign-identity.md"
-    },
-    {
-      "name": "sovereign_reasoning",
-      "description": "Auto-generated stub for sovereign_reasoning",
-      "file": "skills/sovereign-reasoning.md"
-    },
-    {
-      "name": "trading_skill",
-      "description": "Auto-generated stub for trading_skill",
-      "file": "skills/trading-skill.md"
-    },
-    {
-      "name": "SKILLS",
-      "description": "Auto-generated stub for SKILLS",
-      "file": "skills/skills.md"
-    },
-    {
-      "name": "TrustChain",
-      "description": "Immutable SHA-256 ledger for agent accountability",
-      "file": "skills/trustchain.md"
-    },
-    {
-      "name": "CavemanSkill",
-      "description": "Basic foundational problem-solving skill, highly resilient",
-      "file": "skills/caveman-skill.md"
-    },
-    {
-      "name": "FatihaTopology",
-      "description": "Mathematical and topological routing based on Quranic patterns",
-      "file": "skills/fatiha-topology.md"
-    },
-    {
-      "name": "Go_Engine",
-      "description": "Independent HTTP server and optimized execution engine",
-      "file": "skills/go-engine.md"
     }
   ]
 }
