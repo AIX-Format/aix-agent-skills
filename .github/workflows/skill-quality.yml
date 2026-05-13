@@ -1,0 +1,52 @@
+name: Skill Quality Gate
+
+# Blocks pull requests that add or modify skill files containing stub
+# placeholders ("TODO: Define ...", "TBD", etc.). Existing stubs on
+# main are grandfathered: they surface as warnings, never block.
+# See rules/skills.md for the full policy.
+on:
+  pull_request:
+    paths:
+      - "skills/**/*.md"
+      - "templates/skill-template.md"
+      - "rules/skills.md"
+      - "scripts/validate_skill_quality.py"
+      - ".github/workflows/skill-quality.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  skill-quality:
+    name: Validate changed skills
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Collect changed skill files
+        id: changed
+        run: |
+          base="origin/${{ github.event.pull_request.base.ref }}"
+          if [ -n "${{ github.event.pull_request.base.ref }}" ]; then
+            git diff --name-only "$base"...HEAD -- 'skills/*.md' > .changed_skills.txt || true
+          else
+            : > .changed_skills.txt
+          fi
+          echo "n=$(wc -l < .changed_skills.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Run skill quality gate (changed mode)
+        run: |
+          if [ -s .changed_skills.txt ]; then
+            python3 scripts/validate_skill_quality.py --mode=changed < .changed_skills.txt
+          else
+            echo "No skill files changed in this PR. Running advisory scan."
+            python3 scripts/validate_skill_quality.py --mode=changed </dev/null
+          fi
