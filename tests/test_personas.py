@@ -6,8 +6,13 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PERSONAS_DIR = os.path.join(REPO_ROOT, "personas")
 REGISTRY_PATH = os.path.join(REPO_ROOT, "personas.json")
 
-VALID_TIERS = {"SOVEREIGN", "ADVANCED_INFRASTRUCTURE", "PRO", "ADVANCED_TOOL", "BASIC_TOOL"}
-VALID_CATEGORIES = {"engineering", "design", "marketing", "finance", "product", "sales", "support", "strategy", "specialized"}
+VALID_TIERS = {"SOVEREIGN", "ADVANCED_INFRASTRUCTURE", "PRO", "ADVANCED_TOOL", "BASIC_TOOL", "ARCHETYPE"}
+VALID_CATEGORIES = {
+    "engineering", "design", "marketing", "finance", "product", "sales",
+    "support", "strategy", "specialized",
+    # Archetype categories (abstract behavioral patterns, not job roles)
+    "security", "creative", "analysis", "execution", "wisdom",
+}
 
 class TestPersonaStructure(unittest.TestCase):
     def test_registry_valid(self):

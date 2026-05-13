@@ -88,6 +88,7 @@ VALID_TIERS = {
     "PRO",
     "ADVANCED_TOOL",
     "BASIC_TOOL",
+    "ARCHETYPE",
 }
 
 # Regex for valid kebab-case skill names (lowercase letters, digits, hyphens).
