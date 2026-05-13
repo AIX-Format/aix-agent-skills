@@ -80,6 +80,8 @@ NEW_SKILLS_IN_PR = {
     "open-mcp-connectors",
     "blockchain-trading-kit",
     "prompt-templates",
+    # Added in the owasp-agentic-guard PR
+    "owasp-agentic-guard",
 }
 
 VALID_TIERS = {
@@ -441,16 +443,80 @@ class TestNewSkillEntries(unittest.TestCase):
             f"Unexpected agent-division-loader description: '{entry['description']}'",
         )
 
-    def test_prompt_templates_is_last_new_entry(self):
-        """prompt-templates was the last entry added in this PR."""
+    def test_owasp_agentic_guard_is_last_entry(self):
+        """owasp-agentic-guard is the last entry added to skills.json."""
         data = json.loads(open(SKILLS_JSON_PATH, encoding="utf-8").read())
         last_skill = data["skills"][-1]
-        self.assertEqual(last_skill["name"], "prompt-templates")
+        self.assertEqual(last_skill["name"], "owasp-agentic-guard")
 
     def test_prompt_templates_entry(self):
         self.assertIn("prompt-templates", self.skills_by_name)
         entry = self.skills_by_name["prompt-templates"]
         self.assertIn("prompt", entry["description"].lower())
+
+    # -- owasp-agentic-guard (added in this PR) --
+
+    def test_owasp_agentic_guard_registered(self):
+        """owasp-agentic-guard must be present in skills.json after this PR."""
+        self.assertIn(
+            "owasp-agentic-guard",
+            self.skill_names,
+            "owasp-agentic-guard must be registered in skills.json",
+        )
+
+    def test_owasp_agentic_guard_name(self):
+        self.assertIn("owasp-agentic-guard", self.skills_by_name)
+        entry = self.skills_by_name["owasp-agentic-guard"]
+        self.assertEqual(entry["name"], "owasp-agentic-guard")
+
+    def test_owasp_agentic_guard_description_mentions_owasp(self):
+        self.assertIn("owasp-agentic-guard", self.skills_by_name)
+        desc = self.skills_by_name["owasp-agentic-guard"]["description"]
+        self.assertIn("OWASP", desc, "description must reference OWASP")
+
+    def test_owasp_agentic_guard_description_mentions_agentic(self):
+        self.assertIn("owasp-agentic-guard", self.skills_by_name)
+        desc = self.skills_by_name["owasp-agentic-guard"]["description"].lower()
+        self.assertIn(
+            "agentic", desc, "description must mention 'agentic'"
+        )
+
+    def test_owasp_agentic_guard_file_path(self):
+        self.assertIn("owasp-agentic-guard", self.skills_by_name)
+        entry = self.skills_by_name["owasp-agentic-guard"]
+        self.assertEqual(
+            entry["file"],
+            "skills/owasp-agentic-guard.md",
+            "file path must be 'skills/owasp-agentic-guard.md'",
+        )
+
+    def test_owasp_agentic_guard_md_exists_on_disk(self):
+        self.assertIn("owasp-agentic-guard", self.skills_by_name)
+        entry = self.skills_by_name["owasp-agentic-guard"]
+        full_path = os.path.join(REPO_ROOT, entry["file"])
+        self.assertTrue(
+            os.path.isfile(full_path),
+            f"owasp-agentic-guard MD file must exist at {entry['file']}",
+        )
+
+    def test_owasp_agentic_guard_tier(self):
+        self.assertIn("owasp-agentic-guard", self.skills_by_name)
+        entry = self.skills_by_name["owasp-agentic-guard"]
+        self.assertEqual(
+            entry.get("tier"),
+            "ADVANCED_INFRASTRUCTURE",
+            "owasp-agentic-guard tier must be ADVANCED_INFRASTRUCTURE",
+        )
+
+    def test_owasp_agentic_guard_description_mentions_asi(self):
+        """Description must reference the ASI category notation."""
+        self.assertIn("owasp-agentic-guard", self.skills_by_name)
+        desc = self.skills_by_name["owasp-agentic-guard"]["description"]
+        self.assertIn(
+            "ASI",
+            desc,
+            "description must reference the ASI01-ASI10 classification",
+        )
 
 
 class TestSkillsJsonFileIntegrity(unittest.TestCase):

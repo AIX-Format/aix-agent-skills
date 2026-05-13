@@ -205,9 +205,83 @@ async function runTests() {
     );
   });
 
+  // --- package.json aix metadata removal tests (this PR removed the `aix` block) ---
+
+  test('package.json does NOT contain the removed "aix" metadata block', () => {
+    assert.ok(
+      !Object.prototype.hasOwnProperty.call(pkg, 'aix'),
+      'The "aix" top-level key must not appear in package.json (removed in this PR)'
+    );
+  });
+
+  test('package.json "aix.stackVersion" field is absent', () => {
+    assert.ok(
+      pkg.aix === undefined || pkg.aix.stackVersion === undefined,
+      'aix.stackVersion must not be present in package.json'
+    );
+  });
+
+  test('package.json "aix.stackCodename" field is absent', () => {
+    assert.ok(
+      pkg.aix === undefined || pkg.aix.stackCodename === undefined,
+      'aix.stackCodename must not be present in package.json'
+    );
+  });
+
+  test('package.json "aix.spec" field is absent', () => {
+    assert.ok(
+      pkg.aix === undefined || pkg.aix.spec === undefined,
+      'aix.spec must not be present in package.json'
+    );
+  });
+
+  test('package.json "aix.layer" field is absent', () => {
+    assert.ok(
+      pkg.aix === undefined || pkg.aix.layer === undefined,
+      'aix.layer must not be present in package.json'
+    );
+  });
+
+  test('package.json "aix.authority" field is absent', () => {
+    assert.ok(
+      pkg.aix === undefined || pkg.aix.authority === undefined,
+      'aix.authority must not be present in package.json'
+    );
+  });
+
+  test('package.json contains only expected top-level keys', () => {
+    const knownKeys = new Set(['name', 'version', 'description', 'license', 'scripts']);
+    const actualKeys = Object.keys(pkg);
+    const unknownKeys = actualKeys.filter(k => !knownKeys.has(k));
+    assert.deepStrictEqual(
+      unknownKeys,
+      [],
+      `package.json must only contain known keys; unexpected: ${unknownKeys.join(', ')}`
+    );
+  });
+
+  test('package.json has a "scripts" field with a "test" command', () => {
+    assert.ok(
+      Object.prototype.hasOwnProperty.call(pkg, 'scripts'),
+      'package.json must have a "scripts" field'
+    );
+    assert.ok(
+      Object.prototype.hasOwnProperty.call(pkg.scripts || {}, 'test'),
+      'package.json scripts must include a "test" command'
+    );
+  });
+
+  test('package.json "name" field is "aix-agent-skills"', () => {
+    assert.strictEqual(
+      pkg.name,
+      'aix-agent-skills',
+      'package.json name must be "aix-agent-skills"'
+    );
+  });
+
   // Summary
   console.log(`\nResults: ${passed} passed, ${failed} failed`);
   if (failed > 0) process.exit(1);
-}
+
 
 runTests();
