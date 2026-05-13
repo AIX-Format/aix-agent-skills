@@ -10,7 +10,7 @@
 [![Spec](https://img.shields.io/badge/SPEC-AIX%2F1.0-39FF14?style=for-the-badge&labelColor=050505)](https://github.com/Moeabdelaziz007/aix-format/blob/main/AXIOM.md)
 [![Layer](https://img.shields.io/badge/LAYER-L3%20%C2%B7%20MARKETPLACE-39FF14?style=for-the-badge&labelColor=050505)](https://github.com/Moeabdelaziz007/aix-agent-skills)
 [![Version](https://img.shields.io/badge/version-v1.0.0-39FF14?style=for-the-badge&labelColor=050505)](./package.json)
-[![Skills](https://img.shields.io/badge/ARCHITECTURE-7%20LAYERS-39FF14?style=for-the-badge&labelColor=050505)](#architecture)
+[![Skills](https://img.shields.io/badge/ARCHITECTURE-9%20LAYERS-39FF14?style=for-the-badge&labelColor=050505)](#architecture)
 [![License](https://img.shields.io/badge/LICENSE-Apache_2.0-39FF14?style=for-the-badge&labelColor=050505)](./LICENSE)
 
 </div>
@@ -40,10 +40,10 @@
 # IQRA Agentic Marketplace 🌌
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Architecture-7_Layers-gold?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Protocol-IQRA_Sovereign-green?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Security-Red_Teamed-red?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Ecosystem-Triple_Integration-blue?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Architecture-9_Layers-gold?style=flat-square" alt="Architecture: 9 Layers"/>
+  <img src="https://img.shields.io/badge/Protocol-IQRA_Sovereign-green?style=flat-square" alt="Protocol: IQRA Sovereign"/>
+  <img src="https://img.shields.io/badge/Security-Red_Teamed-red?style=flat-square" alt="Security: Red Teamed"/>
+  <img src="https://img.shields.io/badge/Ecosystem-Triple_Integration-blue?style=flat-square" alt="Ecosystem: Triple Integration"/>
 </div>
 
 Welcome to the **Agentic Marketplace** for [IQRA](https://github.com/Moeabdelaziz007/iqra): the supreme multi-agent AI operating system.
@@ -66,7 +66,7 @@ This repository is not a mere directory of scripts; it is a **secure, sovereign,
 |:---:|:---|:---|:---:|
 | ⚪ **L1** | [`aix-format`](https://github.com/Moeabdelaziz007/aix-format) | **Protocol** · Universal Agent Passport · DID · Manifest · ABOM · TrustChain | [→ Read](https://github.com/Moeabdelaziz007/aix-format) |
 | ⚪ **L2** | [`iqra`](https://github.com/Moeabdelaziz007/iqra) | **Runtime** · Sovereign AI OS · 7 Loops · MCTS · Damir · MissionControl | [→ Read](https://github.com/Moeabdelaziz007/iqra) |
-| 🟢 **L3** | [`aix-agent-skills`](https://github.com/Moeabdelaziz007/aix-agent-skills) | **Marketplace** · 7 Layers · Constitutional · TrustChain | **You are here** |
+| 🟢 **L3** | [`aix-agent-skills`](https://github.com/Moeabdelaziz007/aix-agent-skills) | **Marketplace** · 9 Layers · Constitutional · TrustChain | **You are here** |
 
 > The three repositories are **one project in three layers**. The protocol is the contract, the runtime is the engine, the marketplace is the catalog. Same constitution, same TrustChain, same palette, same author.
 
@@ -94,9 +94,9 @@ The marketplace thrives on a continuous cycle of creation, testing, and evolutio
 
 <a id="architecture"></a>
 
-## 🏛️ The 7 Sovereign Layers & 36 Core Capabilities
+## 🏛️ The 9 Sovereign Layers & 58 Core Skills
 
-We currently host an expansive suite of capabilities structured perfectly into 7 profound layers.
+We currently host an expansive suite of capabilities structured into 9 profound layers (numbered 0 through 8) across 6 tiers. The 58 figure is a core-catalogue snapshot; for the authoritative live total, see the [Live Ecosystem Dashboard](#-live-ecosystem-dashboard) below.
 
 ### 0. The Sovereignty Layer (السيادة والدستور)
 The absolute core. This layer acts as the living conscience of the agent. Skills here cannot be overridden.
@@ -152,13 +152,6 @@ The immune system and red team.
 - `cross-model-judge`: Evaluates responses by consulting multiple independent LLMs.
 - `ci-cd-ai-guard`: Prevents untested prompts or skills from ever reaching production.
 - `chain-tracer`: Provides full execution traces and observability for complex skill pipelines.
-### 8. The Simulation & Multiverse Layer (المحاكاة والأكوان الموازية)
-Before any agent touches the real world, it lives a thousand lives here. These topological twins and shadow environments test execution purely in simulation.
-- `multiverse-lab-pro`: The meta-pack encompassing all shadow creation and topological forking engines.
-- `topology-fork-engine`: Forks reality into multiple simultaneous shadow execution paths to test different strategies silently.
-- `shadow-exchange`: A 1:1 realistic financial simulation environment with historical data and slippage for testing trading packs.
-- `shadow-hospital`: Synthetic FHIR patient records and medical emergencies to stress-test clinician agents.
-
 
 ### 7. The Hidden Gems (الجواهر المخفية) & Curation
 The frontiers of discovery and community validation.
@@ -166,6 +159,13 @@ The frontiers of discovery and community validation.
 - `hidden-topology`: Discovers undocumented, emergent connections between skills.
 - `fractal-memory`: Compresses memories into infinite, self-reflecting layers.
 - `awesome-curator`: Transforms the marketplace into a "Digital Library of Alexandria" via community-curated, verified lists.
+
+### 8. The Simulation & Multiverse Layer (المحاكاة والأكوان الموازية)
+Before any agent touches the real world, it lives a thousand lives here. These topological twins and shadow environments test execution purely in simulation.
+- `multiverse-lab-pro`: The meta-pack encompassing all shadow creation and topological forking engines.
+- `topology-fork-engine`: Forks reality into multiple simultaneous shadow execution paths to test different strategies silently.
+- `shadow-exchange`: A 1:1 realistic financial simulation environment with historical data and slippage for testing trading packs.
+- `shadow-hospital`: Synthetic FHIR patient records and medical emergencies to stress-test clinician agents.
 
 ---
 
@@ -178,7 +178,7 @@ To integrate a skill into your IQRA agent, reference its identifier from this re
 ## 🤝 Contributing
 
 Contributions must respect the `sovereign-constitution`. When submitting a new skill:
-1. Define its Tier (e.g., `BASIC`, `PRO`, `SOVEREIGN`).
+1. Define its Tier from the 6 supported tiers: `SOVEREIGN`, `ADVANCED_INFRASTRUCTURE`, `PRO`, `ADVANCED_TOOL`, `BASIC_TOOL`, or `UNCLASSIFIED`.
 2. Clearly state its philosophy and architecture.
 3. Ensure it can survive the `skill-sandbox` and pass `prompt-evaluator` and `red-team-guard` checks.
 4. If curating a list, interface with the `awesome-curator` to ensure all listed skills carry the verified badge.
