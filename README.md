@@ -8,7 +8,7 @@
 
 [![Layer](https://img.shields.io/badge/LAYER-L3%20%C2%B7%20MARKETPLACE-39FF14?style=for-the-badge&labelColor=050505)](https://github.com/Moeabdelaziz007/aix-agent-skills)
 [![Stack](https://img.shields.io/badge/AIX%20STACK-v0.369.0-39FF14?style=for-the-badge&labelColor=050505)](https://github.com/Moeabdelaziz007/aix-format)
-[![Skills](https://img.shields.io/badge/ARCHITECTURE-7%20LAYERS-39FF14?style=for-the-badge&labelColor=050505)](#-the-7-sovereign-layers--36-core-capabilities)
+[![Skills](https://img.shields.io/badge/ARCHITECTURE-7%20LAYERS-39FF14?style=for-the-badge&labelColor=050505)](#architecture)
 
 </div>
 
@@ -63,6 +63,8 @@ The marketplace thrives on a continuous cycle of creation, testing, and evolutio
 3. **Sovereign Execution**: Verified skills join the IQRA topology, orchestrated flawlessly, governed by an absolute constitution, and leaving an immutable TrustChain trace.
 
 ---
+
+<a id="architecture"></a>
 
 ## 🏛️ The 7 Sovereign Layers & 36 Core Capabilities
 
