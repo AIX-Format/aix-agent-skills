@@ -1,6 +1,14 @@
 {
   "name": "aix-agent-skills",
   "version": "1.0.0",
+  "aix": {
+    "stackVersion": "0.369.0",
+    "stackCodename": "Echo369",
+    "spec": "AIX/1.0",
+    "layer": "L3",
+    "layerName": "marketplace",
+    "authority": "axiomid.app"
+  },
   "description": "AIX Format coding skills for AI agents",
   "license": "Apache-2.0",
   "scripts": {
