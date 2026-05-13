@@ -1,3 +1,27 @@
+<!-- ════════════════ AIX SOVEREIGN STACK · UNIFIED BRANDING ════════════════ -->
+
+<div align="center">
+  <img src="./assets/aix-stack-header.svg" alt="The AIX Sovereign Stack — L1 PROTOCOL · L2 RUNTIME · L3 MARKETPLACE" width="100%"/>
+</div>
+
+<div align="center">
+
+[![Layer](https://img.shields.io/badge/LAYER-L3%20%C2%B7%20MARKETPLACE-39FF14?style=for-the-badge&labelColor=050505)](https://github.com/Moeabdelaziz007/aix-agent-skills)
+[![Stack](https://img.shields.io/badge/AIX%20STACK-v0.369.0-39FF14?style=for-the-badge&labelColor=050505)](https://github.com/Moeabdelaziz007/aix-format)
+[![Skills](https://img.shields.io/badge/ARCHITECTURE-7%20LAYERS-39FF14?style=for-the-badge&labelColor=050505)](#architecture)
+
+</div>
+
+<div align="center">
+
+[**← L1 · PROTOCOL · `aix-format`**](https://github.com/Moeabdelaziz007/aix-format) &nbsp;·&nbsp; [**← L2 · RUNTIME · `iqra`**](https://github.com/Moeabdelaziz007/iqra) &nbsp;·&nbsp; **🟢 L3 · MARKETPLACE · `aix-agent-skills` · YOU ARE HERE**
+
+</div>
+
+<br/>
+
+<!-- ════════════════ /AIX SOVEREIGN STACK ════════════════ -->
+
 # IQRA Agentic Marketplace 🌌
 
 <div align="center">
@@ -11,6 +35,26 @@ Welcome to the **Agentic Marketplace** for [IQRA](https://github.com/Moeabdelazi
 
 This repository is not a mere directory of scripts; it is a **secure, sovereign, and self-evolving cognitive ecosystem**. By combining the supreme architectural sovereignty of IQRA with rigorous security paradigms, we have built a marketplace where every skill is battle-tested, every persona is forged with precision, and every memory is immutable.
 
+---
+
+## 🌐 THE STACK | المنظومة المتكاملة
+
+`aix-agent-skills` is **L3** of the AIX Sovereign Stack — the capability marketplace whose skills are signed against the [`aix-format`](https://github.com/Moeabdelaziz007/aix-format) protocol and orchestrated at execution time by the [`iqra`](https://github.com/Moeabdelaziz007/iqra) runtime.
+
+<div align="center">
+  <img src="./assets/aix-stack-diagram.svg" alt="AIX Stack Topology — L1 Protocol, L2 Runtime, L3 Marketplace" width="100%"/>
+</div>
+
+| Layer | Repo | Role | Status |
+|:---:|:---|:---|:---:|
+| ⚪ **L1** | [`aix-format`](https://github.com/Moeabdelaziz007/aix-format) | **Protocol** · Universal Agent Passport · DID · Manifest · ABOM · TrustChain | [→ Read](https://github.com/Moeabdelaziz007/aix-format) |
+| ⚪ **L2** | [`iqra`](https://github.com/Moeabdelaziz007/iqra) | **Runtime** · Sovereign AI OS · 7 Loops · MCTS · Damir · MissionControl | [→ Read](https://github.com/Moeabdelaziz007/iqra) |
+| 🟢 **L3** | [`aix-agent-skills`](https://github.com/Moeabdelaziz007/aix-agent-skills) | **Marketplace** · 7 Layers · Constitutional · TrustChain | **You are here** |
+
+> The three repositories are **one project in three layers**. The protocol is the contract, the runtime is the engine, the marketplace is the catalog. Same constitution, same TrustChain, same palette, same author.
+
+---
+
 ## 🔥 The Sovereign Innovation Loop
 
 The marketplace thrives on a continuous cycle of creation, testing, and evolution:
@@ -19,6 +63,8 @@ The marketplace thrives on a continuous cycle of creation, testing, and evolutio
 3. **Sovereign Execution**: Verified skills join the IQRA topology, orchestrated flawlessly, governed by an absolute constitution, and leaving an immutable TrustChain trace.
 
 ---
+
+<a id="architecture"></a>
 
 ## 🏛️ The 7 Sovereign Layers & 36 Core Capabilities
 
@@ -297,3 +343,20 @@ _Last updated: 2026-05-13 01:16 UTC_
 
 </div>
 <!-- DASHBOARD_END -->
+
+---
+
+<!-- ════════════════ AIX SOVEREIGN STACK · FOOTER ════════════════ -->
+
+<div align="center">
+
+[**← L1 · PROTOCOL · `aix-format`**](https://github.com/Moeabdelaziz007/aix-format) &nbsp;·&nbsp; [**← L2 · RUNTIME · `iqra`**](https://github.com/Moeabdelaziz007/iqra) &nbsp;·&nbsp; **🟢 L3 · MARKETPLACE · `aix-agent-skills` · YOU ARE HERE**
+
+</div>
+
+<div align="center">
+  <img src="./assets/aix-footer-quote.svg" alt="AIX Stack — King isn't Born, he is Made." width="100%"/>
+</div>
+
+<!-- ════════════════ /AIX SOVEREIGN STACK · FOOTER ════════════════ -->
+
