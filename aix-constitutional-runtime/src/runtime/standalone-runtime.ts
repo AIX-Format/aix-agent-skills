@@ -10,7 +10,6 @@
  */
 
 import { runPurityFilter, type PurityFilterInput, type PurityFilterResult } from "../skills/purity-filter.js";
-import { TrustChain, type AppendInput } from "../skills/trust-chain.js";
 import { TrustChain, type AppendInput, type TrustChainState } from "../skills/trust-chain.js";
 import { reportSkillFailure } from "../skills/tasbih-resilience.js";
 
