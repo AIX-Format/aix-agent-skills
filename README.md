@@ -186,7 +186,7 @@ This sovereign ecosystem is conceived and engineered by a small team: **one huma
         <sub>human</sub>
       </td>
       <td align="center" width="25%">
-        <a href="https://jules.google.com">
+        <a href="#">
           <img src="https://img.icons8.com/color/96/000000/bot.png" width="100px;" alt="Jules"/><br />
           <sub><b>Jules (AIX Agent)</b></sub>
         </a><br />
