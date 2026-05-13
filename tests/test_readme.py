@@ -101,7 +101,7 @@ class TestReadmeTitle(unittest.TestCase):
         h1 = self._first_h1(content)
         self.assertTrue(
             h1.startswith("# "),
-            f"README.md should contain an H1 heading; none found",
+            "README.md should contain an H1 heading; none found",
         )
 
 
