@@ -14,6 +14,7 @@
 - المهارة السيادية المسؤولة عن إنفاذ التخفيف
 
 ## خريطة الفئات العشر
+
 | ASI | الاسم | الإنفاذ |
 |:---|:---|:---|
 | ASI01 | Agent Goal Hijack | `sovereign-constitution` + `prompt-weaver` |
