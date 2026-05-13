@@ -60,7 +60,7 @@ This repository is not a mere directory of scripts; it is a **secure, sovereign,
   <img src="./assets/aix-stack-diagram-v2.svg" alt="AIX Stack Topology · Echo369: Root Authority, Sovereign Core, Satellite Layers" width="100%"/>
 </div>
 
-#### Sovereign Stack (the three core repos)
+### Sovereign Stack (the three core repos)
 
 | Layer | Repo | Role | Status |
 |:---:|:---|:---|:---:|
@@ -70,7 +70,7 @@ This repository is not a mere directory of scripts; it is a **secure, sovereign,
 
 > The three repositories are **one project in three layers**. The protocol is the contract, the runtime is the engine, the marketplace is the catalog. Same constitution, same TrustChain, same palette, same author.
 
-#### Extended Ecosystem (root authority + satellites)
+### Extended Ecosystem (root authority + satellites)
 
 Outside the strict L1/L2/L3 chain sits the root authority and a tier of satellite layers. They consume the stack and ride the protocol; they do NOT define it. See [`AXIOM.md §4.5`](https://github.com/Moeabdelaziz007/aix-format/blob/main/AXIOM.md) for the full doctrine and [`AIX_STACK_VERSIONING.md`](https://github.com/Moeabdelaziz007/aix-format/blob/main/AIX_STACK_VERSIONING.md) for the independent-SemVer + `Echo369` codename rule.
 
