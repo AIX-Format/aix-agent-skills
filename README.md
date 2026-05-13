@@ -299,7 +299,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-13 07:06 UTC_
+_Last updated: 2026-05-13 10:48 UTC_
 
 ---
 
@@ -331,11 +331,11 @@ _Last updated: 2026-05-13 07:06 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`a724875`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/a724875) | fix(runtime): remove duplicate TrustChain import in standalone-runtime (#25) | Mohamed Abdelaziz ‬‏ |
+| [`fefd915`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/fefd915) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`6697fcd`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/6697fcd) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`d651df7`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/d651df7) | Feat/growth loops batch 2 (#23) | Mohamed Abdelaziz ‬‏ |
 | [`e28a9ad`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/e28a9ad) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`005cc74`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/005cc74) | Brand aix-agent-skills as L3 · MARKETPLACE of the unified AIX Sovereign Stack (#24) | Mohamed Abdelaziz ‬‏ |
-| [`85a009a`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/85a009a) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 
 ---
 
