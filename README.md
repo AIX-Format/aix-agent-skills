@@ -299,7 +299,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-13 01:16 UTC_
+_Last updated: 2026-05-13 04:25 UTC_
 
 ---
 
@@ -307,7 +307,7 @@ _Last updated: 2026-05-13 01:16 UTC_
 
 | Component | Type | Status |
 |---|---|---|
-| 🐍 Python Tests | `pytest` | ✅ Pass |
+| 🐍 Python Tests | `pytest` | ❌ Fail |
 | 🟦 TypeScript Runtime | `tsc --noEmit` | ❌ Fail |
 | 🟦 TS E2E Tests | `node --test` | ❌ Fail |
 | 🔷 Go Engine | `go build` | ✅ Pass |
@@ -331,11 +331,11 @@ _Last updated: 2026-05-13 01:16 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`005cc74`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/005cc74) | Brand aix-agent-skills as L3 · MARKETPLACE of the unified AIX Sovereign Stack (#24) | Mohamed Abdelaziz ‬‏ |
+| [`85a009a`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/85a009a) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`8ffb735`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/8ffb735) | Merge pull request #22 from Moeabdelaziz007/chore/sentinel-autofix-via-pr | Mohamed Abdelaziz ‬‏ |
 | [`705653d`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/705653d) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`cf99a16`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/cf99a16) | Merge pull request #21 from Moeabdelaziz007/chore/skills-cleanup-stubs | Mohamed Abdelaziz ‬‏ |
-| [`2c0ba0a`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/2c0ba0a) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`2817905`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/2817905) | Merge pull request #19 from Moeabdelaziz007/feat/growth-loops-batch-2 | Mohamed Abdelaziz ‬‏ |
 
 ---
 
