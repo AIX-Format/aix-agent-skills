@@ -226,56 +226,66 @@ Add to your MCP client configuration:
 
 ## 👨‍💻 Architects & Visionaries
 
-This sovereign marketplace is part of the [**Sovereign AI Stack**](https://github.com/Moeabdelaziz007#07-architects--ai-collaborators--المعماريون-والمتعاونون-الذكيون): 5 sovereign projects engineered by **1 human and 12 AI agents** in total. This **L3 Marketplace** carries the fingerprints of **4 of those 12 agents**, derived from real commit history (direct authors, `Co-authored-by` trailers, and review attributions).
+This sovereign marketplace is part of the [**Sovereign AI Stack**](https://github.com/Moeabdelaziz007#07-architects--ai-collaborators--المعماريون-والمتعاونون-الذكيون): 5 sovereign projects engineered by **1 human and 12 AI agents** in total. This **L3 Marketplace** carries the fingerprints of **5 of those 12 agents**: 2 coding agents and 3 review/debug agents, derived from real commit history (direct authors, `Co-authored-by` trailers, and review-attribution subjects like `fix(growth-loops-2): more review fixes (codex, coderabbit)`).
+
+### 🏛️ Architect
 
 <div align="center">
-  <table>
-    <tr>
-      <td align="center" width="20%">
-        <a href="https://github.com/Moeabdelaziz007">
-          <img src="https://avatars.githubusercontent.com/u/105391515?v=4" width="100px;" alt="Moeabdelaziz007"/><br />
-          <sub><b>Moe Abdelaziz</b></sub>
-        </a><br />
-        <i>The Visionary &amp; Supreme Architect</i><br />
-        <sub>🏛️ human</sub>
-      </td>
-      <td align="center" width="20%">
-        <a href="https://jules.google">
-          <img src="https://img.shields.io/badge/AI-Jules-10b981?style=for-the-badge&logo=googlecloud&logoColor=white" height="40"/><br /><br />
-          <sub><b>Jules</b></sub>
-        </a><br />
-        <i>The Sovereign Engineer &amp; Builder</i><br />
-        <sub>🔁 Google Antigravity</sub>
-      </td>
-      <td align="center" width="20%">
-        <a href="https://blacksmith.sh">
-          <img src="https://img.shields.io/badge/AI-Codesmith-ff6b35?style=for-the-badge&logo=githubactions&logoColor=white" height="40"/><br /><br />
-          <sub><b>Codesmith</b></sub>
-        </a><br />
-        <i>The Forge &amp; CI Steward</i><br />
-        <sub>🔨 Blacksmith · Autofix</sub>
-      </td>
-      <td align="center" width="20%">
-        <a href="https://coderabbit.ai">
-          <img src="https://img.shields.io/badge/AI-CodeRabbit-7c3aed?style=for-the-badge&logo=githubactions&logoColor=white" height="40"/><br /><br />
-          <sub><b>CodeRabbit</b></sub>
-        </a><br />
-        <i>The Reviewer &amp; Pattern Watcher</i><br />
-        <sub>🔍 PR review · Quality gate</sub>
-      </td>
-      <td align="center" width="20%">
-        <a href="https://developers.google.com/gemini-code-assist">
-          <img src="https://img.shields.io/badge/AI-Gemini_Code_Assist-4285F4?style=for-the-badge&logo=googlegemini&logoColor=white" height="40"/><br /><br />
-          <sub><b>Gemini Code Assist</b></sub>
-        </a><br />
-        <i>The Stream Reviewer</i><br />
-        <sub>🔬 Google · Code review</sub>
-      </td>
-    </tr>
-  </table>
+<table>
+<tr>
+<td align="center" width="200" valign="top">
+  <a href="https://github.com/Moeabdelaziz007"><img src="https://avatars.githubusercontent.com/u/105391515?v=4" width="90" style="border-radius:50%;" alt="Moeabdelaziz007"/></a>
+  <br/><br/><b>Moe Abdelaziz</b><br/>
+  <sub>🏛️ Visionary &amp; Supreme Architect</sub>
+</td>
+</tr>
+</table>
 </div>
 
-> Each PR here carries the fingerprints of multiple agents. The human sets the direction; Jules builds inside the runtime; Codesmith forges the CI, the marketplace plumbing, and the autofix workflows; CodeRabbit and Gemini Code Assist review every change with a second (and third) set of eyes. The constitution is shared.
+### 🔨 Coding Agents (2)
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="200" valign="top">
+  <a href="https://jules.google"><img src="https://img.shields.io/badge/AI-Jules-10b981?style=for-the-badge&logo=googlecloud&logoColor=white" height="40"/></a>
+  <br/><br/><b>Jules</b><br/>
+  <sub>Sovereign Engineer &amp; Builder<br/>Google Antigravity</sub>
+</td>
+<td align="center" width="200" valign="top">
+  <a href="https://blacksmith.sh"><img src="https://img.shields.io/badge/AI-Codesmith-ff6b35?style=for-the-badge&logo=githubactions&logoColor=white" height="40"/></a>
+  <br/><br/><b>Codesmith</b><br/>
+  <sub>Forge &amp; CI Steward<br/>Blacksmith · Autofix</sub>
+</td>
+</tr>
+</table>
+</div>
+
+### 🔍 Review &amp; Debug Agents (3)
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="200" valign="top">
+  <a href="https://coderabbit.ai"><img src="https://img.shields.io/badge/AI-CodeRabbit-7c3aed?style=for-the-badge&logo=githubactions&logoColor=white" height="40"/></a>
+  <br/><br/><b>CodeRabbit</b><br/>
+  <sub>Pattern Watcher<br/>PR review · Quality gate</sub>
+</td>
+<td align="center" width="200" valign="top">
+  <a href="https://openai.com/codex"><img src="https://img.shields.io/badge/AI-Codex-10a37f?style=for-the-badge&logo=openai&logoColor=white" height="40"/></a>
+  <br/><br/><b>Codex</b><br/>
+  <sub>OpenAI · growth-loops review</sub>
+</td>
+<td align="center" width="200" valign="top">
+  <a href="https://developers.google.com/gemini-code-assist"><img src="https://img.shields.io/badge/AI-Gemini_Code_Assist-4285F4?style=for-the-badge&logo=googlegemini&logoColor=white" height="40"/></a>
+  <br/><br/><b>Gemini Code Assist</b><br/>
+  <sub>Stream Reviewer<br/>Google · Code review</sub>
+</td>
+</tr>
+</table>
+</div>
+
+> Each PR here carries the fingerprints of multiple agents. The human sets the direction; Jules and Codesmith build inside the runtime and forge the CI; CodeRabbit, Codex, and Gemini Code Assist review every change with three independent sets of eyes. The constitution is shared.
 >
 > See the full [12-agent roster on the profile README →](https://github.com/Moeabdelaziz007#07-architects--ai-collaborators--المعماريون-والمتعاونون-الذكيون)
 
