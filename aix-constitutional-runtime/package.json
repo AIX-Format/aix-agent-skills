@@ -1,0 +1,25 @@
+{
+  "name": "aix-constitutional-runtime",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "AIX Constitutional Runtime — deterministic execution, governance, observability",
+  "scripts": {
+    "test": "tsx --test tests/e2e.test.ts",
+    "test:watch": "tsx --test --watch tests/e2e.test.ts",
+    "demo": "tsx src/runtime/standalone-runtime.ts",
+    "tui": "tsx src/runtime/tui.ts",
+    "start": "tsx src/runtime/tui.ts",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^25.7.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2"
+  }
+}

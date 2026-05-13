@@ -1,0 +1,32 @@
+{
+  "_doc": "Per-skill success_patterns used by the Rhythm Bridge for cross-pollination. Lives outside the MDs so existing structural tests on skills/*.md stay green. The bridge reads this file as the source of truth for donor DNA. Add a new entry whenever a skill earns confidence through real usage.",
+  "_schema": {
+    "skill_name": ["pattern-1", "pattern-2", "..."]
+  },
+  "patterns": {
+    "purity-filter": [
+      "layered_severity_filtering",
+      "regex_pre_check_then_semantic_pass",
+      "fail_closed_on_unknown_intent",
+      "audit_every_block_to_trust_chain"
+    ],
+    "trust-chain": [
+      "sha256_anchored_entry_id",
+      "append_only_ledger",
+      "previous_hash_chains_integrity",
+      "deterministic_serialization_for_signatures"
+    ],
+    "circuit-breaker": [
+      "exponential_backoff_on_recovery",
+      "half_open_probe_before_full_close",
+      "failure_window_with_rolling_count",
+      "fast_fail_when_open_to_save_budget"
+    ],
+    "topology-orchestrator": [
+      "dag_validation_before_execution",
+      "idempotent_node_retry",
+      "topological_sort_for_dependency_order",
+      "rollback_on_partial_failure"
+    ]
+  }
+}
