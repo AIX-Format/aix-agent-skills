@@ -2,14 +2,21 @@
 
 <!--
 Canonical template for L3 marketplace skills. Copy this file to
-`skills/<snake_case_name>.md` and replace every TODO with real content.
+`skills/<kebab-case-name>.md` and replace every TODO with real content.
 
 Naming rules (see rules/skills.md):
-- Filename: snake_case, matches ^[a-z0-9_]+$
+- Public filename: kebab-case, matches ^[a-z0-9]+(?:-[a-z0-9]+)*$
+  Example: skills/owasp-agentic-guard.md
+- Internal/test fixtures only: leading underscore + snake_case,
+  matches ^_[a-z0-9]+(?:_[a-z0-9]+)*$ (e.g. skills/_test_tool.md)
 - Title: human readable, may include Arabic
 - No em-dash characters (U+2014) anywhere in the file
 - Every section below is REQUIRED and must contain real content
 - Stubs that still say "TODO: Define ..." will fail CI
+
+The naming convention above is the one enforced by
+`scripts/schema_sentinel.py`. It overrides any conflicting wording
+in older docs.
 
 Bilingual content is welcome. Section headers may appear in English
 (as below) or in Arabic equivalents (see rules/skills.md for the
@@ -30,7 +37,7 @@ say how this skill serves it, and call out any tension you accept.
 ## Operational Flow
 
 The concrete steps the skill takes from input to output. Use a numbered
-list. Reference any other skills it composes with by their snake_case name.
+list. Reference any other skills it composes with by their kebab-case name.
 
 1. Step one
 2. Step two

@@ -54,7 +54,11 @@ The validator runs in two modes:
 
 ## How to add a new skill
 
-1. Copy `templates/skill-template.md` to `skills/<snake_case_name>.md`.
+1. Copy `templates/skill-template.md` to `skills/<kebab-case-name>.md`.
+   The schema sentinel (`scripts/schema_sentinel.py`) enforces
+   kebab-case for public skill filenames, regex
+   `^[a-z0-9]+(?:-[a-z0-9]+)*$`. Internal or test-only skills may
+   use a leading underscore plus snake_case (e.g. `_test_tool`).
 2. Replace every placeholder. Do not leave `TODO: Define ...` text.
 3. Register the skill in `skills.json` with a real `description`.
 4. Run `bash hooks/repo/pre-commit` before pushing to catch issues locally.
