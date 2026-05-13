@@ -2,13 +2,12 @@
 
 Auto-generated from `git log` by `scripts/talent_scout.py`. Do not hand-edit; changes will be overwritten on the next run. If a name should be merged or excluded, fix it at the git level (via `.mailmap` or by amending the relevant commits).
 
-## Humans (3)
+## Humans (2)
 
 | Name | Commits | Lines added | Lines removed | First | Latest |
 | --- | ---: | ---: | ---: | --- | --- |
-| Moeabdelaziz007 | 20 | 11906 | 3766 | 2026-05-12 | 2026-05-13 |
-| Mohamed Abdelaziz | 9 | 516871 | 511703 | 2026-05-01 | 2026-05-13 |
-| Mohamed Abdelaziz ‬‏ | 1 | 1 | 518 | 2026-05-12 | 2026-05-12 |
+| Moeabdelaziz007 | 21 | 12339 | 3766 | 2026-05-12 | 2026-05-13 |
+| Mohamed Abdelaziz | 10 | 516872 | 512221 | 2026-05-01 | 2026-05-13 |
 
 ## Bots (2)
 

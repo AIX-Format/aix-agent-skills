@@ -82,7 +82,13 @@ def _collect() -> tuple[dict, dict]:
 
     for line in raw.splitlines():
         if line.startswith("COMMIT\t"):
-            _, name, email, date = line.split("\t", 3)
+            _, raw_name, email, date = line.split("\t", 3)
+            # Strip invisible Unicode control characters (U+202C and
+            # friends) that occasionally sneak into git author names
+            # from copy-pasted identities. Without this two commits
+            # from the same person with one stray U+202C produce two
+            # rows in the contributor table.
+            name = "".join(c for c in raw_name if c.isprintable()).strip()
             current_name = name
             current_email = email
             current_date = date

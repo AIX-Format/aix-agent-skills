@@ -28,6 +28,7 @@ import sys
 import urllib.error
 import urllib.request
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date
 from pathlib import Path
 
@@ -155,15 +156,29 @@ def main() -> int:
     args = parser.parse_args()
 
     by_url = _gather_links()
+    urls = sorted(by_url)
+
+    # Parallelise HEAD requests so a few slow/timing-out hosts do not
+    # dominate the run time. With 8s per-request timeout and 10
+    # workers, a corpus of 100 URLs with worst-case timeouts settles
+    # in under 90 seconds instead of 800.
     results: list[tuple[str, list[str], int | None, str]] = []
-    for url in sorted(by_url):
-        status, msg = _check(url, args.timeout)
-        results.append((url, by_url[url], status, msg))
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        future_to_url = {executor.submit(_check, url, args.timeout): url for url in urls}
+        for future in as_completed(future_to_url):
+            url = future_to_url[future]
+            status, msg = future.result()
+            results.append((url, by_url[url], status, msg))
+    # Re-sort so the report is deterministic regardless of completion order.
+    results.sort(key=lambda r: r[0])
 
     SIGNALS.mkdir(parents=True, exist_ok=True)
-    today = date.today()
-    target = SIGNALS / f"link-health-{today.isoformat()}.md"
-    target.write_text(_render(today, results), encoding="utf-8")
+    # Static filename, deliberately. The report's history lives in
+    # git already; per-day files would clutter signals/ without
+    # adding signal. Overwriting on every run keeps the directory
+    # small and the latest state always at a known path.
+    target = SIGNALS / "link-health.md"
+    target.write_text(_render(date.today(), results), encoding="utf-8")
     broken = sum(1 for r in results if _is_broken(r[2]))
     print(f"Link Doctor: scanned {len(results)} URLs, {broken} broken. Wrote {target.relative_to(ROOT)}")
     return 1 if (args.fail_on_broken and broken) else 0
