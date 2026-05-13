@@ -253,7 +253,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-13 01:13 UTC_
+_Last updated: 2026-05-13 01:15 UTC_
 
 ---
 
@@ -261,14 +261,14 @@ _Last updated: 2026-05-13 01:13 UTC_
 
 | Component | Type | Status |
 |---|---|---|
-| 🐍 Python Tests | `pytest` | ❌ Fail |
+| 🐍 Python Tests | `pytest` | ✅ Pass |
 | 🟦 TypeScript Runtime | `tsc --noEmit` | ❌ Fail |
 | 🟦 TS E2E Tests | `node --test` | ❌ Fail |
 | 🔷 Go Engine | `go build` | ✅ Pass |
 
 ---
 
-### 🧩 Skill Registry — 75 Total Skills across 6 Tiers
+### 🧩 Skill Registry — 58 Total Skills across 6 Tiers
 
 | Tier | Count | Skills |
 |---|---|---|
@@ -277,7 +277,7 @@ _Last updated: 2026-05-13 01:13 UTC_
 | 🔧 Pro | 27 | `topology-orchestrator`, `skill-bank-evolution`, `mission-control`, `pipeline-store`, `resonance-engine`, `mcts-simulator`, `local-journal`, `metamorphosis-loop`, `reward-engine`, `model-council`, `edge-whisperer`, `trust-chain`, `skill-evaluator`, `skill-sandbox`, `prompt-evaluator`, `red-team-guard`, `cross-model-judge`, `ci-cd-ai-guard`, `chain-tracer`, `hidden-topology`, `fractal-memory`, `pre-built-memories`, `fine-tuned-vault`, `integration-packs`, `blockchain-trading-kit`, `shadow-exchange`, `shadow-hospital` |
 | 🛠️ Advanced Tool | 8 | `intent-dispatcher`, `prompt-weaver`, `persona-forge`, `role-tribunal`, `voice-identity`, `persona-marketplace`, `agent-division-loader`, `multi-tool-exporter` |
 | 🔨 Basic Tool | 4 | `data-alchemist`, `open-mcp-connectors`, `_test_tool`, `prompt-templates` |
-| 📦 UNCLASSIFIED | 24 | `agent-memory`, `voice-wizard`, `aix-schema`, `api-route-standard`, `skills-system`, `vercel-deploy`, `antigravity-jules`, `DATA_GUARDIAN`, `TOPOLOGICAL_CURIOSITY`, `compute_router`, `damir_check`, `memory_management`, `opportunity_hunter`, `pattern_validate`, `quran_deep_analysis`, `quran_search`, `sovereign_identity`, `sovereign_reasoning`, `trading_skill`, `SKILLS`, `TrustChain`, `CavemanSkill`, `FatihaTopology`, `Go_Engine` |
+| 📦 UNCLASSIFIED | 7 | `agent-memory`, `voice-wizard`, `aix-schema`, `api-route-standard`, `skills-system`, `vercel-deploy`, `antigravity-jules` |
 
 ---
 
@@ -285,11 +285,11 @@ _Last updated: 2026-05-13 01:13 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`cf99a16`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/cf99a16) | Merge pull request #21 from Moeabdelaziz007/chore/skills-cleanup-stubs | Mohamed Abdelaziz ‬‏ |
+| [`2c0ba0a`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/2c0ba0a) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`2817905`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/2817905) | Merge pull request #19 from Moeabdelaziz007/feat/growth-loops-batch-2 | Mohamed Abdelaziz ‬‏ |
+| [`471f211`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/471f211) | 🧹 cleanup: remove 17 auto-generated stubs + Go_Engine, add missing tiers | Moeabdelaziz007 |
 | [`f77a1db`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/f77a1db) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`a63fd6c`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/a63fd6c) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`a8eec69`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/a8eec69) | Merge pull request #18 from Moeabdelaziz007/feat/growth-loops-batch-1 | Mohamed Abdelaziz ‬‏ |
-| [`9b35833`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/9b35833) | Merge pull request #20 from Moeabdelaziz007/chore/sentinel-and-cleanup | Mohamed Abdelaziz ‬‏ |
 
 ---
 
