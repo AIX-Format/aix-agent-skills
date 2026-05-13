@@ -253,7 +253,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-13 00:07 UTC_
+_Last updated: 2026-05-13 00:29 UTC_
 
 ---
 
@@ -285,11 +285,11 @@ _Last updated: 2026-05-13 00:07 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`3d77fff`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/3d77fff) | Merge pull request #17 from Moeabdelaziz007/feat/team-credits | Mohamed Abdelaziz ‬‏ |
+| [`005a0e6`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/005a0e6) | docs(readme): revert Jules link to placeholder per review | Moeabdelaziz007 |
+| [`e9737fc`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/e9737fc) | docs(readme): credit full team in Architects section | Moeabdelaziz007 |
+| [`c25dcf7`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/c25dcf7) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`9aa850b`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/9aa850b) | Merge pull request #9 from Moeabdelaziz007/jules-3474253802154875185-b5f54eaf | Mohamed Abdelaziz ‬‏ |
-| [`43c4e1c`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/43c4e1c) | Merge pull request #16 from Moeabdelaziz007/feat/chronicle | Mohamed Abdelaziz ‬‏ |
-| [`5d7ec9b`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/5d7ec9b) | Merge pull request #15 from Moeabdelaziz007/feat/sentinel-watermark | Mohamed Abdelaziz ‬‏ |
-| [`eadc88f`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/eadc88f) | feat(chronicle): monthly auto-generated marketplace history | Moeabdelaziz007 |
-| [`c279ac4`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/c279ac4) | feat(watermark): add steganographic HMAC watermark for skill MDs | Moeabdelaziz007 |
 
 ---
 
