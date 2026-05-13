@@ -349,7 +349,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-13 19:53 UTC_
+_Last updated: 2026-05-13 21:56 UTC_
 
 ---
 
@@ -381,11 +381,11 @@ _Last updated: 2026-05-13 19:53 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`8b76f71`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/8b76f71) | fix(readme): topological debug pass on layer counts and section order (#50) | Mohamed Abdelaziz ‬‏ |
+| [`b899312`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/b899312) | CodeRabbit Generated Unit Tests: Add unit tests (#49) | coderabbitai[bot] |
+| [`9bc85de`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/9bc85de) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`a029706`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/a029706) | chore(ci): bump actions/setup-go from 5 to 6 (#48) | dependabot[bot] |
 | [`5e724d9`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/5e724d9) | chore(ci): bump actions/checkout from 3 to 6 (#47) | dependabot[bot] |
-| [`f2502c9`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/f2502c9) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`d579ecb`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/d579ecb) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`ccd8f1d`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/ccd8f1d) | chore(ci): bump actions/setup-python from 4 to 6 (#46) | dependabot[bot] |
 
 ---
 
