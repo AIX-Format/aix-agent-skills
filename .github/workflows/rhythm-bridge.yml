@@ -48,7 +48,7 @@ jobs:
           # 7-day lookback fits comfortably in 200 commits.
           fetch-depth: 200
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
