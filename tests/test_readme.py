@@ -476,5 +476,236 @@ class TestReadmeOldContentRemoved(unittest.TestCase):
         self.assertIn("Engineered for accountability", content)
 
 
+class TestReadmeArchitectsSectionPRUpdate(unittest.TestCase):
+    """Tests for the PR changes to the 'Architects & Visionaries' section.
+
+    This PR expanded the team table from 2 members (Moe + Jules) to 4
+    members (Moe + Jules + Codesmith + CodeRabbit), updated the section
+    description, added role sub-labels, and added a team collaboration
+    paragraph.
+    """
+
+    # ------------------------------------------------------------------ #
+    # Team description text                                                #
+    # ------------------------------------------------------------------ #
+
+    def test_team_description_one_human_three_ai_agents(self):
+        """The updated intro must say 'one human and three AI agents'."""
+        content = _read_readme()
+        self.assertIn(
+            "one human and three AI agents",
+            content,
+            "README.md should describe the team as 'one human and three AI agents'",
+        )
+
+    def test_team_description_working_as_peers(self):
+        """The updated intro must say the team works 'as peers'."""
+        content = _read_readme()
+        self.assertIn(
+            "working as peers",
+            content,
+            "README.md should describe the team as 'working as peers'",
+        )
+
+    # ------------------------------------------------------------------ #
+    # New team member: Codesmith                                           #
+    # ------------------------------------------------------------------ #
+
+    def test_codesmith_mentioned(self):
+        """Codesmith was added as a new team member in this PR."""
+        content = _read_readme()
+        self.assertIn("Codesmith", content)
+
+    def test_codesmith_blacksmith_link_present(self):
+        """Codesmith's card must link to blacksmith.sh."""
+        content = _read_readme()
+        self.assertIn(
+            "blacksmith.sh",
+            content,
+            "README.md should contain a link to blacksmith.sh for Codesmith",
+        )
+
+    def test_codesmith_role_forge_ci_steward(self):
+        """Codesmith's role label must read 'The Forge & CI Steward'."""
+        content = _read_readme()
+        self.assertIn(
+            "The Forge & CI Steward",
+            content,
+            "README.md should include Codesmith's role 'The Forge & CI Steward'",
+        )
+
+    def test_codesmith_sublabel_ai_agent_blacksmith(self):
+        """Codesmith's sub-label must say 'AI agent (Blacksmith)'."""
+        content = _read_readme()
+        self.assertIn(
+            "AI agent (Blacksmith)",
+            content,
+            "README.md should include Codesmith's sub-label 'AI agent (Blacksmith)'",
+        )
+
+    # ------------------------------------------------------------------ #
+    # New team member: CodeRabbit                                          #
+    # ------------------------------------------------------------------ #
+
+    def test_coderabbit_mentioned(self):
+        """CodeRabbit was added as a new team member in this PR."""
+        content = _read_readme()
+        self.assertIn("CodeRabbit", content)
+
+    def test_coderabbit_link_present(self):
+        """CodeRabbit's card must link to coderabbit.ai."""
+        content = _read_readme()
+        self.assertIn(
+            "coderabbit.ai",
+            content,
+            "README.md should contain a link to coderabbit.ai for CodeRabbit",
+        )
+
+    def test_coderabbit_role_reviewer_pattern_watcher(self):
+        """CodeRabbit's role label must read 'The Reviewer & Pattern Watcher'."""
+        content = _read_readme()
+        self.assertIn(
+            "The Reviewer & Pattern Watcher",
+            content,
+            "README.md should include CodeRabbit's role 'The Reviewer & Pattern Watcher'",
+        )
+
+    # ------------------------------------------------------------------ #
+    # Sub-labels added to existing members                                 #
+    # ------------------------------------------------------------------ #
+
+    def test_human_sublabel_present(self):
+        """The 'human' sub-label was added under Moe Abdelaziz."""
+        content = _read_readme()
+        self.assertIn(
+            "<sub>human</sub>",
+            content,
+            "README.md should contain '<sub>human</sub>' under Moe Abdelaziz",
+        )
+
+    def test_ai_agent_sublabel_present(self):
+        """'AI agent' sub-labels were added for Jules and CodeRabbit."""
+        content = _read_readme()
+        self.assertIn(
+            "<sub>AI agent</sub>",
+            content,
+            "README.md should contain '<sub>AI agent</sub>' for at least one member",
+        )
+
+    def test_ai_agent_sublabel_count(self):
+        """There should be exactly two plain 'AI agent' sub-labels (Jules and CodeRabbit)."""
+        content = _read_readme()
+        count = content.count("<sub>AI agent</sub>")
+        self.assertEqual(
+            count,
+            2,
+            f"Expected 2 occurrences of '<sub>AI agent</sub>', found {count}",
+        )
+
+    # ------------------------------------------------------------------ #
+    # Table layout: four equal-width columns                               #
+    # ------------------------------------------------------------------ #
+
+    def test_td_width_25_percent_present(self):
+        """Each team card td must have width=\"25%\"."""
+        content = _read_readme()
+        self.assertIn(
+            'width="25%"',
+            content,
+            "README.md should use width=\"25%\" on team table cells",
+        )
+
+    def test_four_td_columns_with_width_25(self):
+        """There should be exactly four td cells with width=\"25%\" (one per member)."""
+        content = _read_readme()
+        count = content.count('width="25%"')
+        self.assertEqual(
+            count,
+            4,
+            f"Expected 4 td cells with width=\"25%\", found {count}",
+        )
+
+    # ------------------------------------------------------------------ #
+    # Team collaboration paragraph                                         #
+    # ------------------------------------------------------------------ #
+
+    def test_fingerprints_paragraph_present(self):
+        """A blockquote paragraph about 'fingerprints of all four' was added."""
+        content = _read_readme()
+        self.assertIn(
+            "fingerprints of all four",
+            content,
+            "README.md should include the 'fingerprints of all four' team paragraph",
+        )
+
+    def test_collaboration_paragraph_mentions_jules(self):
+        """The collaboration paragraph mentions Jules by name."""
+        content = _read_readme()
+        # Extract the blockquote paragraph
+        self.assertIn(
+            "Jules builds inside the runtime",
+            content,
+            "README.md team paragraph should describe Jules's role",
+        )
+
+    def test_collaboration_paragraph_mentions_codesmith(self):
+        """The collaboration paragraph describes Codesmith's CI role."""
+        content = _read_readme()
+        self.assertIn(
+            "Codesmith forges the CI",
+            content,
+            "README.md team paragraph should describe Codesmith's role",
+        )
+
+    def test_collaboration_paragraph_mentions_coderabbit(self):
+        """The collaboration paragraph describes CodeRabbit's review role."""
+        content = _read_readme()
+        self.assertIn(
+            "CodeRabbit reviews every change",
+            content,
+            "README.md team paragraph should describe CodeRabbit's role",
+        )
+
+    def test_collaboration_paragraph_mentions_shared_constitution(self):
+        """The collaboration paragraph ends with 'The constitution is shared.'"""
+        content = _read_readme()
+        self.assertIn(
+            "The constitution is shared",
+            content,
+            "README.md team paragraph should conclude with 'The constitution is shared'",
+        )
+
+    # ------------------------------------------------------------------ #
+    # Regression: existing members still present after expansion           #
+    # ------------------------------------------------------------------ #
+
+    def test_all_four_members_present(self):
+        """All four team members must be findable after the table expansion."""
+        content = _read_readme()
+        for name in ("Moe Abdelaziz", "Jules", "Codesmith", "CodeRabbit"):
+            with self.subTest(member=name):
+                self.assertIn(
+                    name,
+                    content,
+                    f"README.md should mention team member '{name}'",
+                )
+
+    def test_visionary_role_still_present(self):
+        """Moe's existing role label must not have been removed during the expansion."""
+        content = _read_readme()
+        self.assertIn(
+            "The Visionary & Supreme Architect",
+            content,
+        )
+
+    def test_jules_role_still_present(self):
+        """Jules's existing role label must not have been removed during the expansion."""
+        content = _read_readme()
+        self.assertIn(
+            "The Sovereign Engineer & Builder",
+            content,
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
