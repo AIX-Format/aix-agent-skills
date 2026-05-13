@@ -106,13 +106,14 @@ def _gather_links() -> dict[str, list[str]]:
     by_url: dict[str, set[str]] = defaultdict(set)
     skip_dirs = (".git", "node_modules", ".compost", "signals")
     for md in ROOT.rglob("*.md"):
-        if any(part in skip_dirs for part in md.parts):
+        rel_path = md.relative_to(ROOT)
+        if any(part in skip_dirs for part in rel_path.parts):
             continue
         try:
             text = md.read_text(encoding="utf-8", errors="ignore")
         except OSError:
             continue
-        rel = str(md.relative_to(ROOT))
+        rel = str(rel_path)
         for match in URL_RE.finditer(text):
             raw = match.group("md") or match.group("bare") or ""
             url = raw.rstrip(".,;:")
