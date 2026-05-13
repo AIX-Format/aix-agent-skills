@@ -42,14 +42,14 @@ SIGNALS = ROOT / "signals"
 #      `https://en.wikipedia.org/wiki/Foo_(disambiguation)` need
 #      this so they are not truncated at the first `)`.
 #   2. Bare URL outside a markdown link, terminated at whitespace,
-#      angle brackets, quotes, or backticks.
+#      angle brackets, quotes, square brackets, or backticks.
 #
 # `_BALANCED` matches characters that are either non-paren and
 # non-whitespace, or a `(...)` pair with no nested parens. One level
 # of balance handles every URL we have seen in the corpus; adding
 # deeper nesting would require the `regex` module's recursive
 # patterns and the marginal gain is not worth the dependency.
-_BALANCED = r"(?:[^\s<>\"'`()]+|\([^()]*\))+"
+_BALANCED = r"(?:[^\s<>\"'`()\[\]]+|\([^()]*\))+"
 URL_RE = re.compile(
     rf"\]\((?P<md>https?://{_BALANCED})\)"
     r"|"
