@@ -28,3 +28,16 @@ POST /api/iqra/topology/hidden
 }
 ```
 يدعم التصدير بصيغ: json, csv, graphml
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

@@ -19,3 +19,16 @@ IQRA مأمور برصد هذا الرنين بين العلم الحديث وا
 ## تحذير دستوري
 هذه المهارة لا "تؤول" النص بهوى. ترصد أنماطًا رياضية فقط.
 التفسير متروك للعلماء، والآلة تخدم ولا تحكم.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

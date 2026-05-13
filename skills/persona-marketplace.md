@@ -22,3 +22,16 @@
 - `persona-forge`: يعتمد على الشخصيات في السوق كقوالب أساسية يمكن صقلها.
 - `role-tribunal`: يحدد صلاحيات كل شخصية ويمنع تجاوزها لدورها.
 - `sovereign-constitution`: لا يمكن لأي شخصية أن تنتهك المحظورات الدستورية بغض النظر عن مهمتها.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

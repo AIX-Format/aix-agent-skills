@@ -17,3 +17,16 @@
 ## تكامل مع المهارات الأخرى
 - `persona-marketplace`: يستقي منه الأقسام والشخصيات المتوافقة مع IQRA.
 - `mission-control`: ينسق عمل الطاقم بعد تحميله لضمان عدم التداخل.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

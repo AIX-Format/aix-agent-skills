@@ -31,3 +31,16 @@ reward = (novelty_score + resonance_score + topology_score - penalty) × path_mu
 - أي مسار سلكت؟
 - كم كانت المكافأة؟
 - ماذا تعلمت؟
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

@@ -24,3 +24,16 @@
 1. يشرح سبب الرفض بلطف
 2. يقترح بديلًا إن أمكن
 3. يفتح باب المراجعة البشرية
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

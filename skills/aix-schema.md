@@ -32,3 +32,16 @@ if (!result.valid) {
 ## Golden Manifests (reference these in tests)
 - `tests/golden_manifests/low-risk.aix.json`
 - `tests/golden_manifests/sovereign-agent.aix.json`
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

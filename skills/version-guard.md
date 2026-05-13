@@ -38,3 +38,16 @@ ports:
 - `skill-evaluator`: يُعاد تشغيل التقييم بعد أي تحديث إصدار.
 - `pipeline-store`: يقفل (Locks) الإصدارات المتوافقة عند التثبيت.
 - `chain-tracer`: يستخدم التتبعات لمعرفة المنافذ التي تُستهلك فعلياً.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

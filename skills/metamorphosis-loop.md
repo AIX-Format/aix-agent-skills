@@ -34,3 +34,16 @@
 ## الجوهرة المخفية: الذاكرة الجنينية (Embryonic Memory)
 أثناء الشرنقة، تُحفظ الذكريات "الجنينية" — البذور التي لم تنبت بعد.
 في الدورة التالية، قد تنبت هذه البذور وتصبح مهارات كاملة.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

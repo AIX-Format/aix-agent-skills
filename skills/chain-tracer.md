@@ -32,3 +32,16 @@
 - `pipeline-store`: مراقبة المسارات المشغلة.
 - `version-guard`: تزويده ببيانات استخدام المنافذ الفعلية.
 - `reward-engine`: يتغذى على التتبعات لتقييم نقاء المسار وكفاءته.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

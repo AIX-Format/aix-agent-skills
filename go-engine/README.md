@@ -259,7 +259,7 @@ GET /health
 
 ---
 
-**Made with ❤️ by Moe Abdelaziz**  
+**Made with ❤️ by Moe Abdelaziz**
 **Powered by: Go 1.25 + TinyMiniMicroTerboQuanSimuAlgoToplogy**
 
 صدقاً، دقةً، بركةً.

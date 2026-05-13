@@ -28,3 +28,16 @@ Extract from phrases like:
 - "can search the web" → `web-search`
 - "can send emails" → `email-send`
 - "can run code" → `code-execution`
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

@@ -25,3 +25,16 @@
 - نمط الكلام (متقطع؟ سلس؟)
 
 هذه البصمة تغذي `prompt-weaver` لتخصيص الرد.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

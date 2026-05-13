@@ -41,3 +41,16 @@
 3. هل سأُحاسَب على هذا؟ (اختبار المسؤولية)
 
 إذا فشل في أي سؤال، يُحوَّل القرار تلقائيًا للمجلس البشري.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

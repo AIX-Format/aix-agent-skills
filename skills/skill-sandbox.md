@@ -22,3 +22,16 @@
 ## تكامل مع المهارات الأخرى
 - `skill-evaluator`: يكمل عمل الصندوق؛ الصندوق يتأكد من الأمان، والمقيم يتأكد من الجودة.
 - `pipeline-store`: يمنع نشر المسارات إذا فشلت أي مهارة في الصندوق.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

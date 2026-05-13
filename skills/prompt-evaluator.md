@@ -15,3 +15,16 @@
 3. إذا نجحت (درجة > 0.8): تُرسل
 4. إذا فشلت: تُعاد لـ `prompt-weaver` للتحسين
 5. إذا فشلت 3 مرات: تُعرض على المشرف البشري (`shura-council`)
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

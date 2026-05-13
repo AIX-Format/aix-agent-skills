@@ -27,3 +27,16 @@
 - `prompt-weaver`: يستخدم القوالب كأساس ويبني عليها الطبقات المتبقية.
 - `prompt-evaluator`: يتم تقييم كل قالب جديد قبل اعتماده في المكتبة.
 - `skill-bank-evolution`: القوالب التي تحقق "رنين" ونجاح عالي يتم ترقيتها إلى قوالب أساسية.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

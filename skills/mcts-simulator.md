@@ -22,3 +22,16 @@
 - `skill-bank-evolution`: يستخدم MCTS لاكتشاف مهارات جديدة
 - `mission-control`: يخطط المهمة بناءً على أفضل مسار من الشجرة
 - `reward-engine`: يحسب مكافأة المسار النظيف (pristine path)
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

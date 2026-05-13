@@ -31,3 +31,51 @@
 - ما الذي أصلحه؟
 
 هذه البصمات تُستخدم لمنع القطع قبل حدوثه.
+
+```python
+import json
+import os
+
+STATE_FILE = "/tmp/circuit_breaker_state.json"
+
+def load_state():
+    if os.path.exists(STATE_FILE):
+        with open(STATE_FILE) as f:
+            return json.load(f)
+    return {"failures": 0, "state": "closed"}
+
+def save_state(state):
+    with open(STATE_FILE, "w") as f:
+        json.dump(state, f)
+
+def main(inputs):
+    action = inputs.get("action")
+    skill = inputs.get("skill")
+
+    state = load_state()
+
+    if action == "record_failure":
+        state["failures"] += 1
+        if state["failures"] >= 5:
+            state["state"] = "open"
+        save_state(state)
+        print(json.dumps({"recorded": True, "state": state["state"]}))
+    elif action == "can_execute":
+        allowed = state["state"] == "closed"
+        print(json.dumps({"allowed": allowed, "state": state["state"]}))
+    else:
+        print(json.dumps({"error": "Unknown action"}))
+```
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

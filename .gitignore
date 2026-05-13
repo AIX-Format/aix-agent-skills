@@ -64,6 +64,7 @@ yarn-error.log*
 *.tmp
 scratch/
 scratch_test.ts
+test_write.ts
 
 # Env
 .env

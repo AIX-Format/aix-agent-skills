@@ -137,3 +137,16 @@ performance_thresholds:
 
 ## التكامل
 يعمل كخط دفاع أخير قبل تفعيل المهارة أو المطالبة في البيئة الحية، مع ضمان الامتثال الكامل للمعايير الدستورية وقواعد الأمان.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

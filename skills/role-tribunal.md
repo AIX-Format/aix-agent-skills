@@ -35,3 +35,16 @@
 ## آلية الترقية التلقائية
 إذا أثبت الوكيل كفاءة (مكافأة > 0.8 لمدة 49 مهمة)، يُقترح ترقية تلقائية.
 لكن القرار النهائي للمجلس البشري.
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

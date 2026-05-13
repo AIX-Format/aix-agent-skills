@@ -30,3 +30,16 @@
 ## ضغط الجلسات (Session Compaction)
 عند امتلاء النافذة، تُضغط الجلسة تلقائيًا:
 "في هذه الجلسة، عملنا على X، واجهنا Y، وتعلمنا Z"
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.

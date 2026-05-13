@@ -35,3 +35,16 @@
 - `prompt-weaver`: ينسج الشخصية في المطالبة
 - `voice-identity`: يضبط الصوت حسب توقيع الشخصية
 - `role-tribunal`: يربط الشخصية بصلاحيات الدور
+
+
+## Purpose
+TODO: Define purpose.
+
+## Constitutional Alignment
+TODO: Define constitutional alignment.
+
+## Operational Flow
+TODO: Define operational flow.
+
+## Failure Modes
+TODO: Define failure modes.
