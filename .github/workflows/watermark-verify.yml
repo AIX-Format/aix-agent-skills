@@ -1,0 +1,43 @@
+name: Skill Watermark Verify
+
+# Quiet tamper-detection on skill MDs. Verifies HMAC signatures embedded
+# as trailing HTML comments. Runs in advisory mode (no --strict) so the
+# workflow can land before all files are signed; flip to --strict once
+# the corpus is fully signed via `watermark.py --sign-all`.
+on:
+  pull_request:
+    paths:
+      - "skills/**"
+      - "scripts/watermark.py"
+      - ".github/workflows/watermark-verify.yml"
+  workflow_dispatch:
+    inputs:
+      strict:
+        description: "Treat unsigned files as failures"
+        required: false
+        default: "false"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify skill signatures
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify watermarks
+        env:
+          IQRA_WATERMARK_SECRET: ${{ secrets.IQRA_WATERMARK_SECRET }}
+        run: |
+          if [ "${{ github.event.inputs.strict }}" = "true" ]; then
+            python3 scripts/watermark.py --verify --strict
+          else
+            python3 scripts/watermark.py --verify
+          fi

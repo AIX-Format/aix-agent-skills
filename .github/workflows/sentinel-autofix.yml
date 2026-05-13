@@ -1,0 +1,89 @@
+name: Schema Sentinel Autofix
+
+# Sibling workflow to `schema-sentinel.yml`. The strict sentinel keeps PRs
+# honest by failing on any orphan MD; this workflow runs on a schedule (and
+# on pushes to main) to auto-register any orphan that lands on the default
+# branch and commit the registration directly back to main under the
+# github-actions[bot] identity. The commit carries `[skip ci]` so the
+# autofix cannot recursively re-trigger itself.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/**"
+      - "skills.json"
+      - "scripts/schema_sentinel.py"
+  schedule:
+    # Daily at 06:00 UTC — catches any orphan that slipped in via direct
+    # pushes, merges with [skip ci], or out-of-band tooling.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sentinel-autofix
+  cancel-in-progress: false
+
+jobs:
+  autofix:
+    name: Auto-register orphan skills
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run schema sentinel with --fix
+        id: sentinel
+        # The script returns 0 when orphans are the only failure (after
+        # autofix), or non-zero for any other violation. We capture the
+        # exit code without short-circuiting so the workflow can still
+        # surface real schema errors via the strict sentinel job.
+        run: |
+          set +e
+          python3 scripts/schema_sentinel.py --fix
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Re-sign any newly registered orphans
+        # Best-effort: if the secret is missing the script will refuse
+        # to sign, which is fine. The verify workflow stays advisory.
+        env:
+          IQRA_WATERMARK_SECRET: ${{ secrets.IQRA_WATERMARK_SECRET }}
+        run: |
+          set +e
+          python3 scripts/watermark.py --sign-all >/dev/null 2>&1
+          exit 0
+
+      - name: Detect manifest changes
+        id: diff
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit & push autofix to main
+        if: steps.diff.outputs.changed == 'true'
+        # Direct commit to main under the github-actions[bot] identity,
+        # matching the existing pattern in `dashboard.yml`. The trailing
+        # `[skip ci]` prevents this workflow (and others gated on push to
+        # main) from re-triggering on the autofix commit itself.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add skills.json skills/
+          git commit -m "🛡️ sentinel: auto-register ${{ steps.sentinel.outputs.orphan_count || 'orphan' }} skill(s) [skip ci]" \
+                     -m "Orphans: ${{ steps.sentinel.outputs.orphans }}" \
+                     -m "Detected by Schema Sentinel autofix run #${{ github.run_number }} (${{ github.event_name }})."
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin HEAD:main
