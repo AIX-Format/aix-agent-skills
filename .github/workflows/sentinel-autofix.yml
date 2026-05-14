@@ -82,7 +82,7 @@ jobs:
         # push, and PR open/update in one step. The action is idempotent:
         # rerunning with new orphans updates the existing PR in place.
         # Reviewer ensures we never silently merge low-quality stubs again.
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: sentinel-autofix/orphan-skills

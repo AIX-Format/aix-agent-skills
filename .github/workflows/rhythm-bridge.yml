@@ -78,7 +78,7 @@ jobs:
 
       - name: Open cross-pollination PR
         if: steps.bridge.outputs.pairs_count != '0' && inputs.dry_run != 'true'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           path: aix-agent-skills
           branch: tide-sync/cycle-${{ steps.bridge.outputs.tick }}
