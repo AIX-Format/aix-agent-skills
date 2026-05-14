@@ -1,0 +1,14 @@
+# Local development environment variables for the gateway. Copy this
+# file to `.dev.vars` and fill in real values. `.dev.vars` is gitignored.
+#
+# For production, set these as Cloudflare secrets via
+#   wrangler secret put RECEIVING_WALLET --env production
+# rather than committing them anywhere.
+
+# The seller's receiving wallet (USDC on Base / Base Sepolia).
+# Use a TESTNET wallet in local development; never a production key.
+RECEIVING_WALLET=0x0000000000000000000000000000000000000000
+
+# Override the x402 facilitator URL if you want to use a self-hosted one
+# instead of the Coinbase-hosted default.
+# X402_FACILITATOR_URL=https://my-facilitator.example.com
