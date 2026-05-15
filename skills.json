@@ -465,6 +465,20 @@
       "file": "skills/content-creator.md",
       "tier": "PRO",
       "price_usdc": "0.00"
+    },
+    {
+      "name": "inverse-design-healer",
+      "description": "Self-healing skill that analyzes failures and proposes deterministic recovery",
+      "file": "skills/inverse-design-healer.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
+    },
+    {
+      "name": "topological-analyzer",
+      "description": "Persistent homology, Shannon entropy, resonance coherence analysis",
+      "file": "skills/topological-analyzer.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
     }
   ]
 }
