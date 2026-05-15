@@ -367,6 +367,27 @@
       "file": "skills/persona-loader.md",
       "tier": "BASIC_TOOL",
       "price_usdc": "0.00"
+    },
+    {
+      "name": "aggressive-scalper",
+      "description": "Aggressive scalping strategy with RSI extremes and 2:1 R:R",
+      "file": "skills/aggressive-scalper.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
+    },
+    {
+      "name": "caveman-compressor",
+      "description": "LLM prompt compression (~60%) for English and Arabic",
+      "file": "skills/caveman-compressor.md",
+      "tier": "BASIC_TOOL",
+      "price_usdc": "0.00"
+    },
+    {
+      "name": "git-operator",
+      "description": "Git operations (commit, push, branch, revert, openPR) for agents",
+      "file": "skills/git-operator.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
     }
   ]
 }
