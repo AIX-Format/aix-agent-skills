@@ -383,7 +383,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-15 09:10 UTC_
+_Last updated: 2026-05-15 09:44 UTC_
 
 ---
 
@@ -398,7 +398,7 @@ _Last updated: 2026-05-15 09:10 UTC_
 
 ---
 
-### 🧩 Skill Registry — 60 Total Skills across 6 Tiers
+### 🧩 Skill Registry — 63 Total Skills across 6 Tiers
 
 | Tier | Count | Skills |
 |---|---|---|
@@ -407,7 +407,7 @@ _Last updated: 2026-05-15 09:10 UTC_
 | 🔧 Pro | 27 | `topology-orchestrator`, `skill-bank-evolution`, `mission-control`, `pipeline-store`, `resonance-engine`, `mcts-simulator`, `local-journal`, `metamorphosis-loop`, `reward-engine`, `model-council`, `edge-whisperer`, `trust-chain`, `skill-evaluator`, `skill-sandbox`, `prompt-evaluator`, `red-team-guard`, `cross-model-judge`, `ci-cd-ai-guard`, `chain-tracer`, `hidden-topology`, `fractal-memory`, `pre-built-memories`, `fine-tuned-vault`, `integration-packs`, `blockchain-trading-kit`, `shadow-exchange`, `shadow-hospital` |
 | 🛠️ Advanced Tool | 8 | `intent-dispatcher`, `prompt-weaver`, `persona-forge`, `role-tribunal`, `voice-identity`, `persona-marketplace`, `agent-division-loader`, `multi-tool-exporter` |
 | 🔨 Basic Tool | 4 | `data-alchemist`, `open-mcp-connectors`, `_test_tool`, `prompt-templates` |
-| 📦 UNCLASSIFIED | 8 | `agent-memory`, `voice-wizard`, `aix-schema`, `api-route-standard`, `skills-system`, `vercel-deploy`, `antigravity-jules`, `persona-loader` |
+| 📦 UNCLASSIFIED | 11 | `agent-memory`, `voice-wizard`, `aix-schema`, `api-route-standard`, `skills-system`, `vercel-deploy`, `antigravity-jules`, `persona-loader`, `aggressive-scalper`, `caveman-compressor`, `git-operator` |
 
 ---
 
@@ -415,11 +415,11 @@ _Last updated: 2026-05-15 09:10 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`26bb19b`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/26bb19b) | feat: add 3 skills from AlphaAxiom + iqra (Clean Room batch #2) | Mohamed Abdelaziz |
+| [`fe355f3`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/fe355f3) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`7fd976f`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/7fd976f) | feat: add persona-loader skill (Clean Room #1) | Mohamed Abdelaziz |
 | [`4d1df1d`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/4d1df1d) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`183e713`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/183e713) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`01e04a8`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/01e04a8) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`8e62a25`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/8e62a25) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 
 ---
 
