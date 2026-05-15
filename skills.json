@@ -416,6 +416,55 @@
       "file": "skills/frontend-developer.md",
       "tier": "PRO",
       "price_usdc": "0.00"
+    },
+    {
+      "name": "creative-brainstorming",
+      "description": "Structured creative ideation and brainstorming",
+      "file": "skills/creative-brainstorming.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
+    },
+    {
+      "name": "api-marketplace-connector",
+      "description": "Discover and integrate APIs from marketplaces",
+      "file": "skills/api-marketplace-connector.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
+    },
+    {
+      "name": "polyglot-coder",
+      "description": "Write code in multiple programming languages",
+      "file": "skills/polyglot-coder.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
+    },
+    {
+      "name": "proactive-assistant",
+      "description": "Anticipate needs and offer proactive suggestions",
+      "file": "skills/proactive-assistant.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
+    },
+    {
+      "name": "self-improvement-trainer",
+      "description": "Analyze actions and suggest workflow improvements",
+      "file": "skills/self-improvement-trainer.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
+    },
+    {
+      "name": "software-engineer",
+      "description": "Full-stack software engineering with testing",
+      "file": "skills/software-engineer.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
+    },
+    {
+      "name": "content-creator",
+      "description": "Create content across formats: articles, social, marketing",
+      "file": "skills/content-creator.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
     }
   ]
 }
