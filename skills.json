@@ -388,6 +388,34 @@
       "file": "skills/git-operator.md",
       "tier": "PRO",
       "price_usdc": "0.00"
+    },
+    {
+      "name": "gmail-integration",
+      "description": "Send, receive and manage emails via Gmail API",
+      "file": "skills/gmail-integration.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
+    },
+    {
+      "name": "calendar-manager",
+      "description": "Manage Google Calendar events (create, read, update)",
+      "file": "skills/calendar-manager.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
+    },
+    {
+      "name": "data-analysis-engine",
+      "description": "Statistical analysis, visualization, and predictive modeling",
+      "file": "skills/data-analysis-engine.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
+    },
+    {
+      "name": "frontend-developer",
+      "description": "Build modern web interfaces with React, Vue, vanilla",
+      "file": "skills/frontend-developer.md",
+      "tier": "PRO",
+      "price_usdc": "0.00"
     }
   ]
 }
