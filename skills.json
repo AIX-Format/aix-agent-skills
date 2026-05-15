@@ -360,6 +360,13 @@
       "description": "Runtime gate that maps OWASP Top 10 for Agentic Applications 2026 (ASI01-ASI10) to mitigation skills",
       "file": "skills/owasp-agentic-guard.md",
       "tier": "ADVANCED_INFRASTRUCTURE"
+    },
+    {
+      "name": "persona-loader",
+      "description": "Load agent personas from L3 marketplace by ID",
+      "file": "skills/persona-loader.md",
+      "tier": "BASIC_TOOL",
+      "price_usdc": "0.00"
     }
   ]
 }
