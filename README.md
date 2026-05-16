@@ -383,7 +383,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-16 08:01 UTC_
+_Last updated: 2026-05-16 11:48 UTC_
 
 ---
 
@@ -398,7 +398,7 @@ _Last updated: 2026-05-16 08:01 UTC_
 
 ---
 
-### 🧩 Skill Registry — 76 Total Skills across 6 Tiers
+### 🧩 Skill Registry — 124 Total Skills across 6 Tiers
 
 | Tier | Count | Skills |
 |---|---|---|
@@ -407,7 +407,7 @@ _Last updated: 2026-05-16 08:01 UTC_
 | 🔧 Pro | 27 | `topology-orchestrator`, `skill-bank-evolution`, `mission-control`, `pipeline-store`, `resonance-engine`, `mcts-simulator`, `local-journal`, `metamorphosis-loop`, `reward-engine`, `model-council`, `edge-whisperer`, `trust-chain`, `skill-evaluator`, `skill-sandbox`, `prompt-evaluator`, `red-team-guard`, `cross-model-judge`, `ci-cd-ai-guard`, `chain-tracer`, `hidden-topology`, `fractal-memory`, `pre-built-memories`, `fine-tuned-vault`, `integration-packs`, `blockchain-trading-kit`, `shadow-exchange`, `shadow-hospital` |
 | 🛠️ Advanced Tool | 8 | `intent-dispatcher`, `prompt-weaver`, `persona-forge`, `role-tribunal`, `voice-identity`, `persona-marketplace`, `agent-division-loader`, `multi-tool-exporter` |
 | 🔨 Basic Tool | 4 | `data-alchemist`, `open-mcp-connectors`, `_test_tool`, `prompt-templates` |
-| 📦 UNCLASSIFIED | 24 | `agent-memory`, `voice-wizard`, `aix-schema`, `api-route-standard`, `skills-system`, `vercel-deploy`, `antigravity-jules`, `persona-loader`, `aggressive-scalper`, `caveman-compressor`, `git-operator`, `gmail-integration`, `calendar-manager`, `data-analysis-engine`, `frontend-developer`, `creative-brainstorming`, `api-marketplace-connector`, `polyglot-coder`, `proactive-assistant`, `self-improvement-trainer`, `software-engineer`, `content-creator`, `inverse-design-healer`, `topological-analyzer` |
+| 📦 UNCLASSIFIED | 72 | `agent-memory`, `voice-wizard`, `aix-schema`, `api-route-standard`, `skills-system`, `vercel-deploy`, `antigravity-jules`, `persona-loader`, `aggressive-scalper`, `caveman-compressor`, `git-operator`, `gmail-integration`, `calendar-manager`, `data-analysis-engine`, `frontend-developer`, `creative-brainstorming`, `api-marketplace-connector`, `polyglot-coder`, `proactive-assistant`, `self-improvement-trainer`, `software-engineer`, `content-creator`, `inverse-design-healer`, `topological-analyzer`, `google-drive`, `google-docs`, `google-sheets`, `google-slides`, `google-maps`, `google-photos`, `backend-developer`, `database-architect`, `devops-engineer`, `mobile-developer`, `api-designer`, `cloud-infrastructure`, `video-producer`, `podcast-producer`, `graphic-designer`, `copywriter`, `music-composer`, `task-manager`, `note-taking`, `code-assistant`, `file-converter`, `social-media-manager`, `universal-translator`, `web-search`, `news-aggregator`, `weather-intelligence`, `crypto-tracker`, `semantic-memory`, `continuous-learner`, `performance-optimizer`, `intelligent-monitoring`, `event-driven-automator`, `predictive-engagement`, `lateral-thinker`, `design-thinker`, `triz-innovator`, `scenario-planner`, `system-architect`, `code-quality-guardian`, `security-engineer`, `technical-writer`, `agile-project-manager`, `public-api-finder`, `enterprise-api-gateway`, `api-authentication-expert`, `api-rate-limit-manager`, `voice-synthesis`, `content-creation-studio` |
 
 ---
 
@@ -415,11 +415,11 @@ _Last updated: 2026-05-16 08:01 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`e48f36c`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/e48f36c) | feat: expand skills registry from 76→124, fix 46 stub/thin files, add 48 new skills from GemClaw | Mohamed Abdelaziz |
+| [`68cadf3`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/68cadf3) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`d770462`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/d770462) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`17ad9a1`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/17ad9a1) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`4b8a756`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/4b8a756) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`b502868`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/b502868) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`388d62b`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/388d62b) | feat: add 2 iqra skills to L3 marketplace | Mohamed Abdelaziz |
 
 ---
 
