@@ -18,6 +18,9 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { paymentMiddleware } from 'x402-hono';
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 import {
   getSkill,
@@ -27,6 +30,10 @@ import {
   toPublic,
 } from './skills-registry';
 import type { Env } from './types';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const REPO_ROOT = path.resolve(__dirname, '../..');
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -163,15 +170,12 @@ app.get('/skills/:name/manifest', async (c) => {
   return c.body(body);
 });
 
-// Async manifest loader. Stubbed in the Worker context to fetch from a
-// content-addressable origin; the test harness overrides this via a
-// module mock so unit tests do not need a network.
+// Reads the actual skill markdown file from disk. Uses Node.js fs with
+// Cloudflare Workers nodejs_compat flag. Resolves relative to the repo root
+// so skills.json's "file" paths (e.g., "skills/agent-memory.md") work as-is.
 async function loadManifest(file: string): Promise<string> {
-  // Placeholder . wrangler bundles skills/ via assets binding in a
-  // follow-up. For now return a synthetic manifest so the integration
-  // test harness can assert end-to-end shape without coupling to the
-  // real markdown content.
-  return `# ${file}\n\nManifest content placeholder. Replace with skills/ asset binding in deploy hardening.\n`;
+  const fullPath = path.resolve(REPO_ROOT, file);
+  return fs.promises.readFile(fullPath, 'utf-8');
 }
 
 export default app;
