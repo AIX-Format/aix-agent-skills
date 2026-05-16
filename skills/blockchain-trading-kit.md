@@ -62,13 +62,13 @@
 
 
 ## Purpose
-TODO: Define purpose.
+Provide a complete autonomous trading stack deployable as a single agent kit — four integrated layers (Data, Execution, Intelligence, Security) spanning 100+ exchanges, on-chain data, derivatives, cross-chain bridging, and institutional-grade capital protection.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Every trade is immutably logged in trust-chain for auditability. The sovereign-constitution is consulted before any transaction executes. Circuit-breaker halts all trading automatically if loss thresholds are breached. Private keys never leave the local device.
 
 ## Operational Flow
-TODO: Define operational flow.
+Data layer feeds prices and on-chain data from CCXT, Moralis, Blockscout → Intelligence layer analyzes via Nex-T1, NOFX, BitQuant → Execution layer places trades via Coinbase AgentKit, Grix SDK, deBridge → Security layer enforces local key custody and capital protection rules at every step.
 
 ## Failure Modes
-TODO: Define failure modes.
+Exchange API outage starves the data layer causing stale analysis; intelligence hallucination leads to bad trade decisions; private key mismanagement compromises funds; circuit-breaker threshold misconfiguration causes either false stops or runaway losses.

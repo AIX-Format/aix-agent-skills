@@ -27,13 +27,31 @@
 
 
 ## Purpose
-TODO: Define purpose.
+
+Provide pre-packaged cognitive packs (Clinician, Legal, Finance) that agents can load as specialized memory layers. Each pack contains domain-specific embeddings, vector data, and retrieval configurations — turning a general IQRA agent into a domain specialist instantly, without fine-tuning or manual knowledge ingestion.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+
+- **Domain Accuracy**: Pre-built memories must be sourced from verified, authoritative datasets — no hallucinated or synthetic knowledge bases.
+- **Purity at Load**: Every pack runs through `purity-filter` before activation to screen for biased or harmful content.
+- **Human-in-the-Loop Gate**: Legal and Medical packs require explicit user consent before loading, due to their sensitive nature.
+- **Versioned Sources**: Each pack tracks its data provenance and update history via the trust chain.
 
 ## Operational Flow
-TODO: Define operational flow.
+
+1. Agent or user requests a cognitive pack by domain key (e.g. `clinician`, `legal`, `finance`).
+2. Skill looks up the pack manifest in the memory registry — includes source, size, embedding model, and vector store config.
+3. Pack passes through `purity-filter` for content safety screening.
+4. `memory-bridge` mounts the pack into the active vector store (Weaviate/Pinecone/txtai depending on pack).
+5. Agent's retrieval-augmented generation (RAG) pipeline now queries the pack's memory alongside general context.
+6. On session end, pack can be unloaded to free resources.
 
 ## Failure Modes
-TODO: Define failure modes.
+
+| Mode | Detection | Recovery |
+|------|-----------|----------|
+| Pack not found by key | Registry lookup returns null | Return available pack keys |
+| Vector store connection fails | Health check timeout | Suggest fallback store type, log error |
+| Purity filter blocks pack | Filter returns block with reason | Return error with explanation, offer human review |
+| Memory mount conflicts (multiple packs active) | Overlap detection | Warn user, offer to swap packs |
+| Pack data source out of date | Provenance timestamp stale | Run update flow or warn user of staleness |

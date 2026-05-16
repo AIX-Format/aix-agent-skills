@@ -41,13 +41,31 @@ ports:
 
 
 ## Purpose
-TODO: Define purpose.
+
+Enforce semantic versioning (SemVer) compatibility across all IQRA skills and pipelines. When a skill is updated, Version Guard scans the dependency impact graph to detect breaking changes — comparing public port interfaces (inputs/outputs) between old and new versions. It then recommends the correct version bump (Major/Minor/Patch) and blocks installations that would introduce incompatible skill combinations.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+
+- **No Silent Breakage**: Any skill update that breaks downstream dependents must be flagged before merge — never deployed silently.
+- **Public Port Contract**: The declared ports (`inputs`/`outputs`) are the only interface that matters — internal changes are not considered breaking.
+- **Dependency Transparency**: The full dependency graph is published in `.idx/dependency-graph.json` — any dependent can inspect their exposure.
+- **Block on Conflict**: Pipelines with conflicting version requirements are rejected at install time — users are never left with a broken runtime.
 
 ## Operational Flow
-TODO: Define operational flow.
+
+1. A skill update PR is submitted with old and new `pipeline.yaml` port definitions.
+2. Skill runs `scripts/diff_ports.py` to compare old vs. new ports — detects added, removed, or type-changed ports.
+3. Classifies changes: removed port or type narrowing = breaking (Major), new optional port = minor, internal refactor = patch.
+4. Loads `.idx/dependency-graph.json` to find all skills and pipelines that depend on this skill.
+5. For each dependent, evaluates whether the change is compatible with their declared version range.
+6. Outputs a compatibility report: `{ recommendedBump, affectedDependents: [{ skillId, compatible }] }`.
+7. If any dependent is broken, the PR is blocked with the report attached.
 
 ## Failure Modes
-TODO: Define failure modes.
+
+| Mode | Detection | Recovery |
+|------|-----------|----------|
+| Dependency graph unavailable | `.idx/dependency-graph.json` not found | Rebuild graph by scanning all skill manifests |
+| Port diff tool error | `diff_ports.py` crashes | Fallback to manual port declaration comparison |
+| Ambiguous version range (e.g. `^1.2.3` with no upper bound) | Range parser ambiguity | Flag for human review, do not auto-approve |
+| Circular dependency in graph | Cycle detection algorithm | Report cycle path, block the update |

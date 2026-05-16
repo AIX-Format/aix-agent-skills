@@ -20,13 +20,13 @@
 
 
 ## Purpose
-TODO: Define purpose.
+Maintain a registry of small, highly specialized fine-tuned models (Llama 3.2 3B, GGML/ONNX) that are plug-and-play for domain-specific tasks — legal contracts, mechanical diagnostics, Arabic poetry — with lazy loading and edge deployment support.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Every model in the vault is registered with its identity, version, and provenance in trust-chain. Model selection respects intent-dispatcher's domain analysis. Edge-ready models ensure privacy by running locally rather than sending domain-specific data to cloud APIs.
 
 ## Operational Flow
-TODO: Define operational flow.
+Task arrives → Intent Dispatcher detects need for specialized domain knowledge → Fine-Tuned Vault searches registry for matching model → model lazy-loaded (not loaded until context requires it) → Model Council routes request to loaded specialized model → inference runs → model identity and version logged in trust-chain → model unloaded to free resources.
 
 ## Failure Modes
-TODO: Define failure modes.
+Lazy loading adds latency on first specialized query per session; no model found for rare domain forces fallback to general models with degraded accuracy; stale fine-tuned weights produce outdated or incorrect domain responses; model version mismatch with trust-chain log breaks audit trail.

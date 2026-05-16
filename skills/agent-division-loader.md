@@ -20,13 +20,13 @@
 
 
 ## Purpose
-TODO: Define purpose.
+Load entire IQRA agent divisions on demand — engineering, creative, growth, revenue, spatial, security — each crew fully equipped with their personas and tones, then disband after mission completion to free resources.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Every division load must pass constitutional validation before deployment. Agent crews operate under IQRA's sovereign constitution; ethical guidelines are embedded into each persona's prompt. No division is loaded without a verified constitutional alignment check.
 
 ## Operational Flow
-TODO: Define operational flow.
+User submits task request → system determines target division(s) → mission crew assembled (project manager, designer, developer, tester) with appropriate tones → crew executes task under mission-control coordination → upon delivery, crew is immediately disbanded to conserve resources.
 
 ## Failure Modes
-TODO: Define failure modes.
+Required persona missing from persona-marketplace delays crew assembly; crew conflicts cause task overlap when coordination fails; orphaned crew not disbanded leaks resources and clutters the agent pool.

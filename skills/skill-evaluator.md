@@ -63,13 +63,31 @@ description: "Run automated evaluations against any skill and produce verifiable
 
 
 ## Purpose
-TODO: Define purpose.
+
+Run automated 4-stage evaluations against any skill — explore its architecture, build a tailored test suite, execute in the sandbox with statistical rigor, and generate a verifiable pass/fail badge with a score (0–100). Serves as the quality gate for the IQRA marketplace: no skill enters the registry without an evaluation badge, and no pipeline is installed unless all its constituent skills have passing scores.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+
+- **Objective Scoring**: Evaluation criteria are weighted and transparent (correctness 30%, completeness 20%, format 15%, robustness 20%, efficiency 15%) — no hidden or biased metrics.
+- **Statistical Rigor**: Every test case runs 3 times to ensure reproducibility — no single-run flukes.
+- **Cross-Model Validation**: LLM-rubric assertions use `cross-model-judge` to avoid self-evaluation bias.
+- **Re-Evaluation on Change**: Any skill update automatically triggers re-evaluation — stale badges are invalidated.
+- **Public Badges**: Scores are stamped into the skill's markdown — users can see historical scores and trends.
 
 ## Operational Flow
-TODO: Define operational flow.
+
+1. Phase 1 — Explore: Read skill manifest and extract metadata (name, version, inputs, outputs, dependencies).
+2. Phase 2 — Build: Construct a test suite with 5–15 test cases covering normal, edge, and adversarial inputs. Assertions use regex, keyword containment, and LLM-rubric via `cross-model-judge`.
+3. Phase 3 — Execute: Load skill into `skill-sandbox`, run each test case 3 times, capture latency and token usage.
+4. Phase 4 — Badge: Aggregate scores across dimensions, compute final weighted score, and write badge into the skill's markdown (e.g. `eval-pass-87/100-brightgreen`).
+5. Persist the detailed evaluation report to `.idx/evaluations/{skill_id}/{version}.json`.
+6. Notify `version-guard` and `pipeline-store` of the new evaluation result.
 
 ## Failure Modes
-TODO: Define failure modes.
+
+| Mode | Detection | Recovery |
+|------|-----------|----------|
+| Sandbox unavailable | Connection refused on Phase 3 | Queue evaluation, retry with exponential backoff |
+| No test cases could be generated | Skill description too vague | Return error requesting more detailed skill spec |
+| Assertion framework inconsistent | Cross-model judge disagrees with self | Use majority-vote across 3 models |
+| Score deviates wildly from previous version | Δ > 30 points triggers alert | Flag for human review, do not auto-publish badge |

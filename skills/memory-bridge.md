@@ -33,13 +33,13 @@
 
 
 ## Purpose
-TODO: Define purpose.
+Bridge agent memory across five tiers (Hot RAM, Warm SQLite, Cold Redis, Vector Qdrant, Archive LanceDB) with smart Zettelkasten linking, periodic memory purification, and automatic session compaction.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Memory purification removes duplicates and archives unused data while always preserving core essence — no critical memory is lost. Every Zettelkasten card links transparently to related cards. Session compaction summarizes without fabricating or altering facts.
 
 ## Operational Flow
-TODO: Define operational flow.
+New memory arrives → stored in Hot tier (RAM, 1-hour TTL) → cascaded to Warm (SQLite, 7-day TTL) → then Cold (Redis, 30-day TTL) → long-term patterns stored as vectors in Qdrant (infinite TTL) → archives in LanceDB (infinite TTL) → every 40 cycles, purification runs: deduplicate, merge similar memories, archive stale, retain only essence.
 
 ## Failure Modes
-TODO: Define failure modes.
+Hot tier overflow before cascade to Warm causes data loss; purification merge incorrectly conflates two distinct memories into one corrupted record; vector search returns semantically unrelated results polluting context; LanceDB write failure loses archive data permanently.

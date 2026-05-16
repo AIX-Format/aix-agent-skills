@@ -31,13 +31,30 @@ Extract from phrases like:
 
 
 ## Purpose
-TODO: Define purpose.
+
+Static skills registry that maps every agent to its assigned capabilities via a tier-based access model. Defines which skills are available at which tier (free, builder, pro, enterprise), enforces per-agent skill limits, and provides the API contract (Redis-backed agent→skills sets) that the UI and Voice Wizard consume for skill toggling and discovery.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+
+- **Tier Integrity**: No agent can access skills from a tier above its subscription — enforced server-side, not just in UI.
+- **Max Skills Cap**: Per-tier limits (free=2, builder=5, pro=10, enterprise=unlimited) prevent resource exhaustion.
+- **Transparent Tiers**: Every skill card shows its required tier — no hidden paywalls or ambiguous upgrade prompts.
+- **Toggle Accountability**: Every skill enable/disable action is logged in the trust chain with agent ID and timestamp.
 
 ## Operational Flow
-TODO: Define operational flow.
+
+1. Agent is created with a tier and an empty skills set in Redis (`agent:{id}:skills`).
+2. UI loads the skills registry from `/api/skills` — renders grid of skill cards with icons, tier badges, and toggle switches.
+3. User toggles a skill ON → `POST /api/agents/{id}/skills` with `{ skillId }` → server checks tier eligibility and max skill count → if allowed, adds to Redis set.
+4. User toggles skill OFF → `DELETE /api/agents/{id}/skills` with `{ skillId }` → removes from Redis set.
+5. Voice Wizard extracts skill intent from user speech (e.g. "can search the web" → maps to `web-search`).
+6. Agent runtime reads its skills set before executing any tool call — rejects unassigned skills.
 
 ## Failure Modes
-TODO: Define failure modes.
+
+| Mode | Detection | Recovery |
+|------|-----------|----------|
+| Redis connection lost | `agent:{id}:skills` read fails | Fallback to in-memory cache (stale by max 60s) |
+| Agent exceeds max skills | Count check during toggle | Reject toggle, show "upgrade required" message |
+| Skill ID does not exist in registry | Lookup returns null | Return 400 with available skill IDs list |
+| Tier downgrade leaves agent with too many skills | Tier update hook | Auto-disable skills exceeding new limit, notify user |

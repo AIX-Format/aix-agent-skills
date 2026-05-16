@@ -34,13 +34,13 @@
 
 
 ## Purpose
-TODO: Define purpose.
+Provide pre-built integration packs — smart prosthetics that connect IQRA agents to real-world systems (Shopify, Salesforce, WhatsApp, CData for 350+ enterprise systems, and n8n for cross-market MCP bridging) with full MCP protocol support.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+High-impact actions (e.g., bulk email sends, payment operations) pass through Shura Council for approval before execution. Circuit-breaker monitors all real-world operations and isolates any failing integration immediately. Credentials are never logged or exposed.
 
 ## Operational Flow
-TODO: Define operational flow.
+User requests integration → pack loads its MCP server → agent connects to external system via the pack's interface → for high-impact actions, Shura Council consent is requested → operation executes → Circuit Breaker continuously monitors for errors → on failure, the integration is isolated and supervisor is notified.
 
 ## Failure Modes
-TODO: Define failure modes.
+API credential leaks expose connected external systems; high-impact action bypasses Shura Council and causes reputational damage; integration pack incompatibility with target system API version breaks functionality; circuit-breaker false positive isolates a healthy integration unnecessarily.

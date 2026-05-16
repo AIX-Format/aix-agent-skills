@@ -37,13 +37,13 @@ local (ollama) → edge (webgpu) → cloud (gemini)
 
 
 ## Purpose
-TODO: Define purpose.
+Act as a board of directors for model routing — consults three tiers (Local Ollama, Edge WebGPU, Cloud Gemini/OpenAI) with graceful fallback, plus optional model voting for critical tasks where hallucination must be minimized.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Model selection respects data sensitivity — local models are preferred for private or sensitive data to prevent cloud exposure. Voting for critical tasks ensures majority consensus before accepting a response. Every model invocation is logged in trust-chain with the model ID and tier used.
 
 ## Operational Flow
-TODO: Define operational flow.
+Request arrives → evaluate complexity and privacy requirements → try local (Ollama) first → if unavailable or insufficient, try edge (WebGPU) → if still insufficient, fall back to cloud (Gemini/OpenAI) → for critical tasks, dispatch to 3 models → vote: if 2 agree adopt, if all differ escalate to human → result logged in trust-chain.
 
 ## Failure Modes
-TODO: Define failure modes.
+All three tiers fail — no fallback remains; voting tie without human intervention stalls task completion; local model hallucinates on non-critical tasks with no cross-check; trust-chain write failure loses the model invocation audit record.

@@ -80,13 +80,13 @@ def main(inputs):
 
 
 ## Purpose
-TODO: Define purpose.
+Transform raw data through three alchemical stages — Transform (clean, normalize, merge, enrich), Analyze (statistical summaries, trend detection, anomaly detection, correlation), and Visualize (charts, reports, exports) — with full data lineage tracking.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Data lineage is tracked from raw input through every transformation to final visualization, ensuring full auditability. No data is silently discarded — every filter rule is recorded. All operations log their hash for content-addressed verification.
 
 ## Operational Flow
-TODO: Define operational flow.
+Raw data ingested → Transform stage: remove empty values, deduplicate, normalize formats, merge sources, enrich with derived columns → Analyze stage: compute mean/median/stdev, detect trends via linear regression, identify anomalies via z-score/Isolation Forest, compute Pearson/Spearman correlations → Visualize stage: render bar/line/pie/scatter/heatmap charts, generate PDF/HTML dashboards, export PNG/SVG/CSV.
 
 ## Failure Modes
-TODO: Define failure modes.
+Empty dataset after cleaning produces misleading statistical reports; normalization on zero-variance data causes division-by-zero errors; memory exhaustion on large datasets during visualization rendering; data lineage chain broken mid-stage makes error tracing impossible.

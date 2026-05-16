@@ -32,13 +32,13 @@
 
 
 ## Purpose
-TODO: Define purpose.
+Transform the IQRA marketplace from a bare app store into a community-curated digital library where verified skill lists are organized by domain, maintained by stewards, and surfaced through recognizable shelves for browsing.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Skills listed in curated collections must have passed `skill-evaluator` tests and carry a green badge. List stewards are accountable for quality; stale or degraded skills are periodically purged. Nominations are transparent via issues and PRs with automated evaluation reports attached.
 
 ## Operational Flow
-TODO: Define operational flow.
+Community member nominates a skill via issue/PR → CI pipeline triggers `skill-sandbox` and `prompt-evaluator` → reports attached automatically → list steward reviews and merges → skill appears on `/marketplace/awesome` shelf → periodic quality checks remove skills that no longer meet the bar.
 
 ## Failure Modes
-TODO: Define failure modes.
+Malicious PR bypasses review and introduces unverified skills; list steward goes inactive creating a single point of failure; periodic quality checks not configured leads to stale listings; unevaluated skills leak into curated lists.

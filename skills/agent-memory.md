@@ -37,13 +37,13 @@ curl GET  /api/agents/test-123/memory
 
 
 ## Purpose
-TODO: Define purpose.
+Provide persistent memory for every AIX agent using Upstash Redis — store conversation history as a capped list (50 entries, 30-day TTL) alongside skill references and context hashes for durable cross-session recall.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Memory retention respects user privacy and data sovereignty. No memory is stored client-side (localStorage forbidden). TTL enforcement ensures data does not persist indefinitely. All Redis data must be parsed/stringified JSON to avoid serialization leaks.
 
 ## Operational Flow
-TODO: Define operational flow.
+Agent receives input → LPUSH to Redis list `agent:{id}:memory` → LTRIM to 50 entries → set TTL 30 days → on recall, LRANGE full list → parse JSON → return structured array. Skills stored in Redis Set, context in Redis Hash, each with appropriate TTL.
 
 ## Failure Modes
-TODO: Define failure modes.
+Redis connection failure causes agent amnesia; missing LTRIM allows unbounded list growth exceeding memory limits; unparsed JSON strings returned directly break consumer response handling; TTL not set on write causes stale data to persist indefinitely.

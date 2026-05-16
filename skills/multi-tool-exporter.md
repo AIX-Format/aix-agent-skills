@@ -18,13 +18,13 @@
 
 
 ## Purpose
-TODO: Define purpose.
+Export IQRA personas — with their ethical compass, constitutional constraints, and unique tones — to external AI platforms including CLI tools, IDEs (Cursor, Windsurf), and any platform accepting standard agent definitions.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Every exported persona carries the DASTŪR constitutional constraints as an inseparable, non-removable part of the output prompt. The sovereign-constitution ensures that the ethical guardian travels with the persona regardless of the target platform.
 
 ## Operational Flow
-TODO: Define operational flow.
+User selects a persona from persona-forge (custom) or persona-marketplace (pre-built) → chooses target platform (CLI, IDE, custom format) → exporter transforms persona structure to the target format → embeds constitutional constraints at the prompt level → generates the required files → user downloads or deploys to the target platform.
 
 ## Failure Modes
-TODO: Define failure modes.
+Target platform API format changes silently break export templates, producing malformed output; constitutional constraints omitted from export creates an ungoverned agent on the target platform; persona-forge data missing required fields yields an incomplete export that fails on the target.

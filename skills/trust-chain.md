@@ -64,13 +64,29 @@ def main(inputs):
 
 
 ## Purpose
-TODO: Define purpose.
+
+Provide an append-only, cryptographically verifiable audit chain for every IQRA agent action. Each entry is linked to its predecessor via SHA-256 hash and signed with the agent's Ed25519 key — making the chain immutable, tamper-evident, and publicly auditable. Acts as the system of truth for constitutional compliance history, reward ledger entries, and metamorphosis records.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+
+- **Append-Only**: Once committed, an entry cannot be deleted, modified, or reordered — the hash chain makes tampering immediately detectable.
+- **Signed by Identity**: Every entry carries an Ed25519 signature from the acting agent — non-repudiation is guaranteed.
+- **Full Auditability**: Any external auditor can verify the entire chain from genesis to the latest entry.
+- **Truth Moment (Every 100 Entries)**: The chain pauses for integrity verification — scanning the last 100 entries for suspicious patterns and generating a safety certificate or alert.
 
 ## Operational Flow
-TODO: Define operational flow.
+
+1. An event occurs (action executed, decision made, persona loaded) — event data is serialized as JSON.
+2. Skill creates a new entry object with: `entryId` (auto-increment), `prevHash` (last entry's SHA-256), `timestamp`, `action`, `input`, `output`, `constitutionalCheck`, and the acting agent's `signature`.
+3. The entry is appended to the chain — stored as a file or database row (backed by append-only semantics).
+4. After every 100 entries, the Truth Moment trigger fires — validates all hashes and signatures in the last 100 entries, generates a safety certificate.
+5. On request, any entry or the full chain can be verified by re-computing hashes and re-validating signatures.
 
 ## Failure Modes
-TODO: Define failure modes.
+
+| Mode | Detection | Recovery |
+|------|-----------|----------|
+| Hash mismatch detected | Chain verification fails | Halt all agent operations, alert system admin, report the exact broken link |
+| Signature verification fails | Ed25519 verify returns false | Mark entry as tampered, isolate it, continue chain from last valid entry |
+| Storage full (cannot append) | Write operation fails | Rotate to new chain file, link new chain's genesis to old chain's last hash |
+| Timestamp drift (entry time > 5s from system time) | Clock skew detection | Log warning, adjust entry timestamp with annotation, do not halt chain |

@@ -27,13 +27,13 @@
 
 
 ## Purpose
-TODO: Define purpose.
+Compress agent memory across five fractal levels (L0 Raw → L1 Session Summary → L2 Pattern → L3 Principle → L4 Essence) enabling resonant recall that retrieves memories by similarity and analogy rather than by exact key match.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Memory compression preserves privacy — no raw sensitive data propagates into higher abstraction levels. Resonant recall respects user intent by retrieving analogically relevant rather than just lexically matching memories, preventing context-dropping.
 
 ## Operational Flow
-TODO: Define operational flow.
+Conversation logged at L0 (raw text) → compression cascade triggers: L0→L1 produces session summary, L1→L2 extracts behavioral patterns, L2→L3 distills general principles, L3→L4 compresses to core essence → on query, resonant recall searches all levels by semantic similarity → best matching memories returned.
 
 ## Failure Modes
-TODO: Define failure modes.
+Over-compression at L3/L4 loses critical details irreversibly; resonant recall returns semantically irrelevant memories due to weak similarity matching; compression cascade backlog causes L0 to grow unbounded; principle extraction (L2→L3) generalizes incorrectly from sparse data.

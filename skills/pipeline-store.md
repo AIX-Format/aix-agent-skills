@@ -41,13 +41,30 @@ nodes:
 
 
 ## Purpose
-TODO: Define purpose.
+
+Registry of pre-assembled DAG topology graphs (pipelines) that users can discover, install, and execute as single units within IQRA. Each pipeline chains multiple skills together with defined data-flow edges — enabling complex multi-step workflows (e.g. CSV upload → transform → analyze → visualize) to be deployed with one command.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+
+- **No Circular Dependencies**: All pipelines must be valid DAGs — cycles are rejected at install time.
+- **Skill Integrity**: Every skill node in a pipeline must have passed `skill-evaluator` before the pipeline is listed.
+- **Version-Locked**: Pipelines are installed with pinned versions via `version-guard` — silent breaking changes are prevented.
+- **Transparent Flow**: The pipeline manifest must document every node, edge, and data transformation — no hidden side effects.
 
 ## Operational Flow
-TODO: Define operational flow.
+
+1. User searches for a pipeline via `pipeline_store.search(query)` or `intent-dispatcher` suggests one.
+2. Pipeline manifest `pipeline.yaml` is fetched and validated (no cycles, all skills exist, versions compatible).
+3. `version-guard` locks all skill version ranges to compatible releases.
+4. User installs via `scripts/install_pipeline.py` — all constituent skills are fetched.
+5. On execution, `chain-tracer` monitors every node's input/output for debugging.
+6. Results flow through the DAG edges to produce the final output.
 
 ## Failure Modes
-TODO: Define failure modes.
+
+| Mode | Detection | Recovery |
+|------|-----------|----------|
+| Circular dependency in manifest | Graph cycle detection | Reject install, report the cycle path |
+| Missing required skill | Dependency check fails | List missing skills, abort install |
+| Version conflict (incompatible skill semver) | `version-guard` rejects | Report conflict, suggest compatible alternatives |
+| Node execution failure mid-pipeline | `chain-tracer` detects error | Halt pipeline, return partial-results with error node ID |

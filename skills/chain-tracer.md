@@ -35,13 +35,13 @@
 
 
 ## Purpose
-TODO: Define purpose.
+Provide full observability for IQRA pipeline execution — capture timing, token consumption, cost, errors, and data lineage across every skill span, enabling debugging, performance analysis, and content-addressed cache/replay.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+All pipeline execution traces are immutable records preserved for audit. Input/output hashes create a content-addressed graph that enables verifiable data lineage without exposing raw data content.
 
 ## Operational Flow
-TODO: Define operational flow.
+Pipeline starts → root span created → each skill generates a child span (span_id, skill_id, input_hash, output_hash, duration_ms, token_count, cost_usd, status) → upon completion, spans assembled into complete trace → data lineage graph generated from linked hashes → traces available for debug, cost analysis, and cache reuse.
 
 ## Failure Modes
-TODO: Define failure modes.
+Span data loss during a crash breaks trace integrity; missing token_count fields hide cost overruns until billing; hash collisions (rare) corrupt data lineage linking; pipeline completion before all spans flush produces incomplete traces.

@@ -30,13 +30,30 @@
 
 
 ## Purpose
-TODO: Define purpose.
+
+Maintain a library of reusable seven-layer IQRA prompt templates that agents can instantiate with dynamic variables. Ensures every prompt across the system follows the standardized IQRA layered format (intent, identity, constitution, context, task, output, constraints) — guaranteeing consistency, constitutional alignment, and deterministic output structure.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+
+- **Template Approval**: Every template must pass `prompt-evaluator` before being added to the library — no unvetted prompts.
+- **Constitutional Layer Mandatory**: Every template MUST include a `constitution` layer that binds the agent to IQRA's sovereign constitution.
+- **No Lock-In**: Templates are open-source and auditable — no hidden instructions or black-box prompts.
+- **Version Traceability**: Every template is versioned — old versions remain accessible for rollback.
 
 ## Operational Flow
-TODO: Define operational flow.
+
+1. Agent or user requests a template by ID (e.g. `system-architect-v2`) or category.
+2. Skill fetches the template JSON from the library — validates structural integrity.
+3. Dynamic variables (`{{context}}`, `{{task}}`, `{{persona_tone}}`) are injected from the current session state and `memory-bridge`.
+4. Optionally: template is composed with an active persona via `prompt-weaver`.
+5. The final 7-layer prompt is returned for execution.
+6. Execution results and resonance scores feed back into `skill-bank-evolution` for template ranking.
 
 ## Failure Modes
-TODO: Define failure modes.
+
+| Mode | Detection | Recovery |
+|------|-----------|----------|
+| Template ID not found | Registry lookup returns null | Return available template list |
+| Missing required variable | Variable injection detects unbound `{{…}}` | Return error listing missing variables |
+| Template fails structural validation | Missing required layers | Reject template, report which layers are absent |
+| Template version deprecated | Version check against dependency graph | Warn user, recommend latest version |

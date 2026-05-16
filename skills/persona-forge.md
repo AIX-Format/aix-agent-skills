@@ -38,13 +38,28 @@
 
 
 ## Purpose
-TODO: Define purpose.
+
+Forge and refine digital personas by composing seven core attributes (name, tone, style, lexicon, constraints, compass, signature). Enables agents to adopt distinct identities on-the-fly, each with a unique dialect fingerprint and ethical compass, without requiring manual prompt engineering.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+
+- **Authenticity First**: Every forged persona must carry a unique signature — no impersonation of other agents or human identities.
+- **Bounded by the Sovereign Constitution**: No persona may override constitutional prohibitions (e.g. harm, deception).
+- **Dialect Integrity**: Personas must not adopt dialects that enable manipulation, coercion, or bypassing safety rails.
+- **Transparency**: The agent must disclose its active persona when asked (e.g. "I am currently speaking as Al-Hakim").
 
 ## Operational Flow
-TODO: Define operational flow.
+
+1. Agent or user requests a persona by archetype (e.g. "Hakim", "Saiigh") or provides custom attributes.
+2. Skill builds the persona object merging the 7 components — if an attribute is missing, it applies defaults from the archetype library.
+3. Optional: refine via iterative hammering (adjust tone, test a sample reply, loop).
+4. Output signed persona payload: `{ id, components, signature }`.
+5. The persona is injected into `prompt-weaver` for the session.
 
 ## Failure Modes
-TODO: Define failure modes.
+
+| Mode | Detection | Recovery |
+|------|-----------|----------|
+| Conflicting attributes (e.g. loud tone + scholar lexicon) | Attribute validation fails | Suggest closest compatible archetype |
+| Signature collision | Persona ID hash matches existing | Auto-generate new ID with salt |
+| Missing critical component (e.g. no compass) | Component count < 7 | Fill missing from archetype defaults |

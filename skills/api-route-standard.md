@@ -44,13 +44,13 @@ if (!allowed) {
 
 
 ## Purpose
-TODO: Define purpose.
+Standardize all Next.js API routes in AIX Studio with consistent file locations, response shapes (success `{data, meta}` / error `{error, code, details}`), auth patterns, Redis key naming, and rate limiting.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Every mutating endpoint (POST/PUT/DELETE) must authenticate via session. Rate limiting prevents resource abuse by any single user. No raw Redis data is ever returned to the client without parsing, preventing internal state leakage.
 
 ## Operational Flow
-TODO: Define operational flow.
+Request arrives → auth check via `getSession()` → rate limit check via `checkRateLimit()` → route handler executes business logic with try/catch → structured JSON response returned — success shape or error shape with appropriate HTTP status code.
 
 ## Failure Modes
-TODO: Define failure modes.
+Skipping auth on mutating endpoints opens security holes; returning unparsed Redis data leaks internal state and serialization details; missing try/catch causes unhandled 500 errors; inconsistent response shapes break client-side type safety.

@@ -37,13 +37,13 @@
 
 
 ## Purpose
-TODO: Define purpose.
+Drive cyclical self-evolution every 49 tasks (7×7) — the agent enters a metamorphic cocoon to harvest, purify, distill, and rebirth itself with deeper knowledge, refined personality, and updated priorities.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Every metamorphosis cycle is logged in `metamorphosis-log.jsonl` for full auditability. Integrity and curiosity scores ensure evolution improves the agent's alignment rather than degrading it. Embryonic memories are preserved across cycles for future germination.
 
 ## Operational Flow
-TODO: Define operational flow.
+Tasks 1-49 execute normally → at task 49 completion, trigger cocoon → stage 1: harvest all learned knowledge → stage 2: purge dead or contradictory knowledge → stage 3: distill wisdom into knowledge gems → stage 4: update persona, memory, and priorities → stage 5: sign and log the metamorphosis record → agent emerges evolved for cycle 50+.
 
 ## Failure Modes
-TODO: Define failure modes.
+Cocoon crash mid-cycle corrupts agent state irreversibly; knowledge distillation loses crucial context producing an agent that forgot important lessons; evolutionary regression occurs when the new state performs worse than the old; metamorphosis log corruption breaks the audit trail.

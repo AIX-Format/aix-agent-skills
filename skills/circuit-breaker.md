@@ -69,13 +69,13 @@ def main(inputs):
 
 
 ## Purpose
-TODO: Define purpose.
+Act as an immunity system for IQRA — detect and isolate failing components before they cascade across the system. Three states (Closed, Half-Open, Open) with circuit learning fingerprints each trip to prevent recurrence.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Every circuit trip is transparently logged with a complete fingerprint (cause, recurrence history, resolution) for audit. Recovery is automatic but conservative via the Half-Open state, preventing premature re-exposure without evidence of resolution.
 
 ## Operational Flow
-TODO: Define operational flow.
+Skill call succeeds → stay Closed → 5 consecutive failures → trip to Open → freeze skill, notify supervisor, activate alternative path → after 5-minute cooldown → transition to Half-Open → single test call allowed → success returns to Closed, failure returns to Open → circuit fingerprint recorded for learning.
 
 ## Failure Modes
-TODO: Define failure modes.
+Threshold set too low (5 failures) causes frequent false trips on transient errors; threshold too high delays cascade containment and amplifies damage; circuit fingerprint database grows unbounded without pruning; Half-Open test call succeeds but underlying root cause persists.

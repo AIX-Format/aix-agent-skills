@@ -35,13 +35,13 @@ if (!result.valid) {
 
 
 ## Purpose
-TODO: Define purpose.
+Define the canonical AIX v1.3.0 manifest schema as the single source of truth for agent identity, economics, security (abom), and build provenance — enforced by a validation pattern used across all API routes.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Every manifest must carry an abom.risk_score (0-100) for ethical transparency. Only approved identity providers are permitted. The schema enforces constitutional minima — agent name length, description length, and builder identity are all mandatory fields.
 
 ## Operational Flow
-TODO: Define operational flow.
+Developer creates manifest → validate against `aix.schema.json` via `validateManifest()` → check required fields (aix_version, agent, identity, abom, build_provenance) → append optional fields (economics, skills) → return validated manifest or 400 with error details.
 
 ## Failure Modes
-TODO: Define failure modes.
+Missing required fields returns 400 with validation errors but unclear messages confuse developers; schema version drift between 1.3.0 and future versions causes false negatives; golden manifests not updated alongside schema changes break reference tests.

@@ -140,13 +140,13 @@ performance_thresholds:
 
 
 ## Purpose
-TODO: Define purpose.
+Serve as a multi-stage AI-powered CI/CD inspection gate across four checkpoints (pre-commit, pre-PR, pre-deploy, periodic) — blocking malicious or untested code, prompts, and skills before they reach production in IQRA.
 
 ## Constitutional Alignment
-TODO: Define constitutional alignment.
+Every checkpoint enforces constitutional compliance: prompt content scanning, security pattern matching, attack simulation, and cost/performance thresholding. All inspection events are logged in trust-chain. Purity filter integration ensures intent-level pre-screening.
 
 ## Operational Flow
-TODO: Define operational flow.
+Developer commits → pre-commit hook scans prompts and checks constitutional compliance → PR raised → pre-PR validates skill changes, pattern compatibility, integration tests, and security review → deploy requested → pre-deploy runs full vulnerability scan, load test, environment compatibility → weekly periodic audit rechecks all active agents.
 
 ## Failure Modes
-TODO: Define failure modes.
+False positive blocks legitimate code and frustrates developers; false negative allows a malicious prompt through to production; performance thresholds misconfigured cause premature blocking; attack simulation incomplete misses novel or zero-day attack vectors.
