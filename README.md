@@ -383,7 +383,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-17 08:19 UTC_
+_Last updated: 2026-05-17 13:17 UTC_
 
 ---
 
@@ -415,11 +415,11 @@ _Last updated: 2026-05-17 08:19 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`2f22c85`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/2f22c85) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`1389a1d`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/1389a1d) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`e7252c2`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/e7252c2) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`43c97b1`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/43c97b1) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`678631f`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/678631f) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`e48f36c`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/e48f36c) | feat: expand skills registry from 76→124, fix 46 stub/thin files, add 48 new skills from GemClaw | Mohamed Abdelaziz |
 
 ---
 
