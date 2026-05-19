@@ -383,7 +383,7 @@ It acts as an accelerator for the IQRA multi-agent system, bypassing the Node.js
 
 ## 📊 Live Ecosystem Dashboard
 
-_Last updated: 2026-05-19 09:39 UTC_
+_Last updated: 2026-05-19 14:58 UTC_
 
 ---
 
@@ -415,11 +415,11 @@ _Last updated: 2026-05-19 09:39 UTC_
 
 | Commit | Message | Author |
 |---|---|---|
+| [`8caf8f6`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/8caf8f6) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`435949d`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/435949d) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`74bf875`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/74bf875) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`bb8769b`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/bb8769b) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
 | [`27e8482`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/27e8482) | 📊 auto-update live ecosystem dashboard [skip ci] | iqra-dashboard-bot |
-| [`9ee10d4`](https://github.com/Moeabdelaziz007/aix-agent-skills/commit/9ee10d4) | fix: loadManifest reads actual .md files | Mohamed Abdelaziz ‬‏ |
 
 ---
 
