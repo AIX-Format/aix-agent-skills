@@ -22,7 +22,7 @@ jobs:
     name: Generate marketplace chronicle
     runs-on: blacksmith-2vcpu-ubuntu-2404
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           # Need a deeper history so --since=30 days ago and the
           # recent-commits section can actually find commits.
